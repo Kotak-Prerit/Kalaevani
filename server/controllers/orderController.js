@@ -109,13 +109,11 @@ async function updateStock(order) {
   const product = await Product.findById(order.product);
 
   const updatedSizes = [...product.sizes].map((item) => {
-    console.log(item.name, order.size, item.name === order.size);
     if (item.name === order.size) {
       item.quantity -= order.quantity;
     }
     return item;
   });
-  console.log(">>>", updatedSizes);
   await Product.findByIdAndUpdate(
     order.product,
     {

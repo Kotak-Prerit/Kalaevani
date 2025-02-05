@@ -51,19 +51,6 @@ const userSchema = new mongoose.Schema({
   resetpasswordExpire: Date,
 });
 
-// HASHING
-userSchema.pre("save", async function (next) {
-  try {
-    if (!this.isModified("password")) {
-      next();
-    }
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-  } catch (err) {
-    next(err);
-  }
-});
-
 // JWT TOKEN
 userSchema.methods.getJWTToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_KEY, {

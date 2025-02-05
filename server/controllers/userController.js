@@ -3,15 +3,16 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 const User = require("../models/userModel");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
+const bcrypt = require("bcrypt");
 
 // Register a User
 exports.registerUser = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
-
+  encryptedPassword = await bcrypt.hash(password, 10);
   const user = await User.create({
     name,
     email,
-    password,
+    password: encryptedPassword,
   }).catch((err) => {
     throw new ErrorHandler("Error creating user", 500);
   });
@@ -34,7 +35,6 @@ exports.loginUSer = catchAsyncError(async (req, res, next) => {
   }
 
   const isPasswordMatched = await user.comparePassword(password);
-
   if (!isPasswordMatched) {
     return next(new ErrorHandler("Bad Credentials 😔", 401));
   }
@@ -56,25 +56,27 @@ exports.logout = catchAsyncError(async (req, res, next) => {
 });
 
 // Forget Password
-exports.forgotPassword = catchAsyncError(async (req, res, next) => {
+exports.sendForgotPasswordOtp = catchAsyncError(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
     return next(new ErrorHandler("User not found", 404));
   }
 
-  //Get resetPassword Token
-  const resetToken = user.getResetPasswordToken();
-
-  await user.save({ validateBeforeSave: false });
-
-  const resetPasswordUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/password/reset/${resetToken}`;
-
-  const message = `Click the link below to reset your password :- \n\n ${resetPasswordUrl}  \n\n If you have not requested this email then kindly ignore it.`;
-
   try {
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+
+    const otp = String(Math.floor(100000 + Math.random() * 900000));
+
+    user.resetOtp = otp;
+    user.resetOtpExpireAt = Date.now() + 20 * 60 * 1000;
+
+    await user.save();
+
+    const message = `Your OTP for resetting your password is : ${otp} . \n Use this OTP to proceed with resetting your password. \n If you have not requested this email then kindly ignore it.`;
+
     await sendEmail({
       email: user.email,
       subject: `KALAEVANI - Password Recovery`,
@@ -86,39 +88,49 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
       message: `Email sent to ${user.email} successfully`,
     });
   } catch (error) {
-    user.resetPasswordToken = undefined;
-    user.resetpasswordExpire = undefined;
-    await user.save({ validateBeforeSave: false });
-    return next(new ErrorHandler(error.message, 500));
+    return res.json({ success: false, message: error.message });
   }
 });
 
-// Reset password :
-exports.resetPassword = catchAsyncError(async (req, res, next) => {
-  const user = await User.findOne({
-    resetPasswordToken: req.params.token,
-  });
+//Verify forget password OTP
+exports.resetForgottenPassword = catchAsyncError(async (req, res, next) => {
+  const { email, otp, newPassword } = req.body;
 
-  if (!user) {
-    return next(
-      new ErrorHandler(
-        "reset Password token is invalid or has been expired",
-        400
-      )
-    );
+  if (!email || !otp || !newPassword) {
+    return res.json({
+      success: false,
+      message: "Email, OTP and new password are required",
+    });
   }
 
-  if (req.body.password !== req.body.confirmPassword) {
-    return next(new ErrorHandler("Password doesn't match", 400));
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    if (user.resetOtp === "" || user.resetOtp !== otp) {
+      return res.json({ success: false, message: "Invalid OTP" });
+    }
+
+    if (user.resetOtpExpireAt < Date.now()) {
+      return res.json({ success: false, message: "OTP Expired" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    user.resetOtp = "";
+    user.resetOtpExpireAt = 0;
+
+    await user.save();
+
+    return res.json({
+      success: true,
+      message: "Password reset successfully",
+    });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
   }
-
-  user.password = req.body.password;
-  user.resetPasswordToken = undefined;
-  user.resetpasswordExpire = undefined;
-
-  await user.save();
-
-  sendToken(user, 200, res);
 });
 
 // Get User Detail

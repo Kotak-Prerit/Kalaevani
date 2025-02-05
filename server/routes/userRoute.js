@@ -4,8 +4,8 @@ const {
   registerUser,
   loginUSer,
   logout,
-  resetPassword,
-  forgotPassword,
+  resetForgottenPassword,
+  sendForgotPasswordOtp,
   getUserDetails,
   changePassword,
   changeProfile,
@@ -21,8 +21,8 @@ const {
 
 router.route("/register").post(registerUser);
 router.route("/login").post(loginUSer);
-router.route("/password/forgot").post(forgotPassword);
-router.route("/password/reset/:token").put(resetPassword);
+router.route("/password/forgot").post(sendForgotPasswordOtp);
+router.route("/password/reset").post(resetForgottenPassword);
 router.route("/logout").get(logout);
 router.route("/me").get(isAuthenticatedUser, getUserDetails);
 router.route("/password/change").put(isAuthenticatedUser, changePassword);

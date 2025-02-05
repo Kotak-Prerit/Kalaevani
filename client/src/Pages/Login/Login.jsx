@@ -120,9 +120,9 @@ const Login = () => {
                       {visible ? <FaRegEye /> : <FaRegEyeSlash />}
                     </div>
                   </div>
-                  {/* <Link to="/password/forgot" className="forgot-password">
+                  <Link to="/password/forgot" className="forgot-password">
                     Forget Password ?
-                  </Link> */}
+                  </Link>
                   <div className="tAndc flex-center">
                     <p className="forgot-password">
                       By signing in you agree to our{" "}
