@@ -42,14 +42,14 @@ const Dashboard = () => {
             <p className="dashboardHeading poppins">Dashboard</p>
             <div className="dashboardSummary">
               <div className="dashboardBox">
-                <p className="boxTitle poppins flex-center">
+                <p className="boxTitle poppins flex justify-center items-center">
                   <FaRupeeSign className="rupee" /> Total Sales
                 </p>
                 <p className="boxNumbers">NA</p>
               </div>
               <div className="dashboardBox">
                 <Link to="/admin/products897451569418741">
-                  <p className="boxTitle poppins flex-center">
+                  <p className="boxTitle poppins flex justify-center items-center">
                     {" "}
                     <LuBox className="box" />
                     Products
@@ -60,7 +60,7 @@ const Dashboard = () => {
               </div>
               <div className="dashboardBox">
                 <Link to="/admin/orders897451569418741">
-                  <p className="boxTitle poppins flex-center">
+                  <p className="boxTitle poppins flex justify-center items-center">
                     <RiBarcodeBoxLine className="barcode" />
                     Orders
                   </p>
@@ -70,7 +70,7 @@ const Dashboard = () => {
               </div>
               <div className="dashboardBox">
                 <Link to="/admin/users897451569418741">
-                  <p className="boxTitle poppins flex-center">
+                  <p className="boxTitle poppins flex justify-center items-center">
                     {" "}
                     <FaArrowTrendUp className="grow" />
                     Users
@@ -80,14 +80,14 @@ const Dashboard = () => {
                 </Link>
               </div>
             </div>
-            <div className="chart-container flex-center">
+            <div className="chart-container flex justify-center items-center">
               <div className="chart dashboardBox">
                 <p className="chart-title poppins">Sales Statistics</p>
                 <LineGraph />
               </div>
             </div>
-            <div className="chart-container flex-center">
-              <div className="chart dashboardBox flex-center">
+            <div className="chart-container flex justify-center items-center">
+              <div className="chart dashboardBox flex justify-center items-center">
                 <p className="chart-title poppins">Stock Status</p>
                 <DoughnutChart />
               </div>

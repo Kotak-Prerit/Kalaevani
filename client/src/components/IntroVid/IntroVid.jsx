@@ -1,52 +1,18 @@
-// import React, { useRef, useState } from "react";
-// import { FaPlay, FaPause } from "react-icons/fa";
-// import introvid from "../../assets/productVid.mp4";
-import "./IntroVid.css";
+import React from "react";
 
 const IntroVid = () => {
-  // const videoRef = useRef(null);
-  // const [isPlaying, setIsPlaying] = useState(false);
-
-  // const handlePlayPause = () => {
-  //   if (videoRef.current) {
-  //     if (isPlaying) {
-  //       videoRef.current.pause();
-  //     } else {
-  //       videoRef.current.muted = false; // Unmute when playing
-  //       videoRef.current.play();
-  //     }
-  //     setIsPlaying(!isPlaying);
-  //   }
-  // };
-
   return (
-    <div className="Vidcontainer">
-      <div className="productVidWrapper">
-        {/* <video ref={videoRef} className="productVid" loop preload="auto" muted>
-          <source src={introvid} type="video/mp4" />
-        </video>
-
-        {!isPlaying && (
-          <button className="playButton" onClick={handlePlayPause}>
-            <FaPlay />
-          </button>
-        )}
-
-        {isPlaying && (
-          <button className="pauseButton" onClick={handlePlayPause}>
-            <FaPause />
-          </button>
-        )} */}
-        <div className="productVid">
+    <div className="flex justify-center items-center w-full relative">
+      <div className="relative w-full mx-[1.5vw]">
+        <div className="relative w-full pt-[56.25%] flex justify-center items-center">
           <iframe
-            width="560"
-            height="315"
             src="https://www.youtube.com/embed/h_tBRIcGw7Q?si=zpBXB7AGmvV6YGDd&modestbranding=1&rel=0"
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
+            className="absolute top-0 left-0 w-full h-full border-0"
           ></iframe>
         </div>
       </div>

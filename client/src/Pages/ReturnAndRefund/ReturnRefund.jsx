@@ -1,5 +1,4 @@
 import React, { Fragment, lazy, Suspense } from "react";
-import "../ShippingReturn/SR.css";
 import logo from "../../assets/kalaevaniBlack.webp";
 import MetaData from "../../Meta/MetaData";
 
@@ -10,84 +9,50 @@ const ReturnRefund = () => {
   return (
     <Fragment>
       <Suspense>
-        <MetaData title={"Return & refund Policy - Kalevani"} />
+        <MetaData title={"Returns & Refunds - Kalaevani"} />
         <Navbar props={logo} />
-        <div className="srContainer">
-          <div className="shipping">
-            <h1 className="futuraLt srHead">Return & Refund Policy</h1>
-            <p className="srPara poppins">
-              <ul>
+        <div className=" w-full py-[5vh]">
+          <div className="w-full">
+            <h1 className="text-left px-[10vh] text-2xl md:text-3xl futuraLt">
+              Returns & Refunds
+            </h1>
+            <div className="p-[2vh_10vh] text-[18px] poppins md:px-[10vh] px-[5vh]">
+              <ul className="list-disc space-y-4">
                 <li>
-                  We have an exchange-only policy at the moment; Customers are
-                  entitled for an exchange if they don't find the product(s)
-                  true to their size
+                  We do not accept returns or exchanges unless the item you
+                  purchased is defective or damaged.
                 </li>
                 <li>
-                  To be eligible for an exchange, item(s) must be in the same
-                  condition as you received them. Products should be unworn or
-                  unused, with tags, and in its original packaging box. You'll
-                  also need the payment receipt or proof of purchase
-                </li>
-
-                <li>
-                  We do not offer any refunds on the order. However, In case we
-                  don't have your desired size available, you will be entitled
-                  to choose an alternate product of the same amount.
-                </li>
-                <li>
-                  Mode of return: Self-serve; Customer needs to bear the
-                  shipping fees and send it back to the mailing address as we
-                  don't have any return policy, and it should be sent back to us
-                  within 24hrs of the purchase
+                  If you receive a defective or damaged item, please contact us
+                  at{" "}
+                  <a
+                    href="mailto:kalaevanii@gmail.com"
+                    className="underline underline-offset-2 text-blue-600"
+                  >
+                    kalaevanii@gmail.com
+                  </a>{" "}
+                  with details and photographic evidence of the product and the
+                  defect.
                 </li>
                 <li>
-                  Please ensure to raise an exchange request with us prior to
-                  sending the products back, products shipped without raising
-                  exchange request will not be accepted
+                  Upon receipt of the returned product, we will fully examine it
+                  and notify you via e-mail within a reasonable period whether
+                  you are entitled to a replacement as a result of the defect.
                 </li>
                 <li>
-                  Customers are requested to make a video while unboxing the
-                  product so that if you receive a defective product we have
-                  evidence of the same. In such a case the action taken would be
-                  prompt because this would be backed by proof. In case no video
-                  is received from your end we would have to go into detailed
-                  examination of the product to process your request.
-                </li>
-              </ul>
-            </p>
-            <h1 className="futuraLt srHead">Damages and other issues</h1>
-            <p className="srPara poppins">
-              <ul>
-                <li>
-                  Please inspect your order upon reception and contact us within
-                  12 hours post-delivery if the item is
-                  defective/damaged/incorrect. We'll look into the situation
-                  right away and provide the best resolution.
+                  If you are eligible, we will send you a replacement product or
+                  offer store credit within a certain number of days.
                 </li>
                 <li>
-                  Reporting of defective/damaged/incorrect products post 12
-                  hours will not be entertained.
+                  No refunds will be issued unless the product is not available
+                  for replacement.
+                </li>
+                <li>
+                  The refund process will take 5-7 working days and will be
+                  processed in the original mode of payment.
                 </li>
               </ul>
-            </p>
-            <h1 className="futuraLt srHead">Cancellation policy</h1>
-            <p className="srPara poppins">
-              <ul>
-                <li>
-                  Products that are dispatched from our end are not eligible for
-                  cancellation
-                </li>
-                <li>
-                  Cancellations can only be entertained if the order is still
-                  processing and not dispatched.
-                </li>
-                <li>
-                  Orders can be cancelled within 30minutes of placing the order
-                  online. Please reach us via our contact page for any
-                  cancellations.
-                </li>
-              </ul>
-            </p>
+            </div>
           </div>
         </div>
         <Footer />

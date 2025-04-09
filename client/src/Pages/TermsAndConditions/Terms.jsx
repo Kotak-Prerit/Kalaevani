@@ -1,6 +1,5 @@
 import React, { Suspense, Fragment, lazy } from "react";
 import { Link } from "react-router-dom";
-import "../PrivacyPolicy/Privacy.css";
 import logo from "../../assets/kalaevaniBlack.webp";
 import MetaData from "../../Meta/MetaData";
 
@@ -13,10 +12,12 @@ const Terms = () => {
       <Suspense>
         <MetaData title="Terms and Conditions - Kalaevani" />
         <Navbar props={logo} />
-        <div className="privacy-container">
-          <h1 className="futuraLt">Terms & Condition</h1>
-          <p className="intro poppins">1. Introduction</p>
-          <p className="para1 poppins">
+        <div className="mt-[50px] px-[5vh] pb-[5vh] poppins">
+          <h1 className="futuraLt text-5xl font-bold mb-5">
+            Terms & Condition
+          </h1>
+          <p className="mt-[30px] font-bold text-[21px] ">1. Introduction</p>
+          <p className="mt-2 text-[18px] ">
             This website is operated by FRESCO AND ITS TEAM. The terms “we”,
             “us”, and “our” refer to TEAM FRESCO. The use of our website is
             subject to the following terms and conditions of use, as amended
@@ -31,8 +32,10 @@ const Terms = () => {
             Policy, you are not authorized to access our website, use any of our
             website’s services or place an order on our website.
           </p>
-          <p className="intro poppins">2. Use of our Website</p>
-          <p className="para1 poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">
+            2. Use of our Website
+          </p>
+          <p className="mt-2 text-[18px] ">
             You agree to use our website for legitimate purposes and not for any
             illegal or unauthorized purpose, including without limitation, in
             violation of any intellectual property or privacy law. By agreeing
@@ -52,8 +55,10 @@ const Terms = () => {
             collect and use this information to contact you in accordance with
             our Privacy Policy.
           </p>
-          <p className="intro poppins">3. General Conditions</p>
-          <p className="para1 poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">
+            3. General Conditions
+          </p>
+          <p className="mt-2 text-[18px] ">
             We reserve the right to refuse service to anyone, at any time, for
             any reason. We reserve the right to make any modifications to the
             website, including terminating, changing, suspending or
@@ -66,8 +71,10 @@ const Terms = () => {
             any modification, suspension or discontinuance of our website or for
             any service, content, feature or product offered through our website
           </p>
-          <p className="intro poppins">4. Products or Services</p>
-          <p className="para1 poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">
+            4. Products or Services
+          </p>
+          <p className="mt-2 text-[18px] ">
             All purchases through our website are subject to product
             availability. We may, in our sole discretion, limit or cancel the
             quantities offered on our website or limit the sales of our products
@@ -87,8 +94,10 @@ const Terms = () => {
             and design of our products are displayed as accurately as possible
             on our website.
           </p>
-          <p className="intro poppins">5. Links to Third-Party Websites</p>
-          <p className="para1 poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">
+            5. Links to Third-Party Websites
+          </p>
+          <p className="mt-2 text-[18px] ">
             Links from or to websites outside our website are meant for
             convenience only. We do not review, endorse, approve or control, and
             are not responsible for any sites linked from or to our website, the
@@ -102,10 +111,10 @@ const Terms = () => {
             the license agreement, if any, which accompanies or is provided with
             the software.
           </p>
-          <p className="intro poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">
             6. Use Comments, Feedback, and Other Submissions
           </p>
-          <p className="para1 poppins">
+          <p className="mt-2 text-[18px] ">
             You acknowledge that you are responsible for the information,
             profiles, opinions, messages, comments and any other content
             (collectively, the “Content”) that you post, distribute or share on
@@ -135,17 +144,21 @@ const Terms = () => {
             any claim against us for the removal and/or deletion of your
             Content.
           </p>
-          <p className="intro poppins">7. Your Personal Information</p>
-          <p className="para1 poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">
+            7. Your Personal Information
+          </p>
+          <p className="mt-2 text-[18px] ">
             Please see our{" "}
-            <Link to={"/privacy"} className="poppins">
+            <Link to={"/privacy"} className="">
               Privacy Policy
             </Link>{" "}
             to learn about how we collect, use, and share your personal
             information.
           </p>
-          <p className="intro poppins">8. . Errors and Omissions</p>
-          <p className="para1 poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">
+            8. . Errors and Omissions
+          </p>
+          <p className="mt-2 text-[18px] ">
             Please note that our website may contain typographical errors or
             inaccuracies and may not be complete or current. We reserve the
             right to correct any errors, inaccuracies or omissions and to change
@@ -158,10 +171,10 @@ const Terms = () => {
             <br /> We do not undertake to update, modify or clarify information
             on our website, except as required by law
           </p>
-          <p className="intro poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">
             9. Disclaimer and Limitation of Liability
           </p>
-          <p className="para1 poppins">
+          <p className="mt-2 text-[18px] ">
             You assume all responsibility and risk with respect to your use of
             our website, which is provided “as is” without warranties,
             representations or conditions of any kind, either express or
@@ -200,8 +213,10 @@ const Terms = () => {
             limitations, may not apply to you and our liability will be limited
             to the maximum extent permitted by law.
           </p>
-          <p className="intro poppins">10. Indemnification</p>
-          <p className="para1 poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">
+            10. Indemnification
+          </p>
+          <p className="mt-2 text-[18px] ">
             You agree to defend and indemnify us, and hold us and our affiliates
             harmless,, and our and their respective directors, officers, agents,
             contractors, and employees against any losses, liabilities, claims,
@@ -212,8 +227,10 @@ const Terms = () => {
             claim that any information or materials provided by you infringe
             upon any third party proprietary rights.
           </p>
-          <p className="intro poppins">11. Entire Agreement</p>
-          <p className="para1 poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">
+            11. Entire Agreement
+          </p>
+          <p className="mt-2 text-[18px] ">
             The Terms and any documents expressly referred to in them represent
             the entire agreement between you and us in relation to the subject
             matter of the Terms and supersede any prior agreement, understanding
@@ -224,28 +241,28 @@ const Terms = () => {
             you and us prior to such Terms, except as expressly stated in the
             Terms.
           </p>
-          <p className="intro poppins">12. Waiver</p>
-          <p className="para1 poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">12. Waiver</p>
+          <p className="mt-2 text-[18px] ">
             Our failure to exercise or enforce any right or provision of the
             Terms will not constitute a waiver of such right or provision. A
             waiver by us of any default will not constitute a waiver of any
             subsequent default. No waiver by us is effective unless it is
             communicated to you in writing.
           </p>
-          <p className="intro poppins">13. Headings</p>
-          <p className="para1 poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">13. Headings</p>
+          <p className="mt-2 text-[18px] ">
             Any headings and titles herein are for convenience only.
           </p>
-          <p className="intro poppins">14. Severability</p>
-          <p className="para1 poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">14. Severability</p>
+          <p className="mt-2 text-[18px] ">
             If any of the provisions of the Terms are determined by any
             competent authority to be invalid, unlawful or unenforceable, such
             provision will to that extent be severed from the remaining Terms,
             which will continue to be valid and enforceable to the fullest
             extent permitted by law.
           </p>
-          <p className="intro poppins">15. Governing Law</p>
-          <p className="para1 poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">15. Governing Law</p>
+          <p className="mt-2 text-[18px] ">
             Any disputes arising out of or relating to the Terms, the Privacy
             Policy, use of our website, or our products or services offered on
             our website will be resolved in accordance with the laws of India
@@ -255,10 +272,19 @@ const Terms = () => {
             irrevocably consent to the exclusive jurisdiction and venue of such
             courts.
           </p>
-          <p className="intro poppins">16. Questions or Concerns</p>
-          <p className="para1 poppins">
+          <p className="mt-[30px] font-bold text-[21px] ">
+            16. Questions or Concerns
+          </p>
+          <p className="mt-2 text-[18px] ">
             Please send all questions, comments and feedback to us by reaching
-            out to us via our <Link to={"/contact"}>Contact Us</Link> page
+            out to us via our{" "}
+            <Link
+              to={"/contact"}
+              className="underline text-twitter font-semibold"
+            >
+              Contact Us
+            </Link>{" "}
+            page
           </p>
         </div>
         <Footer />

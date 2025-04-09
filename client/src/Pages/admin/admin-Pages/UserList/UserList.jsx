@@ -127,7 +127,7 @@ const UserList = () => {
         </div>
       </div>
       {/* ) : (
-        <div className="unauthorized flex-center Apercu">
+        <div className="unauthorized flex justify-center items-center Apercu">
           <p>You don't Belong here</p>
         </div>
       )} */}

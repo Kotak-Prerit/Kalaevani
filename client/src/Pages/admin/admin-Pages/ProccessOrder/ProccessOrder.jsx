@@ -121,7 +121,10 @@ const ProcessOrder = ({ history, match }) => {
                   <div className="confirmCartItemsContainer">
                     {order.orderItems &&
                       order.orderItems.map((item) => (
-                        <div key={item.product} className="flex-center">
+                        <div
+                          key={item.product}
+                          className="flex justify-center items-center"
+                        >
                           <img src={item.image} alt="Product" />
                           <Link
                             to={`/product/${item.product}`}

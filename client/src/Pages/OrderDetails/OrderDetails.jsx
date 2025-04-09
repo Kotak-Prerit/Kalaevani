@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect } from "react";
-import "./orderDetails.css";
 import { useSelector, useDispatch } from "react-redux";
 import MetaData from "../../Meta/MetaData";
 import { Link } from "react-router-dom";
@@ -34,114 +33,129 @@ const OrderDetails = () => {
   }
   return (
     <Fragment>
-      <Fragment>
-        <MetaData title="Order Details" />
-        <div className="orderDetailsPage poppins">
-          <div className="orderDetailsContainer">
-            <Link to={"/"}>
-              <img
-                src={logo}
-                alt="logo"
-                height={60}
-                className="order_mainlogo"
-              />
-            </Link>
-            <h1>Order #{order && order.paymentInfo.razor_order_id}</h1>
-            <h3>Shipping Info</h3>
-            <div className="orderDetailsContainerBox">
-              <div>
-                <p>Name:</p>
-                <span>{order.user && order.user.name}</span>
-              </div>
-              <div>
-                <p>Phone:</p>
-                <span>{order.shippingInfo && order.shippingInfo.phoneNo}</span>
-              </div>
-              <div>
-                <p>Address:</p>
-                <span>
-                  {order.shippingInfo &&
-                    `${order.shippingInfo.houseNo}, ${order.shippingInfo.street}, ${order.shippingInfo.info}, ${order.shippingInfo.zipCode}, ${order.shippingInfo.city},${order.shippingInfo.state},${order.shippingInfo.country}`}
-                </span>
-              </div>
-            </div>
-            <h3>Payment</h3>
-            <div className="orderDetailsContainerBox">
-              <div>
-                <p>Payment Method : </p>
-                <span>
-                  {order.paymentMethod
-                    ? order.paymentMethod
-                    : " Your order might be older and made before v1.0 is launched"}
-                </span>
-              </div>
+      <MetaData title="Order Details" />
+      <div className="bg-white mb-24 font-poppins px-[5vw] pt-[4vh] poppins">
+        <Link to={"/"}>
+          <img src={logo} alt="logo" height={60} className="mb-[3vh]" />
+        </Link>
 
-              <div>
-                <p>order Amount :</p>
-                <span>
-                  ₹
-                  {order.totalPrice
-                    ? order.totalPrice
-                    : " Your order might be older and made before v1.0 is launched"}
-                </span>
-              </div>
+        <h1 className="text-3xl font-bold mb-16 text-black">
+          Order #{order?.paymentInfo?.razor_order_id}
+        </h1>
 
-              <div>
-                <p>Payment Status :</p>
-                <span
-                  className={`${
-                    order.paymentStatus === "Paid" ? "green" : "red"
-                  }`}
-                >
-                  {order.paymentStatus}
-                </span>
-              </div>
-            </div>
-
-            <h3>Order Status</h3>
-            <div className="orderDetailsContainerBox">
-              <div>
-                <p
-                  className={
-                    order.orderStatus && order.orderStatus === "Delivered"
-                      ? "greenColor"
-                      : "redColor"
-                  }
-                >
-                  {order.orderStatus && order.orderStatus}
-                </p>
-              </div>
-            </div>
+        <h3 className="text-xl font-semibold mb-4">Shipping Info</h3>
+        <div className="my-8">
+          <div className="flex mb-4">
+            <p className="font-semibold text-base text-black">Name:</p>
+            <span className="ml-4 text-base">{order.user?.name}</span>
           </div>
-
-          <div className="orderDetailsCartItems">
-            <h3>Ordered Item :</h3>
-            <div className="orderDetailsCartItemsContainer">
-              {order.orderItems &&
-                order.orderItems.map((item) => (
-                  <div key={item.product} className="cart-card">
-                    <div className="img-name-size">
-                      <img src={item.image} alt="Product" height={60} />
-                      <div className="name_size">
-                        <Link to={`/product/${item.product}`}>{item.name}</Link>{" "}
-                        <p> Size : {item.size}</p>
-                      </div>
-                    </div>
-                    <span>
-                      {item.quantity} X ₹{item.price} ={" "}
-                      <b>₹{item.price * item.quantity}</b>
-                    </span>
-                  </div>
-                ))}
-            </div>
+          <div className="flex mb-4">
+            <p className="font-semibold text-base text-black">Phone:</p>
+            <span className="ml-4 text-base">
+              {order.shippingInfo?.phoneNo}
+            </span>
           </div>
-          <div className="printBtn-wrapper flex-center">
-            <button className="printBtn Apercu" onClick={handlePrint}>
-              Download Invoice
-            </button>
+          <div className="flex mb-4">
+            <p className="font-semibold text-base text-black">Address:</p>
+            <span className="ml-4 text-base">
+              {order.shippingInfo &&
+                `${order.shippingInfo.houseNo}, ${order.shippingInfo.street}, ${order.shippingInfo.info}, ${order.shippingInfo.zipCode}, ${order.shippingInfo.city}, ${order.shippingInfo.state}, ${order.shippingInfo.country}`}
+            </span>
           </div>
         </div>
-      </Fragment>
+
+        <h3 className="text-xl font-semibold mb-4">Payment</h3>
+        <div className="my-8">
+          <div className="flex mb-4">
+            <p className="font-semibold text-base text-black">
+              Payment Method:
+            </p>
+            <span className="ml-4 text-base">
+              {order.paymentMethod ||
+                "Your order might be older and made before v1.0 is launched"}
+            </span>
+          </div>
+          <div className="flex mb-4">
+            <p className="font-semibold text-base text-black">Order Amount:</p>
+            <span className="ml-4 text-base">
+              ₹
+              {order.totalPrice ||
+                "Your order might be older and made before v1.0 is launched"}
+            </span>
+          </div>
+          <div className="flex mb-4">
+            <p className="font-semibold text-base text-black">
+              Payment Status:
+            </p>
+            <span
+              className={`ml-4 text-base ${
+                order.paymentStatus === "Paid"
+                  ? "text-green-600"
+                  : "text-red-600"
+              }`}
+            >
+              {order.paymentStatus}
+            </span>
+          </div>
+        </div>
+
+        <h3 className="text-xl font-semibold mb-4">Order Status</h3>
+        <div className="my-8">
+          <div className="flex mb-4">
+            <p
+              className={`text-base font-semibold ${
+                order.orderStatus === "Delivered"
+                  ? "text-green-600"
+                  : "text-red-600"
+              }`}
+            >
+              {order.orderStatus}
+            </p>
+          </div>
+        </div>
+
+        <div className="border-t border-gray-300 pt-8 mt-8">
+          <h3 className="text-xl font-semibold mb-6">Ordered Item:</h3>
+          <div className="flex flex-col gap-6">
+            {order.orderItems?.map((item) => (
+              <div
+                key={item.product}
+                className="flex justify-between items-center border p-5 flex-wrap"
+              >
+                <div className="flex items-center gap-5 flex-wrap">
+                  <img
+                    src={item.image}
+                    alt="Product"
+                    className="w-12 sm:w-20"
+                  />
+                  <div>
+                    <Link
+                      to={`/product/${item.product}`}
+                      className="font-medium text-black no-underline block"
+                    >
+                      {item.name}
+                    </Link>
+                    <p>Size: {item.size}</p>
+                  </div>
+                </div>
+                <span className="text-gray-700 text-sm sm:text-base">
+                  {item.quantity} X ₹{item.price} ={" "}
+                  <b>₹{item.price * item.quantity}</b>
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="w-full h-12 flex justify-center items-center mt-12">
+          <button
+            className="bg-[#2d2d2d] text-white text-lg px-6 py-3 rounded-lg hover:bg-black transition duration-300"
+            onClick={handlePrint}
+          >
+            Download Invoice
+          </button>
+        </div>
+      </div>
     </Fragment>
   );
 };

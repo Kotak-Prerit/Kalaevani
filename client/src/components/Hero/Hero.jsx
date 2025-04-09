@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Spheres1Background from "threejs-components/build/backgrounds/spheres1.cdn.min.js";
-import "./Hero.css";
 import { IoIosColorFill } from "react-icons/io";
-import fallback from "../../assets/loader-final.gif";
+import Loader from "../../utils/QuoteLoader/QuoteLoader";
 
 const Hero = () => {
   const canvasRef = useRef(null);
@@ -41,18 +40,41 @@ const Hero = () => {
   };
 
   return (
-    <div id="hero-wrapper">
-      <div className="hero">
-        <h1 className="heroText">Wear your</h1>
-        <h2 className="heroText">Emotions</h2>
+    <div className="relative h-screen w-full overflow-hidden bg-white -mt-[12vh]">
+      <div className="flex flex-col items-center justify-center h-full">
+        <h1 className="futuraLt uppercase text-black text-[7vw] md:text-[9vw] leading-none z-10">
+          Wear your
+        </h1>
+        <h2 className="futuraLt uppercase text-black text-[9vw] md:text-[10vw] leading-none z-10">
+          Emotions
+        </h2>
       </div>
-      <div className="hero-buttons">
-        <button type="button" id="colors-btn" onClick={changeColors}>
-          <IoIosColorFill className="colorIcon" />
+
+      <div
+        className="absolute top-1/2 right-4 flex justify-center items-center gap-4 -translate-y-1/2"
+        style={{ zIndex: 10 }}
+      >
+        <button
+          type="button"
+          onClick={changeColors}
+          className="bg-black hover:bg-white border border-black text-white hover:text-black rounded-full p-4 transition-all duration-300 ease-in-out"
+        >
+          <IoIosColorFill className="text-lg" />
         </button>
       </div>
-      {!isLoaded && <img src={fallback} alt="Hero" className="hero-fallback" />}{" "}
-      <canvas id="hero-canvas" ref={canvasRef}></canvas>
+
+      {!isLoaded && (
+        <img
+          src={Loader}
+          alt="Hero"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
+
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full"
+      ></canvas>
     </div>
   );
 };

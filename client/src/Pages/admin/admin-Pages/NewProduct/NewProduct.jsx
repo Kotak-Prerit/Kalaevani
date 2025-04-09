@@ -84,7 +84,7 @@ const NewProduct = () => {
       <MetaData title="Create Product" />
       <div className="dashboard">
         <Sidebar />
-        <div className="newProductContainer flex-center">
+        <div className="newProductContainer flex justify-center items-center">
           Not ready yet
           {/* <form
             className="createProductForm"

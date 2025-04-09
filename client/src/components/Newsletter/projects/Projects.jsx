@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styles from "./style.module.scss";
 import Titles from "./Titles/Titles";
 import Descriptions from "./descriptions/Description";
 
@@ -25,7 +24,7 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
 
   return (
-    <div className={styles.container}>
+    <div className="w-full absolute z-[1]">
       <Titles data={data} setSelectedProject={setSelectedProject} />
       <Descriptions data={data} selectedProject={selectedProject} />
     </div>

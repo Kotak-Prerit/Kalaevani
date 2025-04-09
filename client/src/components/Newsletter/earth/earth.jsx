@@ -1,5 +1,5 @@
 import { Canvas, useLoader } from "@react-three/fiber";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { useScroll } from "framer-motion";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { motion } from "framer-motion-3d";

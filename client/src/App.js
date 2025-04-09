@@ -1,4 +1,3 @@
-import "./App.css";
 import { Fragment, useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Lenis from "lenis";
@@ -15,7 +14,6 @@ import UpdateProfile from "./Pages/updateProfile/UpdateProfile";
 import UpdatePassword from "./Pages/UpdatePassword/UpdatePassword";
 import PageNotFound from "./Pages/404/PageNotFound";
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
-import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import Cart from "./Pages/Cart/Cart";
 import Shipping from "./Pages/Shipping/Shipping";
 import About from "./Pages/About/About";
@@ -127,10 +125,6 @@ function App() {
                 <Route path="/return-refund" element={<ReturnRefund />} />
                 <Route path="/wholesale" element={<Wholesale />} />
                 <Route path="/collab" element={<Collab />} />
-                <Route
-                  path="/password/reset/:token"
-                  element={<ResetPassword />}
-                />
                 <Route path="*" element={<PageNotFound />} />
                 <Route path="/admin/dashboard" element={<Dashboard />} />
                 <Route

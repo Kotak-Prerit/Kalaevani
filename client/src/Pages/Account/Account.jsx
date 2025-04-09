@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import Navbar from "../../components/Navbar/Navbar";
-import "./Account.css";
 import { useSelector } from "react-redux";
 import { loadUser } from "../../actions/userAction";
 import store from "../../store/store";
@@ -16,12 +15,15 @@ import { logout } from "../../actions/userAction";
 import { useDispatch } from "react-redux";
 import UserAccount from "../../components/UserAccount/UserAccount";
 import logo from "../../assets/kalaevaniBlack.webp";
+import banner from "../../assets/banner.jpg";
 
 const Account = () => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+
   React.useEffect(() => {
     store.dispatch(loadUser());
   }, []);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -84,48 +86,52 @@ const Account = () => {
     <Fragment>
       <MetaData title={`Kalaevani - ${user.name}`} />
       <Navbar props={logo} />
-      <div className="profileWrapper">
+      <div className="w-full mb-28">
         {isAuthenticated && (
           <Fragment>
-            <div className="accountHeader">
-              <div className="nameEmail">
-                <p className="username poppins">{user.name}</p>
-                <p className="useremail poppins">{user.email}</p>
+            <div
+              className="w-full bg-cover bg-center bg-black relative flex flex-col items-center justify-center h-[45vh] mt-6"
+              style={{ backgroundImage: `url(${banner})` }}
+            >
+              <div className="flex flex-col items-center absolute top-10 translate-x-30p">
+                <p className="text-2xl md:text-xl font-bold capitalize poppins">
+                  {user.name}
+                </p>
+                <p className="text-lg text-gray-600">{user.email}</p>
               </div>
-              <div
-                className="userProfile flex-center"
-                style={{
-                  backgroundColor: "#fff",
-                }}
-              >
-                <p className="avatarText poppins black">
+              <div className="absolute bottom-[-50px] left-[20px] flex items-center justify-center w-[100px] h-[100px] md:w-[70px] md:h-[70px] rounded-full bg-white border-2 border-black transform translate-y-[50%]">
+                <p className="text-4xl md:text-2xl font-medium text-black">
                   {user.name.charAt(0)}
                 </p>
               </div>
             </div>
-            <div className="emptyFill">
-              <p className="createdAt poppins">Joined on : {formattedDate}</p>
+
+            <div className="mt-16 md:mt-10 flex justify-end pr-8">
+              <p className="text-lg md:text-lg text-gray Apercu">
+                Joined on : {formattedDate}
+              </p>
             </div>
-            <div className="accountOptionsWrapper">
-              <div className="accountOptions">
-                {card.map((content) => {
-                  return (
-                    <UserAccount
-                      key={content.heading}
-                      img={content.img}
-                      head={content.heading}
-                      summary={content.summary}
-                      click={content.func}
-                    />
-                  );
-                })}
+
+            <div className="flex flex-col items-center mt-8">
+              <div className="flex flex-wrap justify-center gap-4 p-4">
+                {card.map((content) => (
+                  <UserAccount
+                    key={content.heading}
+                    img={content.img}
+                    head={content.heading}
+                    summary={content.summary}
+                    click={content.func}
+                  />
+                ))}
               </div>
 
-              <div className="logout">
-                <button onClick={logoutUser}>
-                  {" "}
+              <div className="mt-10">
+                <button
+                  onClick={logoutUser}
+                  className="text-red-500 hover:text-white hover:bg-red-500 transition-colors border border-gray-400 px-6 py-4 rounded-lg text-lg flex items-center gap-2"
+                >
                   <IoLogOutOutline />
-                  log out
+                  Log out
                 </button>
               </div>
             </div>

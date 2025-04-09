@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import Navbar from "../../components/Navbar/Navbar";
-import "./Cart.css";
 import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../../Meta/MetaData";
 import CartItems from "../../components/CartItems/CartItems";
@@ -42,6 +41,7 @@ const Cart = () => {
   const deleteCartItems = (id, size) => {
     dispatch(removeItemsFromCart(id, size));
   };
+
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.price,
     0
@@ -54,39 +54,45 @@ const Cart = () => {
   return (
     <Fragment>
       <MetaData title={"Cart"} />
-      <div className="cartContainer">
+      <div className="bg-black min-h-screen pb-[5vh]">
         <Navbar props={logoWhite} />
-        <div className="productAddedWrapper">
-          <main>
+        <div className="flex justify-end">
+          <main className="w-full">
             {cartItems.length === 0 ? (
-              <div className="emptyCartWrapper">
-                <div className="cartEmptyContainer">
-                  <p className="cartEmpty white Apercu">Your cart is empty.</p>
-                  <div className="gotoProducts flex-center">
-                    <Link
-                      to="/products"
-                      className="productPageBtn white poppins"
-                    >
-                      explore wearables
-                    </Link>
-                  </div>
+              <div className="flex flex-col items-center mt-5">
+                <p className="text-white font-black text-[5vmax] text-center poppins">
+                  Your cart is empty.
+                </p>
+                <div className="w-full my-6 flex justify-center">
+                  <Link
+                    to="/products"
+                    className="border rounded-full py-5 px-8 border-white text-lg font-semibold text-white uppercase hover:bg-white hover:text-black transition"
+                  >
+                    Explore Wearables
+                  </Link>
                 </div>
-                <div className="marqueeContainer flex-center">
+                <div className="relative w-full overflow-hidden border-t border-white py-4 mt-5">
                   <Marquee autoFill>
-                    <p className="futuraLt cartemptyText white pb-10">cart</p>
+                    <p className="mr-2 text-6xl text-white pb-10 uppercase montserrat">
+                      cart
+                    </p>
                   </Marquee>
                 </div>
-                <div className="marqueeContainer flex-center bb-light">
+                <div className="relative w-full overflow-hidden border-t border-b border-white py-4">
                   <Marquee autoFill direction="right">
-                    <p className="futuraLt cartemptyText white ">empty</p>
+                    <p className="mr-2 text-6xl text-white uppercase montserrat">
+                      empty
+                    </p>
                   </Marquee>
                 </div>
-                <div className="ThanksMsg">
-                  <p className="appreciate-N poppins p-i-2_5">
+                <div className="mt-20 text-white text-center font-semibold ">
+                  <p className="text-[3vmax] Apercu">
                     Keep Exploring... <br /> We've got amazing wearables for
                     you. <br /> Click on{" "}
                     <strong>
-                      <Link to={"/products"}>Explore wearables</Link>
+                      <Link to={"/products"} className="text-twitter">
+                        Explore wearables
+                      </Link>
                     </strong>{" "}
                     button above <br />
                     to buy your first product
@@ -94,57 +100,61 @@ const Cart = () => {
                 </div>
               </div>
             ) : (
-              <div className="cartActive p-i-2_5">
-                <div className="cartTitle align-center">
-                  <div className="cartHeadWrapper align-center">
-                    <p className="cartHead padauk">cart</p>
-                  </div>
-                  <div className="cartQuantityWrapper align-center">
-                    <p className="QuantityWrapper padauk">quantity</p>
-                  </div>
-                  <div className="cartSubtotalWrapper align-center">
-                    <p className="SubtotalWrapper padauk">subtotal</p>
-                  </div>
+              <div className="py-10 px-6 mt-5 md:mt-16 ">
+                <div className="flex justify-between items-center">
+                  <p className="uppercase text-gray-500 text-sm font-medium">
+                    cart
+                  </p>
+                  <p className="uppercase text-gray-500 text-sm font-medium">
+                    quantity
+                  </p>
+                  <p className="uppercase text-gray-500 text-sm font-medium">
+                    subtotal
+                  </p>
                 </div>
 
-                {cartItems &&
-                  cartItems.map((item, idx) => (
-                    <CartItems
-                      key={idx}
-                      item={item}
-                      quantity={item.quantity}
-                      stock={item.stock}
-                      increaseQty={increaseQauntity}
-                      decreaseQty={decreaseQauntity}
-                      deleteCartItems={deleteCartItems}
-                    />
-                  ))}
+                {cartItems.map((item, idx) => (
+                  <CartItems
+                    key={idx}
+                    item={item}
+                    quantity={item.quantity}
+                    stock={item.stock}
+                    increaseQty={increaseQauntity}
+                    decreaseQty={decreaseQauntity}
+                    deleteCartItems={deleteCartItems}
+                  />
+                ))}
 
-                <div className="ProductsAdded white montserrat align-center">
-                  <div className="beforeCheckout">
-                    <div className="delivery align-center">
-                      <p className="deliveryTxt">delivery</p>
-                      <p className="later">shipping calculated at check-out.</p>
+                <div className="mt-[5vh] w-full flex justify-end">
+                  <div className="w-full md:w-1/2">
+                    <div className="flex justify-between items-center mb-4">
+                      <p className="font-bold text-base text-white uppercase">
+                        delivery :
+                      </p>
+                      <p className="text-sm poppins text-shipping capitalize">
+                        shipping calculated at checkout.
+                      </p>
                     </div>
-
-                    <div className="subtotal align-center">
-                      <p className="subtotalTxt">Gross Total</p>{" "}
-                      <p className="subamount"> ₹{subtotal}</p>
+                    <div className="flex justify-between items-center mb-4">
+                      <p className="font-bold text-lg text-white uppercase">
+                        Gross Total
+                      </p>
+                      <p className="font-bold text-2xl text-twitter Apercu">
+                        ₹{subtotal}
+                      </p>
                     </div>
-                    <div className="checkout">
-                      <button
-                        onClick={checkoutHandler}
-                        className="checkoutBtn poppins"
-                      >
-                        checkout
-                      </button>
-                    </div>
+                    <button
+                      onClick={checkoutHandler}
+                      className="w-full border rounded-full py-5 text-lg font-black text-white bg-transparent border-white hover:bg-white hover:text-black transition montserrat"
+                    >
+                      Checkout
+                    </button>
                   </div>
                 </div>
-                <div className="ThanksMsg">
-                  <p className="appreciate futuraLt">
-                    Thank you for embracing our artistry! Your style inspires us
-                    to create more uniqueness
+                <div className="mt-[10vh] flex items-start text-white">
+                  <p className="text-[5vw] leading-tight poppins">
+                    Thank you for embracing our artistry! Your fashion inspires
+                    us to create more uniqueness
                   </p>
                 </div>
               </div>

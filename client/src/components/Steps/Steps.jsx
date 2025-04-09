@@ -54,34 +54,45 @@ const Steps = () => {
   const handleStepClick = (index) => {
     setCurrentStep(index);
   };
+
   return (
-    <div className="process-steps">
-      <div className="steps-content">
-        <div className="image-container">
+    <div className="flex flex-col items-start w-full my-[10vh] px-[2.5vw]">
+      <div className="flex items-start gap-[5%] mb-[30px]">
+        <div className="w-1/2 overflow-hidden rounded-[10px]">
           <img
             src={stepsData[currentStep].image}
             alt={stepsData[currentStep].title}
+            className="w-full h-full object-cover"
           />
         </div>
-        <div className="text-content">
-          <h4 className="poppins">Step {stepsData[currentStep].id}</h4>
-          <h1 className="futuraLt">{stepsData[currentStep].title}</h1>
 
-          <p className="poppins">{stepsData[currentStep].description}</p>
+        <div className="max-w-[500px]">
+          <h4 className="text-[16px] font-bold text-[#333] poppins">
+            Step {stepsData[currentStep].id}
+          </h4>
+          <h1 className="text-[3vmax] leading-[2] futuraLt">
+            {stepsData[currentStep].title}
+          </h1>
+          <p className="text-[16px] text-[#666] poppins">
+            {stepsData[currentStep].description}
+          </p>
         </div>
       </div>
 
-      <div className="navigation">
-        <div className="steps-indicators">
+      <div className="flex items-center justify-between gap-[20px] w-full">
+        <div className="relative flex gap-[25%] w-[88%]">
+          <div className="absolute top-1/2 w-full h-[2px] bg-[#333] -translate-y-1/2"></div>
           {stepsData.map((step, index) => (
-            <div key={step.id} className="step">
+            <div key={step.id} className="relative">
               <div
-                className={`step-dot ${index === currentStep ? "active" : ""}`}
+                className={`w-[15px] h-[15px] border border-[#333] rounded-full cursor-pointer transition-colors duration-300 z-10 ${
+                  index === currentStep ? "bg-[#333]" : "bg-white"
+                }`}
                 onClick={() => handleStepClick(index)}
               ></div>
               <span
-                className={`step-label poppins ${
-                  index === currentStep ? "active" : ""
+                className={`absolute text-[1.2vmax] font-semibold poppins ${
+                  index === currentStep ? "text-[#222]" : "text-[#999]"
                 }`}
               >
                 {step.title}
@@ -89,12 +100,19 @@ const Steps = () => {
             </div>
           ))}
         </div>
-        <div className="step-btns flex-center">
-          <button className="Ws-arrow" onClick={handlePrev}>
-            <IoIosArrowRoundBack className="arrow-icon" />
+
+        <div className="flex items-center gap-[10px]">
+          <button
+            className="text-[24px] bg-white text-black border border-black rounded-full cursor-pointer transition-all duration-300 p-[10px] hover:bg-[#333] flex items-center justify-center"
+            onClick={handlePrev}
+          >
+            <IoIosArrowRoundBack className="arrow-icon hover:text-white" />
           </button>
-          <button className="Ws-arrow" onClick={handleNext}>
-            <IoIosArrowRoundForward className="arrow-icon" />
+          <button
+            className="text-[24px] bg-white text-black border border-black rounded-full cursor-pointer transition-all duration-300 p-[10px] hover:bg-[#333] flex items-center justify-center"
+            onClick={handleNext}
+          >
+            <IoIosArrowRoundForward className="arrow-icon hover:text-white" />
           </button>
         </div>
       </div>

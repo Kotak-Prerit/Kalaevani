@@ -1,5 +1,4 @@
 import React, { Fragment, lazy, Suspense } from "react";
-import "./Wholesale.css";
 import logo from "../../assets/kalaevaniBlack.webp";
 import MetaData from "../../Meta/MetaData";
 
@@ -17,11 +16,13 @@ const Wholesale = () => {
       <MetaData title={"Wholesale Enquiry"} />
       <Suspense>
         <Navbar props={logo} />
-        <div className="wholesale-wrapper">
+
+        <div className="px-[1.5vw]">
           <WholesaleGrid />
           <Steps />
           <Faqs />
         </div>
+
         <Footer />
       </Suspense>
     </Fragment>
