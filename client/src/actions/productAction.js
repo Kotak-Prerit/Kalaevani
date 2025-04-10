@@ -53,11 +53,17 @@ export const getAdminProducts = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCT_REQUEST });
 
-    const { data } = await axios.get("/api/v1/admin/products");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Add token
+      },
+    };
+
+    const { data } = await axios.get("/api/v1/admin/products", config);
 
     dispatch({
       type: ADMIN_PRODUCT_SUCCESS,
-      payload: data,
+      payload: data.products,
     });
   } catch (error) {
     dispatch({
@@ -124,6 +130,7 @@ export const newReview = (reviewData) => async (dispatch) => {
 
     const config = {
       headers: { "Content-Type": "application/json" },
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     };
 
     const { data } = await axios.put(`/api/v1/review`, reviewData, config);

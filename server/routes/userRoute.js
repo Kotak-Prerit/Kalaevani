@@ -4,8 +4,11 @@ const {
   registerUser,
   loginUSer,
   logout,
+<<<<<<< HEAD
   resetForgottenPassword,
   sendForgotPasswordOtp,
+=======
+>>>>>>> master
   getUserDetails,
   changePassword,
   changeProfile,
@@ -13,6 +16,8 @@ const {
   deleteUser,
   updateUserRole,
   getSingleUser,
+  sendForgotPasswordOtp,
+  resetForgottenPassword,
 } = require("../controllers/userController");
 const {
   isAuthenticatedUser,

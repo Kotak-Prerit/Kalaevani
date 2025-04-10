@@ -1,4 +1,3 @@
-import "./App.css";
 import { Fragment, useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Lenis from "lenis";
@@ -6,7 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { ToastContainer } from "react-toastify";
 import { loadUser } from "./actions/userAction";
 import "react-toastify/dist/ReactToastify.css";
-import store from "./store/store";
+import { useDispatch } from "react-redux";
 import Home from "./Pages/Home/Home";
 import Products from "./Pages/Products/Products";
 import Login from "./Pages/Login/Login";
@@ -15,7 +14,6 @@ import UpdateProfile from "./Pages/updateProfile/UpdateProfile";
 import UpdatePassword from "./Pages/UpdatePassword/UpdatePassword";
 import PageNotFound from "./Pages/404/PageNotFound";
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
-import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import Cart from "./Pages/Cart/Cart";
 import Shipping from "./Pages/Shipping/Shipping";
 import About from "./Pages/About/About";
@@ -44,6 +42,8 @@ import ProcessOrder from "./Pages/admin/admin-Pages/ProccessOrder/ProccessOrder.
 import QuoteLoader from "./utils/QuoteLoader/QuoteLoader.jsx";
 
 function App() {
+  const dispatch = useDispatch();
+
   const lenis = new Lenis();
   lenis.on("scroll", (e) => {});
   function raf(time) {
@@ -59,7 +59,6 @@ function App() {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
-
     window.scrollTo({ top: 0, behavior: "smooth" });
     return () => clearTimeout(timer);
   }, []);
@@ -89,8 +88,8 @@ function App() {
   // }, []);
 
   useEffect(() => {
-    store.dispatch(loadUser());
-  });
+    dispatch(loadUser());
+  }, [dispatch]);
 
   return (
     <Fragment>
@@ -126,10 +125,6 @@ function App() {
                 <Route path="/return-refund" element={<ReturnRefund />} />
                 <Route path="/wholesale" element={<Wholesale />} />
                 <Route path="/collab" element={<Collab />} />
-                <Route
-                  path="/password/reset/:token"
-                  element={<ResetPassword />}
-                />
                 <Route path="*" element={<PageNotFound />} />
                 <Route path="/admin/dashboard" element={<Dashboard />} />
                 <Route

@@ -8,13 +8,18 @@ const bcrypt = require("bcrypt");
 // Register a User
 exports.registerUser = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
+<<<<<<< HEAD
   encryptedPassword = await bcrypt.hash(password, 10);
+=======
+  const salt = await bcrypt.genSalt(10);
+  encryptedPassword = await bcrypt.hash(password, salt);
+>>>>>>> master
   const user = await User.create({
     name,
     email,
     password: encryptedPassword,
   }).catch((err) => {
-    throw new ErrorHandler("Error creating user", 500);
+    throw new ErrorHandler("Error creating user", 500, err);
   });
 
   sendToken(user, 201, res);
@@ -85,7 +90,6 @@ exports.sendForgotPasswordOtp = catchAsyncError(async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: `Email sent to ${user.email} successfully`,
     });
   } catch (error) {
     return res.json({ success: false, message: error.message });
@@ -105,6 +109,7 @@ exports.resetForgottenPassword = catchAsyncError(async (req, res, next) => {
 
   try {
     const user = await User.findOne({ email: req.body.email });
+<<<<<<< HEAD
     if (!user) {
       return res.json({ success: false, message: "User not found" });
     }
@@ -115,6 +120,21 @@ exports.resetForgottenPassword = catchAsyncError(async (req, res, next) => {
 
     if (user.resetOtpExpireAt < Date.now()) {
       return res.json({ success: false, message: "OTP Expired" });
+=======
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    if (!user.resetOtp || user.resetOtp.toString() !== otp.toString()) {
+      return res.status(400).json({ success: false, message: "Invalid OTP" });
+    }
+
+    if (user.resetOtpExpireAt < Date.now()) {
+      return res.status(400).json({ success: false, message: "OTP Expired" });
+>>>>>>> master
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -124,12 +144,20 @@ exports.resetForgottenPassword = catchAsyncError(async (req, res, next) => {
 
     await user.save();
 
+<<<<<<< HEAD
     return res.json({
+=======
+    return res.status(200).json({
+>>>>>>> master
       success: true,
       message: "Password reset successfully",
     });
   } catch (error) {
+<<<<<<< HEAD
     return res.json({ success: false, message: error.message });
+=======
+    return res.status(500).json({ success: false, message: error.message });
+>>>>>>> master
   }
 });
 

@@ -58,6 +58,15 @@ userSchema.methods.getJWTToken = function () {
   });
 };
 
+//reset Password
+userSchema.methods.resetPassword = async function (newPassword) {
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+  this.password = hashedPassword;
+  this.resetOtp = "";
+  this.resetOtpExpireAt = 0;
+};
+
 //compare Password
 userSchema.methods.comparePassword = async function (enteredPassword) {
   const isMatched = await bcrypt.compare(enteredPassword, this.password);

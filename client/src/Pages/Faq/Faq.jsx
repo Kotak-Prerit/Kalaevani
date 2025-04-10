@@ -126,11 +126,14 @@ const Faq = () => {
     <>
       <MetaData title="Kalaevani - Faqs" />
       <Navbar props={logo} />
-      <div className="faqs flex-center">
+      <div className="faqs flex justify-center items-center">
         <h1 className="faqs-head futuraLt">FAQs</h1>
         <div className="faq-container">
           {faqs.map((faq, index) => (
-            <div key={index} className="faq-item flex-center">
+            <div
+              key={index}
+              className="faq-item flex justify-center items-center"
+            >
               <div
                 className="faq-question montserrat"
                 onClick={() => toggleAnswer(index)}

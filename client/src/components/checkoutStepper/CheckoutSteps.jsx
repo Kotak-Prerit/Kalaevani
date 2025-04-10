@@ -25,7 +25,7 @@ const CheckoutSteps = ({ activeStep }) => {
   return (
     <Fragment>
       <Stepper
-        className="process"
+        className="my-[15px] w-full"
         alternativeLabel
         activeStep={activeStep}
         style={stepStyles}
@@ -41,7 +41,7 @@ const CheckoutSteps = ({ activeStep }) => {
                 color: activeStep >= index ? "#fff" : "#aaa",
               }}
               icon={item.icon}
-              className="progress"
+              className="text-[40px]"
             >
               {item.label}
             </StepLabel>

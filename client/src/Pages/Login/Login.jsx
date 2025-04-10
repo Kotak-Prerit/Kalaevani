@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./auth.css";
 import { Link } from "react-router-dom";
 import MetaData from "../../Meta/MetaData";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +9,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import logo from "../../assets/kalaevaniBlack.webp";
 import QuoteLoader from "../../utils/QuoteLoader/QuoteLoader";
+import signInBanner from "../../assets/signInBanner.png";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -81,30 +81,35 @@ const Login = () => {
       ) : (
         <>
           <MetaData title="SignIn - SignUp | Kalaevani" />
-          <div className="loginSignUpcontainer" id="container">
-            <Navbar props={logo} />
-
+          <Navbar props={logo} />
+          <div className="relative w-full min-h-screen flex flex-col items-center justify-center font-poppins mt-[-80px]">
             {showSignIn ? (
-              <div className="form-container sign-in-container">
+              <div className="absolute left-0 w-full sm:w-1/2 z-20 p-10">
                 <form
-                  className="loginForm"
+                  className="bg-white flex flex-col text-left h-full"
                   ref={loginTab}
                   onSubmit={loginSubmit}
                 >
-                  <h1 className="form-title">Log in</h1>
+                  <h1 className="text-2xl font-semibold mb-6">Log in</h1>
 
-                  <label className="lr-label">email</label>
+                  <label className="text-sm uppercase text-gray-700">
+                    Email
+                  </label>
                   <input
-                    className="lr-input"
+                    className="border-b border-black bg-transparent py-2 mb-4 outline-none"
                     type="email"
                     placeholder="example@gmail.com"
                     required
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
                   />
-                  <label className="lr-label">password</label>
-                  <div className="loginPasswordWrapper">
+
+                  <label className="text-sm uppercase text-gray-700">
+                    Password
+                  </label>
+                  <div className="relative w-full mb-4">
                     <input
+                      className="w-full border-b border-black bg-transparent py-2 pr-10 outline-none"
                       type={visible ? "text" : "password"}
                       placeholder="••••••••••••"
                       required
@@ -112,14 +117,13 @@ const Login = () => {
                       onChange={(e) => setLoginPassword(e.target.value)}
                     />
                     <div
-                      className="eyeIcon"
-                      onClick={() => {
-                        setVisible(!visible);
-                      }}
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                      onClick={() => setVisible(!visible)}
                     >
                       {visible ? <FaRegEye /> : <FaRegEyeSlash />}
                     </div>
                   </div>
+<<<<<<< HEAD
                   <Link to="/password/forgot" className="forgot-password">
                     Forget Password ?
                   </Link>
@@ -131,29 +135,55 @@ const Login = () => {
                       </Link>
                     </p>
                   </div>
+=======
+>>>>>>> master
 
-                  <input type="submit" value="Log in" className="sign-in" />
+                  <Link
+                    to="/password/forgot"
+                    className="text-sm text-gray-600 underline"
+                  >
+                    Forget Password?
+                  </Link>
+
+                  <p className="text-sm text-gray-600 mt-4">
+                    By signing in you agree to our{" "}
+                    <Link to="/terms" className="text-blue-500 underline">
+                      Terms & Conditions
+                    </Link>
+                  </p>
+
+                  <input
+                    type="submit"
+                    value="Log in"
+                    className="bg-black text-white rounded-lg py-3 mt-6 hover:bg-white hover:text-black border border-black transition-all duration-300 cursor-pointer"
+                  />
+
                   <button
-                    className="toSignUp flex-center"
                     type="button"
                     onClick={() => setShowSignIn(false)}
+                    className="mt-4 text-sm underline"
                   >
                     Don't have an account? Sign up
                   </button>
                 </form>
               </div>
             ) : (
-              <div className="form-container sign-up-container">
+              <div className="absolute left-0 w-full sm:w-1/2 z-20 p-10">
                 <form
                   ref={registerTab}
                   encType="multipart/form-data"
                   onSubmit={registerSubmit}
-                  className="registerForm"
+                  className="bg-white flex flex-col text-left h-full"
                 >
-                  <h1 className="form-title">Register with your e-mail</h1>
-                  <label className="lr-label">username *</label>
+                  <h1 className="text-2xl font-semibold mb-6">
+                    Register with your e-mail
+                  </h1>
+
+                  <label className="text-sm uppercase text-gray-700">
+                    Username *
+                  </label>
                   <input
-                    className="lr-input"
+                    className="border-b border-black bg-transparent py-2 mb-4 outline-none"
                     type="text"
                     placeholder="Enter your name"
                     required
@@ -161,9 +191,12 @@ const Login = () => {
                     value={name}
                     onChange={registerDataChange}
                   />
-                  <label className="lr-label">email *</label>
+
+                  <label className="text-sm uppercase text-gray-700">
+                    Email *
+                  </label>
                   <input
-                    className="lr-input"
+                    className="border-b border-black bg-transparent py-2 mb-4 outline-none"
                     type="email"
                     placeholder="Enter your email"
                     required
@@ -171,56 +204,58 @@ const Login = () => {
                     value={email}
                     onChange={registerDataChange}
                   />
-                  <div className="signUpPassword">
-                    <div className="password">
-                      <p className="lr-label">password *</p>
-                    </div>
-                    <div className="lr-passwordWrapper">
-                      <input
-                        type={rvisible ? "text" : "password"}
-                        placeholder="Create a Password"
-                        required
-                        name="password"
-                        value={password}
-                        onChange={registerDataChange}
-                        className={`lr-input ${
-                          password.length >= 8
-                            ? "valid-password"
-                            : "invalid-password"
-                        }`}
-                      />
-                      <div
-                        className="eyeIcon"
-                        onClick={() => {
-                          setRvisible(!rvisible);
-                        }}
-                      >
-                        {rvisible ? "HIDE" : "SHOW"}
-                      </div>
-                    </div>
-                    <p
-                      className="passReq poppins"
-                      style={{ color: password.length >= 8 ? "green" : "red" }}
+
+                  <label className="text-sm uppercase text-gray-700">
+                    Password *
+                  </label>
+                  <div className="relative w-full mb-2">
+                    <input
+                      type={rvisible ? "text" : "password"}
+                      placeholder="Create a Password"
+                      required
+                      name="password"
+                      value={password}
+                      onChange={registerDataChange}
+                      className="w-full border-b border-black bg-transparent py-2 pr-10 outline-none"
+                    />
+                    <div
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-sm"
+                      onClick={() => setRvisible(!rvisible)}
                     >
-                      Password must contain at least 8 characters
-                    </p>
+                      {rvisible ? "HIDE" : "SHOW"}
+                    </div>
                   </div>
+                  <p
+                    className={`text-sm ${
+                      password.length >= 8 ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    Password must contain at least 8 characters
+                  </p>
+
                   <input
                     type="submit"
                     value="Register"
-                    className="sign-up"
-                    disabled={loading ? true : false}
+                    className="bg-black text-white rounded-lg py-3 mt-6 hover:bg-white hover:text-black border border-black transition-all duration-300 cursor-pointer"
+                    disabled={loading}
                   />
+
                   <button
-                    className="toSignIn"
                     type="button"
                     onClick={() => setShowSignIn(true)}
+                    className="mt-4 text-sm underline"
                   >
                     Already have an account? Sign In
                   </button>
                 </form>
               </div>
             )}
+
+            <img
+              src={signInBanner}
+              alt="banner"
+              className="absolute h-screen top-0 right-0 w-1/2 object-cover hidden sm:block"
+            />
           </div>
         </>
       )}

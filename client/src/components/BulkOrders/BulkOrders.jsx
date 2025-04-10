@@ -11,7 +11,7 @@ const BulkOrder = () => {
           alt="Bulk Order Process"
         />
       </div>
-      <div className="info-section poppins flex-center">
+      <div className="info-section poppins flex justify-center items-center">
         <h3>What's Included</h3>
         <h1>For Bulk Orders</h1>
         <ul>

@@ -1,5 +1,4 @@
 import React, { Fragment, lazy, Suspense } from "react";
-import "./SR.css";
 import logo from "../../assets/kalaevaniBlack.webp";
 import MetaData from "../../Meta/MetaData";
 
@@ -12,11 +11,13 @@ const ShippingPolicy = () => {
       <Suspense>
         <MetaData title={"Shipping Policy - Kalaevani"} />
         <Navbar props={logo} />
-        <div className="srContainer">
-          <div className="shipping">
-            <h1 className="futuraLt srHead">Shipping Policy</h1>
-            <p className="srPara poppins">
-              <ul>
+        <div className="min-h-screen w-full py-[5vh]">
+          <div className="w-full">
+            <h1 className="text-left px-[10vh] text-2xl md:text-3xl futuraLt">
+              Shipping Policy
+            </h1>
+            <div className="p-[2vh_10vh] text-[18px] poppins md:px-[10vh] px-[5vh]">
+              <ul className="list-disc space-y-4">
                 <li>
                   All the orders are dispatched within 24-48 hours post
                   reception.
@@ -26,20 +27,19 @@ const ShippingPolicy = () => {
                   working days. However, custom and made to order pieces takes
                   7-10 working days.
                 </li>
-
                 <li>
                   International orders -
-                  <p className="spacing">
+                  <p className="pl-5">
                     Orders above 200$ are eligible for free shipping
                   </p>
-                  <p className="spacing">
+                  <p className="pl-5">
                     Orders below 200$ will attract a fees of $42-$45 based on
-                    the customers location
+                    the customer's location
                   </p>
                 </li>
                 <li>
-                  International shipping rates varies on the basis of weight,
-                  dimensions and the countries import duties, where customers
+                  International shipping rates vary on the basis of weight,
+                  dimensions, and the country’s import duties, where customers
                   are ordering from.
                 </li>
                 <li>
@@ -62,7 +62,7 @@ const ShippingPolicy = () => {
                   confirmation emails sent once the order has been shipped.
                 </li>
               </ul>
-            </p>
+            </div>
           </div>
         </div>
         <Footer />

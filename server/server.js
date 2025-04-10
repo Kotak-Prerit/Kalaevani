@@ -2,6 +2,7 @@ const app = require("./app");
 const dotenv = require("dotenv");
 const cloudinary = require("cloudinary");
 const connectDB = require("./config/database");
+const Razorpay = require("razorpay");
 // const cors = require("cors");
 
 process.on("uncaughtException", (err) => {
@@ -11,6 +12,11 @@ process.on("uncaughtException", (err) => {
 
 dotenv.config({ path: "server/config/config.env" });
 connectDB();
+
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_API_KEY,
+  key_secret: process.env.RAZORPAY_SECRET,
+});
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -30,3 +36,5 @@ process.on("unhandledRejection", (err) => {
     process.exit(1);
   });
 });
+
+module.exports = razorpay;

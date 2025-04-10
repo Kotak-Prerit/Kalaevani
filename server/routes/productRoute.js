@@ -18,7 +18,9 @@ const router = express.Router();
 
 router.route("/products").get(getAllProducts);
 
-router.route("/admin/products").get(isAuthenticatedUser, getAdminProducts); //isAuthenticatedUser, authorizeRole("admin"),
+router
+  .route("/admin/products")
+  .get(isAuthenticatedUser, authorizeRole("admin"), getAdminProducts);
 
 router
   .route("/admin/products/new")

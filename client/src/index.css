@@ -1,16 +1,40 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Staatliches&display=swap");
 
 @font-face {
   font-family: "Futura LT Pro Book";
-  src: url(./assets/FuturaLTProBold.otf);
+  src: url(./assets/Fonts/FuturaLTProBold.otf);
 }
 
 @font-face {
   font-family: "Apercu";
-  src: url(./assets/ApercuFontFamily/ApercuRegular.otf);
+  src: url(./assets/Fonts/ApercuRegular.otf);
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url(./assets/Fonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Bebas Neue";
+  src: url(./assets/Fonts/BebasNeue-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Padauk";
+  src: url(./assets/Fonts/Padauk-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url(./assets/Fonts/Montserrat-Regular.ttf);
 }
 
 * {
@@ -25,21 +49,6 @@
 }
 ::-webkit-scrollbar {
   display: none;
-}
-.align-center {
-  display: flex;
-  align-items: center;
-}
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.white {
-  color: #fff;
-}
-.black {
-  color: #000;
 }
 .Apercu {
   font-family: "Apercu", sans-serif;
@@ -60,6 +69,10 @@
 .bebas {
   font-family: "Bebas Neue", sans-serif;
 }
+.staatliches {
+  font-family: "Staatliches", sans-serif;
+}
+
 html.lenis,
 html.lenis body {
   height: auto;
@@ -80,9 +93,6 @@ html.lenis body {
 .lenis.lenis-smooth iframe {
   pointer-events: none;
 }
-.flex {
-  display: flex;
-}
 .container {
   position: relative;
 }
@@ -92,4 +102,24 @@ html.lenis body {
 .td-none {
   text-decoration: none;
   cursor: pointer;
+}
+
+/* Custom animations */
+@keyframes loading {
+  0% {
+    background-position-x: 0;
+  }
+  40%,
+  100% {
+    background-position-x: -200%;
+  }
+}
+
+.loader {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
 }

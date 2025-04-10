@@ -41,6 +41,12 @@ import {
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
+const initialState = {
+  loading: false,
+  message: null,
+  error: null,
+};
+
 export const userReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
@@ -164,14 +170,13 @@ export const profileReducer = (state = {}, action) => {
   }
 };
 
-export const forgotPasswordReducer = (state = {}, action) => {
+export const forgotPasswordReducer = (state = initialState, action) => {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST:
     case RESET_PASSWORD_REQUEST:
       return {
         ...state,
         loading: true,
-        error: null,
       };
     case FORGOT_PASSWORD_SUCCESS:
       return {

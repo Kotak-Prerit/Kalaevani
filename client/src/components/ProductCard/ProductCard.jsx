@@ -1,9 +1,6 @@
-import React, { Fragment, Suspense, useRef, useState } from "react";
+import React, { Fragment, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import ReactStars from "react-stars";
-import "./ProductCard.css";
-import QuoteLoader from "../../utils/QuoteLoader/QuoteLoader";
-// import { toast } from "react-toastify";
 
 const Product = ({ product }) => {
   const options = {
@@ -12,7 +9,7 @@ const Product = ({ product }) => {
     color2: "#000",
     value: product.ratings,
     half: true,
-    size: 16,
+    size: 20,
   };
 
   const wrapper = useRef();
@@ -20,7 +17,7 @@ const Product = ({ product }) => {
   const startX = useRef(0);
   const scrollLeft = useRef(0);
   const [loadingImages, setLoadingImages] = useState(
-    new Array(product.images.length).fill(true)
+    product.images.map(() => true)
   );
 
   const handleMouseDown = (e) => {
@@ -59,81 +56,57 @@ const Product = ({ product }) => {
     });
   };
 
-  // const toggleCart = () => {
-  //   setIsFilled((prevState) => {
-  //     if (prevState) {
-  //       toast.error("Item removed from your whishlist!");
-  //     } else {
-  //       toast.success("Item added to your Whishlist 💖");
-  //     }
-  //     return !prevState; // Toggle the state
-  //   });
-  // };
-
   return (
     <Fragment>
-      <div className="productCard">
-        <Link to={`/product/${product._id}`} className="linkRemove">
-          <div className="pc-carousel" ref={wrapper}>
+      <div className="w-[350px] h-[510px] border border-black relative overflow-hidden">
+        <Link to={`/product/${product._id}`} className="no-underline">
+          <div
+            className="flex overflow-x-auto w-[350px] cursor-grab scroll-smooth snap-x snap-mandatory touch-pan-x select-none"
+            ref={wrapper}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            onTouchEnd={handleMouseUp}
+          >
             {product.images.map((image, i) => (
-              <div
-                key={i}
-                className="pc-innerCarousel"
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-              >
-                <Suspense fallback={<QuoteLoader />}>
-                  {loadingImages[i] && <div className="skeleton-loader"></div>}
-                  <img
-                    src={image.url}
-                    alt={`${product.name}`}
-                    className={`pcImg poppins ${
-                      loadingImages[i] ? "hidden" : ""
-                    }`}
-                    onLoad={() => handleImageLoad(i)}
-                    loading={i === 0 ? "eager" : "lazy"}
-                    fetchpriority={i === 0 ? "high" : "auto"}
-                  />
-                </Suspense>
+              <div key={i} className="snap-start flex-none w-full">
+                {loadingImages[i] && (
+                  <div className="w-full h-[400px] flex items-center justify-center bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse">
+                    <div className="w-full h-[400px] bg-gradient-to-r from-gray-300 to-gray-200 animate-pulse"></div>
+                  </div>
+                )}
+                <img
+                  src={image.url}
+                  alt={`${product.name}`}
+                  className={`w-[350px] h-[400px] object-cover object-top border-b border-black ${
+                    loadingImages[i] ? "hidden" : ""
+                  }`}
+                  onLoad={() => handleImageLoad(i)}
+                  fetchpriority={i === 0 ? "high" : "auto"}
+                />
               </div>
             ))}
           </div>
-          <div className="name-mrp">
-            <div className="product-Name">
-              <p className="productName futuraLt">{product.name}</p>
-            </div>
-            <div className="price-wrapper">
-              <p className="productPrice futuraLt">₹{product.price}</p>
-            </div>
+          <div className="flex items-center justify-between mt-4 px-4">
+            <p className="font-bold uppercase text-xl truncate futuraLt">
+              {product.name}
+            </p>
+            <p className="font-semibold text-lg ">₹ {product.price}</p>
           </div>
-          <div className="ratings">
+          <div className="flex items-center mt-2 px-4">
             <ReactStars {...options} />
-            <span className="users-review poppins">
-              ({" "}
+            <span className="text-lg ml-2">
+              (
               {product.numberOfReviews === 0
                 ? "No reviews"
-                : product.numberOfReviews === 1
-                ? `${product.numberOfReviews} review`
-                : `${product.numberOfReviews} reviews`}{" "}
+                : `${product.numberOfReviews} review${
+                    product.numberOfReviews > 1 ? "s" : ""
+                  }`}
               )
             </span>
           </div>
         </Link>
-        {/* <div className="product-cart align-center">
-          <button onClick={toggleCart}>
-            {isFilled ? (
-              <img src={cartFill} alt="Filled Cart" className="cartFill" />
-            ) : (
-              <img
-                src={cartOutline}
-                alt="Outline Cart"
-                className="cartOutline"
-              />
-            )}
-          </button>
-        </div> */}
       </div>
     </Fragment>
   );

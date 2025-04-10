@@ -1,6 +1,5 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import "./updatePassword.css";
 import MetaData from "../../Meta/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -55,6 +54,7 @@ const UpdatePassword = () => {
       });
     }
   }, [dispatch, error, isUpdated, navigate]);
+
   return (
     <>
       {loading ? (
@@ -63,27 +63,32 @@ const UpdatePassword = () => {
         <Fragment>
           <MetaData title={"Update Password"} />
           <Navbar props={logo} />
-          <div className="updatePasswordContainer">
-            <div className="updatePasswordBox">
-              <h2 className="futuraLt updateHead">Change Password</h2>
+          <div className="w-screen h-screen max-w-full flex justify-center items-center bg-cover bg-center mt-[80px]">
+            <div className="w-[80%] h-[80%] bg-white rounded-[10px] overflow-hidden box-border md:h-screen md:w-full md:mt-0 md:rounded-t-[20px] flex justify-start items-center flex-col">
+              <h2 className="futuraLt text-[25px] uppercase w-[90%] px-[2vw] mb-5">
+                Change Password
+              </h2>
               <form
-                className="updatePasswordForm"
+                className=" w-[90%] px-[2vw] flex flex-col items-start justify-start"
                 onSubmit={updatePasswordSubmit}
               >
-                <div className="loginPassword">
-                  <div className="password">
-                    <p className="passwordText"> old password</p>
+                <div className="w-full mb-8">
+                  <div className="flex justify-start items-center">
+                    <p className="uppercase font-poppins text-black tracking-[1px] font-bold">
+                      old password
+                    </p>
                   </div>
-                  <div className="passwordWrapper">
+                  <div className="flex relative w-full items-center ">
                     <input
                       type={oldVisible ? "text" : "password"}
                       placeholder="Old Password"
                       required
                       value={oldPassword}
                       onChange={(e) => setOldPassword(e.target.value)}
+                      className="w-full p-3 border border-[#333] rounded"
                     />
                     <div
-                      className="eyeIcon"
+                      className="absolute right-4 cursor-pointer"
                       onClick={() => {
                         setOldVisible(!oldVisible);
                       }}
@@ -92,20 +97,24 @@ const UpdatePassword = () => {
                     </div>
                   </div>
                 </div>
-                <div className="loginPassword">
-                  <div className="password">
-                    <p className="passwordText">new password</p>
+
+                <div className="w-full mb-8">
+                  <div className="flex justify-start items-center">
+                    <p className="uppercase font-poppins text-black tracking-[1px] font-bold">
+                      new password
+                    </p>
                   </div>
-                  <div className="passwordWrapper">
+                  <div className="flex relative w-full items-center">
                     <input
                       type={newVisible ? "text" : "password"}
                       placeholder="New Password"
                       required
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
+                      className="w-full border border-[#333] rounded p-3"
                     />
                     <div
-                      className="eyeIcon"
+                      className="absolute right-4 cursor-pointer"
                       onClick={() => {
                         setNewVisible(!newVisible);
                       }}
@@ -114,20 +123,24 @@ const UpdatePassword = () => {
                     </div>
                   </div>
                 </div>
-                <div className="loginPassword">
-                  <div className="password">
-                    <p className="passwordText">confirm password</p>
+
+                <div className="w-full mb-8">
+                  <div className="flex justify-start items-center">
+                    <p className="uppercase font-poppins text-black tracking-[1px] font-bold">
+                      confirm password
+                    </p>
                   </div>
-                  <div className="passwordWrapper">
+                  <div className="flex relative w-full items-center">
                     <input
                       type={confirmVisible ? "text" : "password"}
                       placeholder="Confirm Password"
                       required
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="w-full border border-[#333] rounded p-3"
                     />
                     <div
-                      className="eyeIcon"
+                      className="absolute right-4 cursor-pointer"
                       onClick={() => {
                         setConfirmVisible(!confirmVisible);
                       }}
@@ -140,7 +153,7 @@ const UpdatePassword = () => {
                 <input
                   type="submit"
                   value="Change Password"
-                  className="updatePasswordBtn"
+                  className="w-full mt-[20px] py-[20px] text-[18px] font-light border-none rounded-[8px] bg-[#222] text-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-[#333] Apercu"
                 />
               </form>
             </div>

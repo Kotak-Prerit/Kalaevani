@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import "./myOrders.css";
 import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, myOrders } from "../../actions/orderAction";
 import { Link } from "react-router-dom";
@@ -9,11 +8,13 @@ import MetaData from "../../Meta/MetaData";
 import Navbar from "../../components/Navbar/Navbar";
 import { MdOutlineFileDownload } from "react-icons/md";
 import logo from "../../assets/kalaevaniBlack.webp";
+import Footer from "../../components/Footer/Footer";
 
 const MyOrders = () => {
   const dispatch = useDispatch();
 
   const { error, orders } = useSelector((state) => state.myOrders);
+  const { user } = useSelector((state) => state.user);
 
   const columns = [
     {
@@ -92,21 +93,55 @@ const MyOrders = () => {
 
   return (
     <Fragment>
-      <MetaData title={` - Orders`} />
-      <div className="myOrdersContainer">
-        <Navbar props={logo} />
-        <div className="myOrdersPage">
-          {/* Make the table responsive */}
-          <div className="table-responsive">
+      <MetaData title={`Orders of ${user.name} `} />
+      <Navbar props={logo} />
+      <div className="w-full min-h-[50vh] mt-5 flex flex-col">
+        <div className="w-full max-w-full min-h-[50vh] px-[2.5%] box-border">
+          <div className="overflow-x-auto">
             <DataGrid
               rows={rows}
               columns={columns}
               pageSize={10}
               disableSelectionOnClick
-              className="myOrdersTable poppins"
+              className="bg-white text-center font-light"
+              localeText={{
+                noRowsLabel: "No Orders Yet",
+              }}
+              sx={{
+                ".MuiDataGrid-columnHeaders": {
+                  backgroundColor: "#333",
+                  color: "#000",
+                  fontFamily: "Poppins",
+                  fontWeight: 500,
+                  fontSize: window.innerWidth <= 600 ? 10 : "1.1vmax",
+                },
+                ".MuiDataGrid-columnHeaderTitle": {
+                  whiteSpace: "normal",
+                  lineHeight: "1.5rem",
+                },
+                ".MuiDataGrid-menuIcon, .MuiDataGrid-iconButtonContainer, .MuiDataGrid-iconSeparator":
+                  {
+                    display: "none",
+                  },
+                ".MuiDataGrid-cell": {
+                  fontFamily: "Apercu",
+                  fontSize: window.innerWidth <= 600 ? 10 : "1vmax",
+                  color: "#000",
+                  textAlign: "center",
+                  padding: window.innerWidth <= 600 ? "4vw" : "auto",
+                },
+                ".MuiDataGrid-overlay, .MuiTablePagination-toolbar": {
+                  fontFamily: "Apercu",
+                  fontSize: window.innerWidth <= 600 ? 10 : "1vmax",
+                  color: "#000",
+                  textAlign: "center",
+                  padding: window.innerWidth <= 600 ? "4vw" : "auto",
+                },
+              }}
             />
           </div>
         </div>
+        <Footer />
       </div>
     </Fragment>
   );

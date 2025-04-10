@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import "./MaterialPopup.css";
 import { getProductDetails } from "../../actions/productAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -68,7 +67,7 @@ const MaterialPopup = ({ isOpen, onClose, materialName }) => {
 
   return (
     <Modal
-      className="modal-open"
+      className="absolute top-1/2 left-1/2 w-3/5 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-8 flex flex-col items-start justify-center max-h-[80vh] overflow-y-scroll"
       isOpen={isOpen}
       onRequestClose={onClose}
       appElement={document.getElementById("root")}
@@ -80,17 +79,21 @@ const MaterialPopup = ({ isOpen, onClose, materialName }) => {
         },
       }}
     >
-      <h2 className="pd-title Apercu" style={{ textTransform: "capitalize" }}>
+      <h2 className="text-left border-b border-black pb-2 text-black capitalize text-2xl Apercu">
         {selectedMaterial.name}
       </h2>
-      <p className="pd-data poppins">{selectedMaterial.data}</p>
+      <p className="text-left mt-5 mb-5 text-black max-w-full overflow-hidden break-words whitespace-normal text-[20px] font-poppins">
+        {selectedMaterial.data}
+      </p>
       <img
         src={selectedMaterial.image}
-        alt={""}
-        style={{ borderRadius: "10px" }}
-        className="fabric-gsm"
+        alt=""
+        className="w-[70%] h-auto rounded-lg"
       />
-      <button onClick={onClose} className="off-btn poppins">
+      <button
+        onClick={onClose}
+        className="bg-black text-white px-4 py-2 text-lg border-none cursor-pointer self-end mr-[2%] rounded-md font-poppins"
+      >
         close
       </button>
     </Modal>

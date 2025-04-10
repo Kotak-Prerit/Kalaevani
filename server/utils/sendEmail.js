@@ -5,13 +5,17 @@ const sendEmail = async (options) => {
     // host: process.env.SMTP_HOST,
     // port: process.env.SMTP_PORT,
     service: process.env.SMTP_SERVICE,
-    secure: true,
+    secure: false,
     auth: {
       user: process.env.SMTP_MAIL,
       pass: process.env.SMTP_PASSWORD,
     },
     tls: {
+<<<<<<< HEAD
       rejectUnauthorized: false,
+=======
+      rejectUnauthorized: false, // Allow self-signed certificate
+>>>>>>> master
     },
   });
   const mailOptions = {
@@ -23,7 +27,6 @@ const sendEmail = async (options) => {
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully");
   } catch (error) {
     console.log("Error sending email:", error);
   }

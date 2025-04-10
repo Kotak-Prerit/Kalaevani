@@ -162,30 +162,31 @@ export const orderReducer = (state = {}, action) => {
   }
 };
 
-export const orderDetailsReducer = (state = { order: {} }, action) => {
+const initialState = {
+  order: null,
+  loading: true,
+  error: null,
+};
+
+export const orderDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
     case ORDER_DETAILS_REQUEST:
       return {
+        ...state,
         loading: true,
       };
-
     case ORDER_DETAILS_SUCCESS:
       return {
+        ...state,
         loading: false,
         order: action.payload,
       };
-
     case ORDER_DETAILS_FAIL:
       return {
+        ...state,
         loading: false,
         error: action.payload,
       };
-    case CLEAR_ERRORS:
-      return {
-        ...state,
-        error: null,
-      };
-
     default:
       return state;
   }

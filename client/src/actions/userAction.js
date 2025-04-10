@@ -50,7 +50,7 @@ export const login = (email, password) => async (dispatch) => {
       { email, password },
       config
     );
-
+    localStorage.setItem("token", data.token);
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({ type: LOGIN_FAIL, payload: error.response.data.error });
@@ -111,7 +111,12 @@ export const updateProfile = (userData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_PROFILE_REQUEST });
 
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
 
     const { data } = await axios.put(`/api/v1/me/change`, userData, config);
 
@@ -129,7 +134,12 @@ export const updatePassword = (passwords) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_PASSWORD_REQUEST });
 
-    const config = { headers: { "Content-Type": "application/json" } };
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
 
     const { data } = await axios.put(
       `/api/v1/password/change`,
@@ -151,38 +161,58 @@ export const forgotPassword = (email) => async (dispatch) => {
   try {
     dispatch({ type: FORGOT_PASSWORD_REQUEST });
 
-    const config = { headers: { "Content-Type": "application/json" } };
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
 
     const { data } = await axios.post(`/api/v1/password/forgot`, email, config);
 
     dispatch({ type: FORGOT_PASSWORD_SUCCESS, payload: data.message });
+
+    return Promise.resolve(data.message);
   } catch (error) {
     dispatch({
       type: FORGOT_PASSWORD_FAIL,
       payload: error.response.data.error,
     });
+
+    return Promise.reject(
+      error.response?.data?.message || "Something went wrong"
+    );
   }
 };
 
 // Reset Password
-export const resetPassword = (token, passwords) => async (dispatch) => {
+export const resetPassword = (email, otp, newPassword) => async (dispatch) => {
   try {
     dispatch({ type: RESET_PASSWORD_REQUEST });
 
-    const config = { headers: { "Content-Type": "application/json" } };
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
 
-    const { data } = await axios.put(
-      `/api/v1/password/reset/${token}`,
-      passwords,
+    const { data } = await axios.post(
+      `/api/v1/password/reset`,
+      { email, otp, newPassword },
       config
     );
+    localStorage.setItem("token", data.token);
 
-    dispatch({ type: RESET_PASSWORD_SUCCESS, payload: data.success });
+    dispatch({ type: RESET_PASSWORD_SUCCESS, payload: data.message });
+
+    return data;
   } catch (error) {
     dispatch({
       type: RESET_PASSWORD_FAIL,
       payload: error.response.data.error,
     });
+
+    return {
+      success: false,
+      message: error.response?.data?.message || "Request failed",
+    };
   }
 };
 
@@ -190,7 +220,12 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 export const getAllUsers = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_USERS_REQUEST });
-    const { data } = await axios.get(`/api/v1/admin/users`);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Add token
+      },
+    };
+    const { data } = await axios.get(`/api/v1/admin/users`, config);
 
     dispatch({ type: ALL_USERS_SUCCESS, payload: data.users });
   } catch (error) {
@@ -215,7 +250,10 @@ export const updateUser = (id, userData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
 
-    const config = { headers: { "Content-Type": "application/json" } };
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
 
     const { data } = await axios.put(
       `/api/v1/admin/user/${id}`,

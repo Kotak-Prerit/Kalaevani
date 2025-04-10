@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
-import "./ProductImages.css";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { clearErrors, getProductDetails } from "../../actions/productAction";
@@ -46,41 +45,37 @@ const ProductImages = () => {
     });
   };
 
-  useEffect(() => {
-    const preventDoubleTapZoom = (event) => {
-      if (event.touches.length > 1) {
-        event.preventDefault();
-      }
-    };
-
-    const container = document.querySelector(".productImagesWrapper");
-    container.addEventListener("touchstart", preventDoubleTapZoom, {
-      passive: false,
-    });
-
-    return () => {
-      container.removeEventListener("touchstart", preventDoubleTapZoom);
-    };
-  }, []);
-
   return (
-    <div className="productImagesWrapper">
-      <button onClick={handleGoBack} className="gobackButton flex-center">
+    <div className="min-h-screen w-full overflow-hidden relative">
+      <button
+        onClick={handleGoBack}
+        className="fixed top-5 right-5 z-10 h-10 w-10 border border-black rounded-full bg-transparent flex justify-center items-center text-2xl cursor-pointer"
+      >
         <IoMdClose />
       </button>
-      <div className="carouselWrapper">
-        <button className="leftArrow" onClick={handlePrev}>
-          <BsArrowLeftShort />
-        </button>
-        <motion.img
-          src={product.images[currentIndex].url}
-          alt={`${currentIndex} Slide`}
-          className="image"
-          draggable="false"
-        />
 
-        <button className="rightArrow" onClick={handleNext}>
-          <BsArrowRightShort />
+      <div className="h-full w-full flex justify-center items-center">
+        <button
+          className="fixed top-1/2 left-0 transform -translate-y-1/2 p-2 text-2xl z-10 cursor-pointer ml-4 border-none bg-black"
+          onClick={handlePrev}
+        >
+          <BsArrowLeftShort className="text-white" />
+        </button>
+
+        {product.images.length > 0 && (
+          <motion.img
+            src={product.images[currentIndex].url}
+            alt={`${currentIndex} Slide`}
+            className="w-full min-h-screen object-cover"
+            draggable="false"
+          />
+        )}
+
+        <button
+          className="fixed top-1/2 right-0 transform -translate-y-1/2 p-2 text-2xl z-10 cursor-pointer bg-black mr-4 border-none"
+          onClick={handleNext}
+        >
+          <BsArrowRightShort className="text-white" />
         </button>
       </div>
     </div>

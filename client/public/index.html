@@ -35,61 +35,18 @@
 
       gtag("config", "G-L33R6Z8BKB");
     </script>
-    <style>
-      .loader {
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        width: 100%;
-      }
-      .loader svg path,
-      .loader svg rect {
-        fill: #000;
-      }
-    </style>
-  </head>
-  <body onload="loading()">
-    <div class="loader loader--style3" title="2" id="loader">
-      <svg
-        version="1.1"
-        id="loader-1"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        x="0px"
-        y="0px"
-        width="40px"
-        height="40px"
-        viewBox="0 0 50 50"
-        style="enable-background: new 0 0 50 50"
-        xml:space="preserve"
-      >
-        <path
-          fill="#000"
-          d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z"
-        >
-          <animateTransform
-            attributeType="xml"
-            attributeName="transform"
-            type="rotate"
-            from="0 25 25"
-            to="360 25 25"
-            dur="0.6s"
-            repeatCount="indefinite"
-          />
-        </path>
-      </svg>
-    </div>
-    <div id="root"></div>
-    <script>
-      function loading() {
-        loader.style.display = "none";
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.162.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/"
+        }
       }
     </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   </body>
 </html>

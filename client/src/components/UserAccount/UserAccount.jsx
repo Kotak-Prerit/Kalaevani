@@ -1,16 +1,19 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 const UserAccount = (props) => {
   return (
-    <Fragment>
-      <div className="block poppins" onClick={props.click}>
-        <img src={props.img} alt="icon" className="optionsImg" />
-        <div className="yourOrders">
-          <p className="orderHead">{props.head}</p>
-          <p className="orderSummary">{props.summary}</p>
+    <React.Fragment>
+      <div
+        className="p-4 flex justify-center items-center border border-gray-400 h-[100px] w-[300px] bg-white cursor-pointer transition duration-300 hover:shadow-[5px_5px_0_0_rgba(0,0,0,1)]"
+        onClick={props.click}
+      >
+        <img src={props.img} alt="icon" className="h-[50px] w-auto" />
+        <div className="ml-4 text-left">
+          <p className="text-lg font-medium text-black">{props.head}</p>
+          <p className="text-xs font-normal text-gray-500">{props.summary}</p>
         </div>
       </div>
-    </Fragment>
+    </React.Fragment>
   );
 };
 

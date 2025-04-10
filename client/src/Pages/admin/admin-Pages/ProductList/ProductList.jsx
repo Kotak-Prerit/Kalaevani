@@ -20,12 +20,10 @@ const ProductList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { error, products: adminProducts } = useSelector(
-    (state) => state.adminProduct
-  );
+  const { error, products } = useSelector((state) => state.adminProduct);
   // const { isAuthenticated, user } = useSelector((state) => state.user);
 
-  const productList = adminProducts?.products || [];
+  const productList = products || [];
 
   const { error: deleteError, isDeleted } = useSelector(
     (state) => state.deleteProduct
@@ -150,7 +148,7 @@ const ProductList = () => {
         </div>
       </div>
       {/* ) : (
-        <div className="unauthorized flex-center Apercu">
+        <div className="unauthorized flex justify-center items-center Apercu">
           <p>You don't Belong here</p>
         </div>
       )} */}

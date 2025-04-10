@@ -1,27 +1,17 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AiOutlineInstagram } from "react-icons/ai";
-import { BsYoutube } from "react-icons/bs";
-import { BiLogoPinterestAlt } from "react-icons/bi";
-import { AiOutlineTwitter } from "react-icons/ai";
-import "./footer.css";
+import { BsInstagram, BsYoutube, BsWhatsapp, BsTwitterX } from "react-icons/bs";
 import Logo from "../../assets/kalaevaniWhite.webp";
 import { useSelector } from "react-redux";
 import sizeChart from "../../assets/sizechart.webp";
 
 export default function Footer() {
   const navigate = useNavigate();
-
   const { isAuthenticated } = useSelector((state) => state.user);
   const [sizeChartIsOpen, setSizeChartIsOpen] = useState(false);
 
-  const openSizeChart = () => {
-    setSizeChartIsOpen(true);
-  };
-
-  const closeSizeChart = () => {
-    setSizeChartIsOpen(false);
-  };
+  const openSizeChart = () => setSizeChartIsOpen(true);
+  const closeSizeChart = () => setSizeChartIsOpen(false);
 
   const authenticate = () => {
     if (isAuthenticated) {
@@ -32,126 +22,143 @@ export default function Footer() {
   };
 
   return (
-    <div className="wrapper poppins">
-      <div>
-        <div className="Info">
-          <div className="rs">
-            <p className="heading">Uff Stuff</p>
-            <div className="rsLinks">
-              <Link className="anchor" to="/products">
-                Clothing
-              </Link>
-              <Link className="anchor" to="/about">
-                About Us
-              </Link>
-              <Link className="anchor" to="/account">
-                Account
-              </Link>
-              <Link className="anchor" to="/cart">
-                Cart
-              </Link>
-            </div>
+    <div className="flex flex-col bg-black text-white w-full p-8 pb-24">
+      <div className="flex flex-col sm:flex-row justify-between gap-8">
+        <div className="mb-8">
+          <p className="text-xl uppercase font-medium text-gray-400 mb-3">
+            Uff Stuff
+          </p>
+          <div className="flex flex-col gap-2">
+            <Link to="/products" className="text-lg hover:underline">
+              Clothing
+            </Link>
+            <Link to="/about" className="text-lg hover:underline">
+              About Us
+            </Link>
+            <Link to="/login" className="text-lg hover:underline">
+              Account
+            </Link>
+            <Link to="/cart" className="text-lg hover:underline">
+              Cart
+            </Link>
           </div>
-          <div className="os">
-            <p className="heading">Ordinary Stuff</p>
-            <div className="osLinks">
-              <button className="anchorBtn" onClick={authenticate}>
-                Track Order
+        </div>
+
+        <div className="mb-8">
+          <p className="text-xl uppercase font-medium text-gray-400 mb-3">
+            Ordinary Stuff
+          </p>
+          <div className="flex flex-col gap-2 poppins">
+            <button
+              onClick={authenticate}
+              className="text-lg hover:underline text-left"
+            >
+              Track Order
+            </button>
+            <Link to="/shipping-policy" className="text-lg hover:underline">
+              Shipping Policy
+            </Link>
+            <Link to="/contact" className="text-lg hover:underline">
+              Contact Us
+            </Link>
+            <button
+              onClick={openSizeChart}
+              className="text-lg hover:underline text-left"
+            >
+              Size Chart
+            </button>
+            <Link to="/privacy" className="text-lg hover:underline">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="text-lg hover:underline">
+              Terms & Condition
+            </Link>
+            <Link to="/return-refund" className="text-lg hover:underline">
+              Return & Refund Policy
+            </Link>
+          </div>
+        </div>
+
+        {sizeChartIsOpen && (
+          <div className="fixed top-0 left-0 w-full h-full bg-black/70 z-10 flex items-center justify-center">
+            <div className="bg-white p-5 rounded-lg">
+              <button onClick={closeSizeChart} className="mb-3">
+                X
               </button>
-              <Link className="anchor" to="/shipping-policy">
-                Shipping Policy
-              </Link>
-              <Link className="anchor" to="/contact">
-                Contact Us
-              </Link>
-              <button className="anchorBtn" to="" onClick={openSizeChart}>
-                Size Chart
-              </button>
-              <Link className="anchor" to="/privacy">
-                Privacy Policy
-              </Link>
-              <Link className="anchor" to="/terms">
-                Terms & Condition
-              </Link>
-              <Link className="anchor" to="/return-refund">
-                Return & Refund Policy
-              </Link>
+              <img src={sizeChart} alt="Size Chart" />
             </div>
           </div>
-          {sizeChartIsOpen && (
-            <div className="sizeChartPopup">
-              <div className="popupOverlay" onClick={closeSizeChart}></div>
-              <div className="popupContent">
-                <button className="closeButton" onClick={closeSizeChart}>
-                  X
-                </button>
-                <img src={sizeChart} alt="Size Chart" />
-              </div>
-            </div>
-          )}
-          <div className="others">
-            <p className="heading">Catch Up</p>
-            <div className="details">
-              <Link className="anchor" to="mailto:support@kalaevani.com">
-                support@kalaevani.com
+        )}
+
+        <div>
+          <p className="text-xl uppercase font-medium text-gray-400 mb-3">
+            Catch Up
+          </p>
+          <div className="flex flex-col gap-2">
+            <Link
+              to="mailto:support@kalaevani.com"
+              className="text-lg hover:underline"
+            >
+              support@kalaevani.com
+            </Link>
+            <Link to="/faqs" className="text-lg hover:underline">
+              FAQs
+            </Link>
+            <p className="text-lg text-gray-400">11am to 6pm Mon-Sun</p>
+            <p className="text-lg text-gray-400">Except on public holidays</p>
+            <div className="flex gap-4 mt-5">
+              <Link
+                to="https://www.instagram.com/kalaevani"
+                target="_blank"
+                className="text-4xl hover:text-instagram duration-300"
+              >
+                <BsInstagram />
               </Link>
-              <Link className="anchor" to="/faqs">
-                FAQs
+              <Link
+                to="https://www.youtube.com/@Kalaevani"
+                target="_blank"
+                className="text-4xl hover:text-youtube  duration-300"
+              >
+                <BsYoutube />
               </Link>
-              <p className="helpingHours">11am to 6pm Mon-Sun</p>
-              <p className="ph">except on public holidays</p>
-              <div className="socials">
-                <Link
-                  target="_blank"
-                  to="https://www.instagram.com/kalaevani"
-                  className="icons"
-                >
-                  {" "}
-                  <AiOutlineInstagram />
-                </Link>
-                <Link
-                  target="_blank"
-                  to="https://www.youtube.com"
-                  className="icons"
-                >
-                  <BsYoutube />
-                </Link>
-                <Link
-                  target="_blank"
-                  to="https://www.twitter.com"
-                  className="icons"
-                >
-                  <AiOutlineTwitter />
-                </Link>
-                <Link
-                  target="_blank"
-                  to="https://www.pinterest.com"
-                  className="icons"
-                >
-                  <BiLogoPinterestAlt />
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="otherLinks">
-            <p className="heading">For Business</p>
-            <div className="details">
-              <Link className="anchor" to="/collab">
-                Collab
+              <Link
+                to="https://x.com/kalaevani"
+                target="_blank"
+                className="text-4xl hover:text-twitter  duration-300"
+              >
+                <BsTwitterX />
               </Link>
-              <Link className="anchor" to="/wholesale">
-                Whole Sale Enquiry
+              <Link
+                to="https://www.pinterest.com"
+                target="_blank"
+                className="text-4xl hover:text-whatsapp  duration-300"
+              >
+                <BsWhatsapp />
               </Link>
             </div>
           </div>
         </div>
-        <div className="etc"></div>
+
+        <div>
+          <p className="text-xl uppercase font-medium text-gray-400 mb-3">
+            For Business
+          </p>
+          <div className="flex flex-col gap-2">
+            <Link to="/collab" className="text-lg hover:underline">
+              Collab
+            </Link>
+            <Link to="/wholesale" className="text-lg hover:underline">
+              Whole Sale Enquiry
+            </Link>
+          </div>
+        </div>
       </div>
-      <div className="footerEnd">
-        <Link to={"/"}>
-          <img src={Logo} alt="" className="footerLogo" />
+
+      <div className="mt-8 flex justify-between items-center">
+        <Link to="/">
+          <img src={Logo} alt="Logo" className="h-20" />
         </Link>
-        <p className="copyright">© 2025 Kalaevani-Clothing, Inc.</p>
+        <p className="text-xl text-gray-400">© 2025 Kalaevani-Clothing, Inc.</p>
       </div>
     </div>
   );

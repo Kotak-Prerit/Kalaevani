@@ -3,22 +3,20 @@ import React, {
   useEffect,
   useState,
   lazy,
-  startTransition,
   Suspense,
+  startTransition,
 } from "react";
 import { motion } from "framer-motion";
 import { clearErrors, getProduct } from "../../actions/productAction.js";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import "./Home.css";
 import MetaData from "../../Meta/MetaData";
 import logo from "../../assets/kalaevaniBlack.webp";
 import Navbar from "../../components/Navbar/Navbar";
 import Product from "../../components/ProductCard/ProductCard.jsx";
 import Footer from "../../components/Footer/Footer";
-import Marque from "../../components/Marque-top/Marque.jsx";
-import Hero from "../../components/Hero/Hero";
+import Hero from "../../components/Hero/Hero.jsx";
 import IntroVid from "../../components/IntroVid/IntroVid";
 import QuoteLoader from "../../utils/QuoteLoader/QuoteLoader.jsx";
 
@@ -92,61 +90,58 @@ const Home = () => {
 
   return (
     <Fragment>
-      <>
-        <MetaData title="Kalaevani" />
-        <Marque />
-        <Navbar props={logo} />
-        {/* <motion.div className="draggable-el" drag>
-            <img
-              src="https://i.pinimg.com/originals/90/af/ef/90afef86af7e227ca0b8fda5312c0534.gif"
-              height={200}
-              style={{ pointerEvents: "none" }}
-              alt="draggable element"
-            />
-          </motion.div> */}
-        <Hero />
-        <IntroVid />
-        <Fragment>
-          <div className="LightTheme">
-            <header className="displayHeader padding-inline">
-              <h1 className="buyArt">Latest products</h1>
-              <Link to={"/products"} className="wearArt">
-                See all
-              </Link>
-            </header>
-            <div
-              className="hpWrapper align-center"
-              onMouseEnter={textEnter}
-              onMouseLeave={textLeave}
-            >
-              <div className="productContainer" id="container">
-                {products &&
-                  products
-                    .slice(0, 8)
-                    .map((product) => (
-                      <Product key={product._id} product={product} />
-                    ))}
-              </div>
+      <MetaData title="Kalaevani" />
+      <Navbar props={logo} />
+      <Hero />
+      <IntroVid />
+      <div className="LightTheme">
+        <header className="w-full flex justify-between items-end border-b pb-[5vh] pt-[5vh] px-[2.5vw]">
+          <h1 className="uppercase font-montserrat font-bold text-[25px] leading-none md:text-[20px]">
+            Latest products
+          </h1>
+          <Link
+            to="/products"
+            className="uppercase font-montserrat font-medium text-[14px] no-underline text-black"
+          >
+            See all
+          </Link>
+        </header>
 
-              <motion.div
-                className="cursor"
-                variants={variants}
-                animate={cursorVariant}
-              />
-            </div>
-            <div className="allProducts flex-center poppins">
-              <Link to={"/products"} className="moreProducts">
-                more products
-              </Link>
-            </div>
+        <div
+          className="px-[2.5vw] flex flex-wrap justify-around"
+          onMouseEnter={textEnter}
+          onMouseLeave={textLeave}
+        >
+          <div className="w-full flex gap-[10px] items-center justify-center flex-wrap my-[5vh]">
+            {products &&
+              products
+                .slice(0, 8)
+                .map((product) => (
+                  <Product key={product._id} product={product} />
+                ))}
           </div>
-        </Fragment>
-        <Suspense fallback={<QuoteLoader />}>
-          <Display />
-          <Newsletter />
-        </Suspense>
-        <Footer />
-      </>
+
+          <motion.div
+            className="fixed top-0 left-0 pointer-events-none rounded-full z-[1] mix-blend-color-burn"
+            variants={variants}
+            animate={cursorVariant}
+          />
+        </div>
+
+        <div className="w-full py-[50px] flex justify-center items-center font-poppins">
+          <Link
+            to="/products"
+            className="border border-black px-[30px] py-[20px] rounded-full uppercase text-black transition-all duration-300 hover:bg-black hover:text-white"
+          >
+            more products
+          </Link>
+        </div>
+      </div>
+      <Suspense fallback={<QuoteLoader />}>
+        <Display />
+        <Newsletter />
+      </Suspense>
+      <Footer />
     </Fragment>
   );
 };
