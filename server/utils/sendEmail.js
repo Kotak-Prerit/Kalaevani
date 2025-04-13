@@ -11,11 +11,7 @@ const sendEmail = async (options) => {
       pass: process.env.SMTP_PASSWORD,
     },
     tls: {
-<<<<<<< HEAD
       rejectUnauthorized: false,
-=======
-      rejectUnauthorized: false, // Allow self-signed certificate
->>>>>>> master
     },
   });
   const mailOptions = {

@@ -123,7 +123,7 @@ const Login = () => {
                       {visible ? <FaRegEye /> : <FaRegEyeSlash />}
                     </div>
                   </div>
-<<<<<<< HEAD
+
                   <Link to="/password/forgot" className="forgot-password">
                     Forget Password ?
                   </Link>
@@ -135,8 +135,7 @@ const Login = () => {
                       </Link>
                     </p>
                   </div>
-=======
->>>>>>> master
+
 
                   <Link
                     to="/password/forgot"

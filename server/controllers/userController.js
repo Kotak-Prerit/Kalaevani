@@ -8,12 +8,8 @@ const bcrypt = require("bcrypt");
 // Register a User
 exports.registerUser = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
-<<<<<<< HEAD
-  encryptedPassword = await bcrypt.hash(password, 10);
-=======
   const salt = await bcrypt.genSalt(10);
   encryptedPassword = await bcrypt.hash(password, salt);
->>>>>>> master
   const user = await User.create({
     name,
     email,
@@ -109,18 +105,6 @@ exports.resetForgottenPassword = catchAsyncError(async (req, res, next) => {
 
   try {
     const user = await User.findOne({ email: req.body.email });
-<<<<<<< HEAD
-    if (!user) {
-      return res.json({ success: false, message: "User not found" });
-    }
-
-    if (user.resetOtp === "" || user.resetOtp !== otp) {
-      return res.json({ success: false, message: "Invalid OTP" });
-    }
-
-    if (user.resetOtpExpireAt < Date.now()) {
-      return res.json({ success: false, message: "OTP Expired" });
-=======
 
     if (!user) {
       return res
@@ -134,7 +118,6 @@ exports.resetForgottenPassword = catchAsyncError(async (req, res, next) => {
 
     if (user.resetOtpExpireAt < Date.now()) {
       return res.status(400).json({ success: false, message: "OTP Expired" });
->>>>>>> master
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -144,20 +127,12 @@ exports.resetForgottenPassword = catchAsyncError(async (req, res, next) => {
 
     await user.save();
 
-<<<<<<< HEAD
-    return res.json({
-=======
     return res.status(200).json({
->>>>>>> master
       success: true,
       message: "Password reset successfully",
     });
   } catch (error) {
-<<<<<<< HEAD
-    return res.json({ success: false, message: error.message });
-=======
     return res.status(500).json({ success: false, message: error.message });
->>>>>>> master
   }
 });
 
