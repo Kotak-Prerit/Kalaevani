@@ -57,7 +57,7 @@
 .rupee,
 .barcode,
 .box,
-.grow {
+.usergrow {
   font-size: 20px;
 }
 .rupee {
@@ -69,7 +69,7 @@
 .barcode {
   color: #6366f1;
 }
-.grow {
+.usergrow {
   color: #10b981;
 }
 .boxTitle {

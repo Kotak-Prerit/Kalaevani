@@ -3,6 +3,9 @@ import React, { useRef } from "react";
 import { useScroll } from "framer-motion";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { motion } from "framer-motion-3d";
+import colorImg from "../../../assets/color.jpg";
+import normalImg from "../../../assets/normal.png";
+import occlusionImg from "../../../assets/occlusion.jpg";
 
 export default function Earth() {
   const scene = useRef(null);
@@ -12,9 +15,9 @@ export default function Earth() {
   });
 
   const [color, normal, aoMap] = useLoader(TextureLoader, [
-    "/color.jpg",
-    "/normal.png",
-    "/occlusion.jpg",
+    colorImg,
+    normalImg,
+    occlusionImg,
   ]);
 
   return (

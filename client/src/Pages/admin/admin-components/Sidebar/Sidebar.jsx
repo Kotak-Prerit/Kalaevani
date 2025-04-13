@@ -17,7 +17,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <Link to="/" className="dashboardLogo">
-        <img src={logo} alt="Kalaevani-logo" height={30} />
+        <img src={logo} alt="Kalaevani-logo" className="h-[30px]" />
         <h1 className="logoTxt montserrat">Kalaevani</h1>
       </Link>
       <Link to="/admin/dashboard" className="d-link Apercu">

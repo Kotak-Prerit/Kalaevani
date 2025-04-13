@@ -72,7 +72,7 @@ const Dashboard = () => {
                 <Link to="/admin/users897451569418741">
                   <p className="boxTitle poppins flex justify-center items-center">
                     {" "}
-                    <FaArrowTrendUp className="grow" />
+                    <FaArrowTrendUp className="usergrow" />
                     Users
                   </p>
                   <p className="boxNumbers">{users && users.length}</p>

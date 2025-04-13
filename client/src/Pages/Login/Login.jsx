@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login, register } from "../../actions/userAction";
 import { toast } from "react-toastify";
 import Navbar from "../../components/Navbar/Navbar";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash, FaCheckSquare } from "react-icons/fa";
 import logo from "../../assets/kalaevaniBlack.webp";
 import QuoteLoader from "../../utils/QuoteLoader/QuoteLoader";
 import signInBanner from "../../assets/signInBanner.png";
@@ -124,19 +124,6 @@ const Login = () => {
                     </div>
                   </div>
 
-                  <Link to="/password/forgot" className="forgot-password">
-                    Forget Password ?
-                  </Link>
-                  <div className="tAndc flex-center">
-                    <p className="forgot-password">
-                      By signing in you agree to our{" "}
-                      <Link to={"/terms"} className="poppins">
-                        Terms & conditions
-                      </Link>
-                    </p>
-                  </div>
-
-
                   <Link
                     to="/password/forgot"
                     className="text-sm text-gray-600 underline"
@@ -144,8 +131,8 @@ const Login = () => {
                     Forget Password?
                   </Link>
 
-                  <p className="text-sm text-gray-600 mt-4">
-                    By signing in you agree to our{" "}
+                  <p className="text-sm text-gray-600 mt-4 flex items-center gap-1">
+                    <FaCheckSquare /> By signing in you agree to our{" "}
                     <Link to="/terms" className="text-blue-500 underline">
                       Terms & Conditions
                     </Link>
