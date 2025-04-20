@@ -22,6 +22,7 @@ import {
   orderReducer,
 } from "../reducers/orderReducer";
 import { cartReducer } from "../reducers/cartReducer";
+import config from '../config/config';
 
 const reducer = {
   products: productReducer,
@@ -42,6 +43,7 @@ const reducer = {
   allUsers: allUsersReducer,
   userDetails: userDetailsReducer,
 };
+
 const preloadedState = {
   cart: {
     cartItems: localStorage.getItem("cartItems")
@@ -56,7 +58,7 @@ const preloadedState = {
 const store = configureStore({
   reducer,
   preloadedState,
-  devTools: process.env.NODE_ENV !== "production", // Enable DevTools in development mode
+  devTools: !config.IS_PRODUCTION
 });
 
 export default store;

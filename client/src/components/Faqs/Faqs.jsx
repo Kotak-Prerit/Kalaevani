@@ -42,33 +42,38 @@ const Faqs = () => {
 
   return (
     <div className="flex flex-col items-center mb-[15vh]">
-      <h1 className="text-5xl font-bold text-center my-[5vh]">FAQ</h1>
+      <h1 className="text-4xl md:text-5xl font-bold text-center my-8 futuraLt text-gray-800">
+        Frequently Asked Questions
+      </h1>
 
-      <div className="w-[90%] sm:w-[70%] bg-gray-800 rounded-lg p-5 shadow-md">
+      <div className="w-[90%] md:w-[80%] lg:w-[70%] bg-white rounded-xl border border-black-600 p-6">
         {faqs.map((faq, index) => (
-          <div key={index} className="border-b border-gray-300 py-4">
+          <div key={index} className="border-b border-gray-200 last:border-none">
             <div
-              className="flex justify-between items-center text-white font-semibold cursor-pointer"
+              className="flex justify-between items-center py-4 cursor-pointer group"
               onClick={() => toggleAnswer(index)}
             >
-              <h3 className="text-2xl">{faq.question}</h3>
-              <span>
+              <h3 className="text-lg md:text-xl font-medium text-gray-800 group-hover:text-green-600 transition-colors duration-200 montserrat pr-4">
+                {faq.question}
+              </h3>
+              <span className="flex-shrink-0">
                 {activeIndex === index ? (
-                  <MdKeyboardArrowUp className="bg-gray-300 text-black rounded-full p-1 text-3xl" />
+                  <MdKeyboardArrowUp className="text-3xl text-green-500 bg-green-50 rounded-full p-1" />
                 ) : (
-                  <MdKeyboardArrowDown className="bg-gray-300 text-black rounded-full p-1 text-3xl" />
+                  <MdKeyboardArrowDown className="text-3xl text-gray-400 bg-gray-50 rounded-full p-1 group-hover:text-green-500 group-hover:bg-green-50 transition-colors duration-200" />
                 )}
               </span>
             </div>
-
             <div
-              className="overflow-hidden transition-all duration-200 ease-in-out"
+              className="overflow-hidden transition-all duration-300 ease-in-out"
               ref={(el) => (contentRefs.current[index] = el)}
               style={{
-                maxHeight: activeIndex === index ? "100px" : "0",
+                maxHeight: activeIndex === index ? '500px' : '0',
               }}
             >
-              <p className="text-gray-400 pt-2 text-2xl">{faq.answer}</p>
+              <p className="text-gray-600 pb-4 poppins text-base md:text-lg whitespace-pre-line">
+                {faq.answer}
+              </p>
             </div>
           </div>
         ))}

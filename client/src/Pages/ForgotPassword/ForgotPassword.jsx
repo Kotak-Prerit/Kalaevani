@@ -6,7 +6,7 @@ import {
   forgotPassword,
   resetPassword,
 } from "../../actions/userAction";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import Navbar from "../../components/Navbar/Navbar";
 import logo from "../../assets/kalaevaniBlack.webp";
 import { useNavigate } from "react-router-dom";

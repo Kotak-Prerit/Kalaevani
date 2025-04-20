@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import project from "../../assets/project.gif";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import logo from "../../assets/kalaevaniBlack.webp";
 import MetaData from "../../Meta/MetaData";
 import Navbar from "../../components/Navbar/Navbar";

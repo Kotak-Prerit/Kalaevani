@@ -123,3 +123,7 @@ html.lenis body {
   left: 0;
   z-index: 999;
 }
+
+.MuiTypography-body1 {
+  color: #fff;
+}

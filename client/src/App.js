@@ -2,10 +2,10 @@ import { Fragment, useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Lenis from "lenis";
 import { HelmetProvider } from "react-helmet-async";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from "sonner";
 import { loadUser } from "./actions/userAction";
-import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
+import Layout from "./components/Layout/Layout";
 import Home from "./Pages/Home/Home";
 import Products from "./Pages/Products/Products";
 import Login from "./Pages/Login/Login";
@@ -40,12 +40,25 @@ import MyOrders from "./Pages/MyOrders/Myorders";
 import OrderDetails from "./Pages/OrderDetails/OrderDetails";
 import ProcessOrder from "./Pages/admin/admin-Pages/ProccessOrder/ProccessOrder.jsx";
 import QuoteLoader from "./utils/QuoteLoader/QuoteLoader.jsx";
+import ProtectedRoute from "./utils/Route/ProtectedRoute";
 
 function App() {
   const dispatch = useDispatch();
 
-  const lenis = new Lenis();
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    orientation: 'vertical',
+    gestureOrientation: 'vertical',
+    smoothWheel: true,
+    wheelMultiplier: 1,
+    smoothTouch: false,
+    touchMultiplier: 2,
+    infinite: false,
+  });
+
   lenis.on("scroll", (e) => {});
+  
   function raf(time) {
     lenis.raf(time);
     requestAnimationFrame(raf);
@@ -99,57 +112,52 @@ function App() {
         <Fragment>
           <HelmetProvider>
             <Router>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/products/:keyword" element={<Products />} />
-                <Route path="/product/:id" element={<ProductDetails />} />
-                <Route path="/product/:id/images" element={<ProductImages />} />
-                <Route path="/faqs" element={<Faq />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/account" element={<Account />} />
-                <Route path="/me/change" element={<UpdateProfile />} />
-                <Route path="/password/change" element={<UpdatePassword />} />
-                <Route path="/password/forgot" element={<ForgotPassword />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/shipping" element={<Shipping />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/order/confirm" element={<ConfirmOrder />} />
-                <Route path="/process/payment" element={<Payment />} />
-                <Route path="/orders" element={<MyOrders />} />
-                <Route path="/order/:id" element={<OrderDetails />} />
-                <Route path="/shipping-policy" element={<ShippingPolicy />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/privacy" element={<PrivacyPolicy />} />
-                <Route path="/terms" element={<Terms />} />
-                <Route path="/return-refund" element={<ReturnRefund />} />
-                <Route path="/wholesale" element={<Wholesale />} />
-                <Route path="/collab" element={<Collab />} />
-                <Route path="*" element={<PageNotFound />} />
-                <Route path="/admin/dashboard" element={<Dashboard />} />
-                <Route
-                  path="/admin/products897451569418741"
-                  element={<ProductList />}
-                />
-                <Route
-                  path="/admin/orders897451569418741"
-                  element={<OrderList />}
-                />
-                <Route path="/admin/order/:id" element={<ProcessOrder />} />
-                <Route
-                  path="/admin/product897451569418741"
-                  element={<NewProduct />}
-                />
-                <Route
-                  path="/admin/users897451569418741"
-                  element={<UserList />}
-                />
-                <Route path="/unauthorized" element={<Unauthorized />} />
-                <Route path="/success" element={<Success />} />
-              </Routes>
+              <Layout>
+                <Routes>
+                  {/* Public Routes */}
+                  <Route path="/" element={<Home />} />
+                  <Route path="/products" element={<Products />} />
+                  <Route path="/products/:keyword" element={<Products />} />
+                  <Route path="/product/:id" element={<ProductDetails />} />
+                  <Route path="/product/:id/images" element={<ProductImages />} />
+                  <Route path="/faqs" element={<Faq />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/account" element={<Account />} />
+                  <Route path="/me/change" element={<UpdateProfile />} />
+                  <Route path="/password/change" element={<UpdatePassword />} />
+                  <Route path="/password/forgot" element={<ForgotPassword />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/shipping" element={<Shipping />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/order/confirm" element={<ConfirmOrder />} />
+                  <Route path="/process/payment" element={<Payment />} />
+                  <Route path="/orders" element={<MyOrders />} />
+                  <Route path="/order/:id" element={<OrderDetails />} />
+                  <Route path="/shipping-policy" element={<ShippingPolicy />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/privacy" element={<PrivacyPolicy />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route path="/return-refund" element={<ReturnRefund />} />
+                  <Route path="/wholesale" element={<Wholesale />} />
+                  <Route path="/collab" element={<Collab />} />
+                  <Route path="/unauthorized" element={<Unauthorized />} />
+                  <Route path="/success" element={<Success />} />
+                  <Route path="*" element={<PageNotFound />} />
+
+                  {/* Admin Routes */}
+                  <Route element={<ProtectedRoute isAdmin={true} />}>
+                    <Route path="/admin/dashboard" element={<Dashboard />} />
+                    <Route path="/admin/products" element={<ProductList />} />
+                    <Route path="/admin/orders" element={<OrderList />} />
+                    <Route path="/admin/order/:id" element={<ProcessOrder />} />
+                    <Route path="/admin/product" element={<NewProduct />} />
+                    <Route path="/admin/users" element={<UserList />} />
+                  </Route>
+                </Routes>
+              </Layout>
             </Router>
           </HelmetProvider>
-          <ToastContainer position="bottom-center" autoClose={2500} />
+          <Toaster position="top-center" richColors />
         </Fragment>
       )}
     </Fragment>

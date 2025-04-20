@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../ProductList/ProductList.css";
 import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, deleteOrder } from "../../../../actions/orderAction";
 import { Link, useNavigate } from "react-router-dom";
 import SideBar from "../../admin-components/Sidebar/Sidebar";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { CiEdit } from "react-icons/ci";
 import { AiOutlineDelete } from "react-icons/ai";
 import MetaData from "../../../../Meta/MetaData";
@@ -20,12 +20,23 @@ const ProductList = () => {
   const { error, orders } = useSelector((state) => state.allOrders);
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
-  //   const productList = adminProducts?.products || [];
-
   const { error: deleteError, isDeleted } = useSelector((state) => state.order);
 
-  const deleteOrderHandler = (id) => {
-    dispatch(deleteOrder(id));
+  const [open, setOpen] = useState(false);
+  const [orderId, setOrderId] = useState("");
+
+  const handleClickOpen = (id) => {
+    setOrderId(id);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const deleteOrderHandler = () => {
+    dispatch(deleteOrder(orderId));
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -41,7 +52,7 @@ const ProductList = () => {
 
     if (isDeleted) {
       toast.success("Order deleted successfully");
-      navigate("/admin/orders897451569418741");
+      navigate("/admin/orders");
       dispatch({ type: DELETE_ORDER_RESET });
     }
 
@@ -91,17 +102,17 @@ const ProductList = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <React.Fragment>
-            <Link to={`/admin/order/${params.row.id}`} className="productEdit">
+          <div className="flex items-center justify-center w-full h-full">
+            <Link to={`/admin/order/${params.row.id}`} className="productEdit flex items-center justify-center">
               <CiEdit className="productEditIcon" />
             </Link>
             <Button
               className="productDeleteBtn"
-              onClick={() => deleteOrderHandler(params.row.id)}
+              onClick={() => handleClickOpen(params.row.id)}
             >
               <AiOutlineDelete className="productDeleteBtnIcon" />
             </Button>
-          </React.Fragment>
+          </div>
         );
       },
     },
@@ -134,6 +145,25 @@ const ProductList = () => {
               disableRowSelectionOnClick
               className="productListTable"
             />
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {"Delete Order"}
+              </DialogTitle>
+              <DialogContent>
+                Are you sure you want to delete this order?
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={deleteOrderHandler} autoFocus>
+                  Delete
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
       ) : (

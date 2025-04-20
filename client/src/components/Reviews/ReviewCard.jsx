@@ -1,14 +1,12 @@
 import React from "react";
-import ReactStars from "react-stars";
+import Rating from "../Rating/Rating";
 
 const ReviewCard = ({ review }) => {
   const options = {
-    edit: false,
-    color: "#333",
-    activeColor: "#fff",
     value: review.rating,
+    size: 20,
+    edit: false,
     isHalf: true,
-    size: 25,
   };
 
   const createdAt = new Date(review.reviewedAt);
@@ -25,8 +23,7 @@ const ReviewCard = ({ review }) => {
             <p className="Apercu">{formattedDate}</p>
           </div>
           <div className="flex items-center justify-start gap-1 ratingStars">
-            <ReactStars {...options} />
-            <span>{review.rating} stars</span>
+            <Rating {...options} />
           </div>
         </div>
       </div>

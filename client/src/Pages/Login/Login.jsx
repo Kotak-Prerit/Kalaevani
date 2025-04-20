@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import MetaData from "../../Meta/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login, register } from "../../actions/userAction";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import Navbar from "../../components/Navbar/Navbar";
 import { FaRegEye, FaRegEyeSlash, FaCheckSquare } from "react-icons/fa";
 import logo from "../../assets/kalaevaniBlack.webp";

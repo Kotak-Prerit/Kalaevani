@@ -1,35 +1,98 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../ProductList/ProductList.css";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SideBar from "../../admin-components/Sidebar/Sidebar";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  Select,
+  MenuItem,
+  InputLabel
+} from "@mui/material";
 import { CiEdit } from "react-icons/ci";
 import { AiOutlineDelete } from "react-icons/ai";
 import MetaData from "../../../../Meta/MetaData";
-import { DELETE_PRODUCT_RESET } from "../../../../constants/productConstants";
+import { DELETE_USER_RESET, UPDATE_USER_RESET } from "../../../../constants/userConstants";
 import {
   getAllUsers,
   clearErrors,
   deleteUser,
+  updateUser
 } from "../../../../actions/userAction";
 
 const UserList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { error, users } = useSelector((state) => state.allUsers);
+  // State for delete dialog
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
+  // State for edit dialog
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editId, setEditId] = useState(null);
+  const [selectedRole, setSelectedRole] = useState("");
+
+  const { error, users } = useSelector((state) => state.allUsers);
   const {
     error: deleteError,
     isDeleted,
-    message,
+    message: deleteMessage,
+    loading: deleteLoading
   } = useSelector((state) => state.profile);
 
-  const deleteUserHandler = (id) => {
-    dispatch(deleteUser(id));
+  const {
+    error: updateError,
+    isUpdated,
+    loading: updateLoading
+  } = useSelector((state) => state.profile);
+
+  // Delete handlers
+  const handleDeleteDialogOpen = (id) => {
+    setDeleteId(id);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteDialogClose = () => {
+    setDeleteId(null);
+    setDeleteDialogOpen(false);
+  };
+
+  const deleteUserHandler = () => {
+    if (deleteId) {
+      dispatch(deleteUser(deleteId));
+      handleDeleteDialogClose();
+    }
+  };
+
+  // Edit handlers
+  const handleEditDialogOpen = (id, currentRole) => {
+    setEditId(id);
+    setSelectedRole(currentRole);
+    setEditDialogOpen(true);
+  };
+
+  const handleEditDialogClose = () => {
+    setEditId(null);
+    setSelectedRole("");
+    setEditDialogOpen(false);
+  };
+
+  const updateRoleHandler = () => {
+    if (editId && selectedRole) {
+      const userData = {
+        role: selectedRole
+      };
+      dispatch(updateUser(editId, userData));
+      handleEditDialogClose();
+    }
   };
 
   useEffect(() => {
@@ -43,14 +106,26 @@ const UserList = () => {
       dispatch(clearErrors());
     }
 
+    if (updateError) {
+      toast.error(updateError);
+      dispatch(clearErrors());
+    }
+
     if (isDeleted) {
-      toast.success(message);
-      navigate("/admin/dashboard");
-      dispatch({ type: DELETE_PRODUCT_RESET });
+      toast.success(deleteMessage);
+      navigate("/admin/users");
+      dispatch({ type: DELETE_USER_RESET });
+      dispatch(getAllUsers());
+    }
+
+    if (isUpdated) {
+      toast.success("User Role Updated Successfully");
+      dispatch({ type: UPDATE_USER_RESET });
+      dispatch(getAllUsers());
     }
 
     dispatch(getAllUsers());
-  }, [dispatch, error, deleteError, isDeleted, navigate, message]);
+  }, [dispatch, error, deleteError, updateError, isDeleted, isUpdated, navigate, deleteMessage]);
 
   const columns = [
     { field: "id", headerName: "User ID", minwidth: 200, flex: 0.8 },
@@ -69,7 +144,6 @@ const UserList = () => {
     {
       field: "role",
       headerName: "Role",
-      type: "number",
       minWidth: 150,
       flex: 0.3,
     },
@@ -82,21 +156,27 @@ const UserList = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <React.Fragment>
-            <Link to={`/admin/users`} className="productEdit">
+          <div className="flex items-center justify-center w-full h-full gap-2">
+            <Button
+              className="productEdit flex items-center justify-center"
+              onClick={() => handleEditDialogOpen(params.row.id, params.row.role)}
+              disabled={updateLoading || deleteLoading}
+            >
               <CiEdit className="productEditIcon" />
-            </Link>
+            </Button>
             <Button
               className="productDeleteBtn"
-              onClick={() => deleteUserHandler(params.row.id)}
+              onClick={() => handleDeleteDialogOpen(params.row.id)}
+              disabled={updateLoading || deleteLoading}
             >
               <AiOutlineDelete className="productDeleteBtnIcon" />
             </Button>
-          </React.Fragment>
+          </div>
         );
       },
     },
   ];
+
   const rows = [];
   users &&
     users.forEach((item) => {
@@ -110,9 +190,8 @@ const UserList = () => {
 
   return (
     <React.Fragment>
-      <MetaData title={`Product Management`} />
+      <MetaData title={`User Management`} />
 
-      {/* {isAuthenticated && user.role === "admin" ? ( */}
       <div className="dashboard">
         <SideBar />
         <div className="productListContainer">
@@ -120,17 +199,82 @@ const UserList = () => {
           <DataGrid
             rows={rows}
             columns={columns}
-            pageSize={10}
+            initialState={{
+              pagination: {
+                paginationModel: { pageSize: 25 },
+              },
+            }}
+            pageSizeOptions={[25]}
             disableRowSelectionOnClick
             className="productListTable"
           />
+
+          {/* Delete Dialog */}
+          <Dialog
+            open={deleteDialogOpen}
+            onClose={handleDeleteDialogClose}
+            aria-labelledby="delete-dialog-title"
+          >
+            <DialogTitle id="delete-dialog-title">
+              Delete User
+            </DialogTitle>
+            <DialogContent>
+              Are you sure you want to delete this user?
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleDeleteDialogClose} disabled={deleteLoading}>
+                Cancel
+              </Button>
+              <Button
+                onClick={deleteUserHandler}
+                autoFocus
+                color="error"
+                disabled={deleteLoading}
+              >
+                {deleteLoading ? "Deleting..." : "Delete"}
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          {/* Edit Role Dialog */}
+          <Dialog
+            open={editDialogOpen}
+            onClose={handleEditDialogClose}
+            aria-labelledby="edit-dialog-title"
+          >
+            <DialogTitle id="edit-dialog-title">
+              Update User Role
+            </DialogTitle>
+            <DialogContent>
+              <FormControl fullWidth sx={{ mt: 2 }}>
+                <InputLabel id="role-select-label">Role</InputLabel>
+                <Select
+                  labelId="role-select-label"
+                  id="role-select"
+                  value={selectedRole}
+                  label="Role"
+                  onChange={(e) => setSelectedRole(e.target.value)}
+                >
+                  <MenuItem value="user">User</MenuItem>
+                  <MenuItem value="admin">Admin</MenuItem>
+                </Select>
+              </FormControl>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleEditDialogClose} disabled={updateLoading}>
+                Cancel
+              </Button>
+              <Button
+                onClick={updateRoleHandler}
+                color="primary"
+                disabled={updateLoading || selectedRole === ""}
+              >
+                {updateLoading ? "Updating..." : "Update"}
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
       </div>
-      {/* ) : (
-        <div className="unauthorized flex justify-center items-center Apercu">
-          <p>You don't Belong here</p>
-        </div>
-      )} */}
     </React.Fragment>
   );
 };

@@ -1,19 +1,23 @@
 .productListContainer {
-  position: absolute;
-  right: 0;
+  margin-left: 20%; /* Width of sidebar */
   width: 80%;
-  background: #131417;
-  top: 0;
   min-height: 100vh;
+  background: #131417;
+  overflow-y: auto;
+  padding-bottom: 2rem;
 }
 .dashboardHeading {
   text-align: left;
   width: 100%;
   padding: 1rem 2rem;
   margin: auto;
+  background: #000;
   color: #fff;
   font-weight: 500;
   font-size: 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 .MuiDataGrid-columnHeaderTitle {
   color: #fff;
@@ -45,6 +49,7 @@
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: transparent !important;
 }
 .MuiTablePagination-toolbar {
   color: #fff;
@@ -78,6 +83,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .popup {
@@ -87,6 +93,7 @@
   border-radius: 8px;
   text-align: center;
   width: 70%;
+  max-width: 500px;
 }
 .popup h2 {
   font-size: 1.2rem;
@@ -116,4 +123,19 @@
 .popupNoBtn {
   background-color: gray;
   color: white;
+}
+
+@media (max-width: 600px) {
+  .productListContainer {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .productListTable {
+    margin: 10px;
+  }
+  
+  .popup {
+    width: 90%;
+  }
 }

@@ -12,9 +12,9 @@ import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import MaterialPopup from "../../components/Popup/MaterialPopup";
-import ReactStars from "react-stars";
+import Rating from "../../components/Rating/Rating";
 import ReviewCard from "../../components/Reviews/ReviewCard";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import MetaData from "../../Meta/MetaData";
 import { addItemsToCart } from "../../actions/cartAction";
 import Product from "../../components/ProductCard/ProductCard";
@@ -25,7 +25,6 @@ import {
   DialogContent,
   DialogTitle,
   Button,
-  Rating,
 } from "@mui/material";
 import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 import logo from "../../assets/kalaevaniBlack.webp";
@@ -185,6 +184,7 @@ const ProductDetails = () => {
     color2: "#FFD700",
     value: product.ratings,
     half: true,
+    size: window.innerWidth < 400 ? 15 : 20
   };
 
   const stockStatus = () => {
@@ -203,7 +203,7 @@ const ProductDetails = () => {
         <MetaData title={` ${product.name} `} />
         <Suspense fallback={<QuoteLoader />}>
           <Navbar props={logo} />
-          <div className="absolute top-[13vh] left-[2vw] flex flex-col items-start justify-center font-poppins">
+          <div className="absolute top-[13vh] z-10 left-[2vw] flex flex-col items-start justify-center font-poppins">
             <div className="flex items-center text-xs">
               <p className="text-[25px] text-[#131313] bebas mb-2">
                 {product.name}
@@ -212,10 +212,7 @@ const ProductDetails = () => {
             <span className="text-sm">{stockStatus()}</span>
 
             <div className="flex justify-center items-center gap-[5px]">
-              <ReactStars
-                {...options}
-                size={window.innerWidth < 400 ? 15 : 20}
-              />
+              <Rating {...options} />
               <span className="text-xs">
                 ({product.numberOfReviews} Reviews)
               </span>
@@ -224,7 +221,7 @@ const ProductDetails = () => {
             <div>
               <button
                 onClick={openSizeChart}
-                className="bg-transparent border-none underline cursor-pointer font-poppins"
+                className="bg-transparent border-none underline cursor-pointer font-poppins z-5"
               >
                 size chart
               </button>
@@ -239,7 +236,7 @@ const ProductDetails = () => {
               ></div>
               <div className="relative bg-white p-5 rounded-[10px] max-w-[90%] max-h-[90%] flex flex-col items-center justify-center">
                 <button
-                  className="absolute top-[10px] right-[10px] bg-red-600 text-white border-none rounded-full w-[30px] h-[30px] flex items-center justify-center cursor-pointer"
+                  className="absolute top-[10px] right-[10px] bg-red-600 text-white border-none rounded-[8px] w-[30px] h-[30px] flex items-center justify-center cursor-pointer"
                   onClick={closeSizeChart}
                 >
                   X
@@ -332,7 +329,7 @@ const ProductDetails = () => {
                     <button
                       disabled={product.Stock < 1}
                       onClick={addToCartHandler}
-                      className="w-full h-full bg-transparent border-none text-[25px] text-white cursor-pointer"
+                      className="w-full h-full bg-transparent border-none text-[20px] text-white cursor-pointer"
                     >
                       {product.Stock > 0 ? "Add to cart" : "Not available"}
                     </button>
@@ -341,7 +338,7 @@ const ProductDetails = () => {
                     <button
                       onClick={scrollToProductDetail}
                       disabled={product.Stock < 1}
-                      className="h-full bg-transparent border-none text-[25px] cursor-pointer"
+                      className="h-full bg-transparent border-none text-[20px] cursor-pointer"
                     >
                       Buy Now
                     </button>
@@ -368,7 +365,7 @@ const ProductDetails = () => {
                 {product.images &&
                   product.images.slice(0, 4).map((item, i) => (
                     <motion.div
-                      className="min-h-[40rem] min-w-[30rem] p-2.5 relative"
+                      className="md:min-h-[40rem] min-h-[30rem] min-w-[20rem] md:min-w-[30rem] p-2.5 relative"
                       key={i}
                     >
                       <img
@@ -393,10 +390,10 @@ const ProductDetails = () => {
             className="h-screen flex flex-col justify-center items-center bg-white relative overflow-hidden"
             ref={productDetailRef}
           >
-            <h1 className="absolute top-[15px] left-[15px] uppercase z-[5] text-4xl futuraLt">
+            <h1 className="absolute top-[15px] left-[15px] uppercase z-[5] text-lg md:text-4xl futuraLt">
               fabric / care & Artwork Meaning
             </h1>
-            <p className="absolute top-[7%] left-[15px] text-xl z-[5] Apercu">
+            <p className="absolute top-[5%] md:top-[7%] left-[15px] text-sm md:text-lg z-[5] Apercu">
               Click on the blinking buttons
             </p>
 
@@ -404,7 +401,7 @@ const ProductDetails = () => {
               <img
                 src={productImage}
                 alt=""
-                className="w-auto h-[90vh] -mt-[10vh] object-cover"
+                className="w-auto h-[60vh] md:h-[90vh] -mt-[10vh] object-cover"
               />
               <Fragment>
                 <div className="absolute w-full h-full top-0 left-0">
@@ -431,7 +428,7 @@ const ProductDetails = () => {
           </section>
 
           <Fragment>
-            <div>
+            <div className="touch-pan-y">
               <header className="flex justify-between items-center mb-6 px-[1.5vw] text-xl">
                 <h1 className="uppercase futuraLt">you may also like</h1>
                 <Link to={"/products"} className="underline text-blue-600">
@@ -439,13 +436,13 @@ const ProductDetails = () => {
                 </Link>
               </header>
 
-              <div className="w-full px-[1.5vw] flex items-center">
-                <div className="w-full flex flex-wrap justify-center items-center gap-2">
-                  {products &&
-                    products.map((product, i) => (
-                      <Product key={i} product={product} />
+              <div className="w-full flex gap-[10px] items-center justify-center flex-wrap my-[5vh]">
+                {products &&
+                  products
+                    .slice(0, 8)
+                    .map((product) => (
+                      <Product key={product._id} product={product} />
                     ))}
-                </div>
               </div>
 
               <div className="flex justify-center items-center mt-12 w-full">
@@ -467,21 +464,18 @@ const ProductDetails = () => {
             <div>
               {product.reviews && product.reviews[0] ? (
                 <div>
-                  <div className="bg-[#111] text-white flex justify-center items-center gap-3 p-4 relative w-full">
-                    <p className="text-[3vmax] font-bold">
+                  <div className="bg-[#111] text-white block md:flex justify-center items-center gap-3 p-4 relative w-full">
+                    <p className="text-[4vmax] md:text-[3vmax] font-bold">
                       {product.ratings.toFixed(1)}
                     </p>
                     <div>
-                      <ReactStars
-                        {...options}
-                        size={window.innerWidth < 600 ? 15 : 40}
-                      />
+                      <Rating {...options} size={window.innerWidth < 600 ? 15 : 40} />
                       <span className="text-sm ml-2">
                         Based on {product.numberOfReviews} Reviews
                       </span>
                     </div>
                     <button
-                      className="absolute right-[2vw] top-1/2 -translate-y-1/2 bg-white text-black px-5 py-2 font-semibold uppercase text-sm tracking-wider"
+                      className="relative md:absolute right-[2vw] top-1/2 -translate-y-1/2 bg-white text-black px-5 py-2 font-semibold uppercase text-sm tracking-wider"
                       onClick={submitReviewToggle}
                     >
                       Write a review

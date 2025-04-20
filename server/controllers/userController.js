@@ -1,12 +1,12 @@
-const ErrorHandler = require("../utils/errorhandler");
-const catchAsyncError = require("../middleware/catchAsyncError");
+const ErrorHandler = require("../utils/errorHandler");
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModel");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const bcrypt = require("bcrypt");
 
 // Register a User
-exports.registerUser = catchAsyncError(async (req, res, next) => {
+exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const { name, email, password } = req.body;
   const salt = await bcrypt.genSalt(10);
   encryptedPassword = await bcrypt.hash(password, salt);
@@ -22,7 +22,7 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
 });
 
 // LOGIN User :
-exports.loginUSer = catchAsyncError(async (req, res, next) => {
+exports.loginUSer = catchAsyncErrors(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -44,7 +44,7 @@ exports.loginUSer = catchAsyncError(async (req, res, next) => {
 });
 
 // Logout User :
-exports.logout = catchAsyncError(async (req, res, next) => {
+exports.logout = catchAsyncErrors(async (req, res, next) => {
   res.cookie("token", null, {
     expires: new Date(Date.now()),
     httpOnly: true,
@@ -57,7 +57,7 @@ exports.logout = catchAsyncError(async (req, res, next) => {
 });
 
 // Forget Password
-exports.sendForgotPasswordOtp = catchAsyncError(async (req, res, next) => {
+exports.sendForgotPasswordOtp = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
@@ -93,7 +93,7 @@ exports.sendForgotPasswordOtp = catchAsyncError(async (req, res, next) => {
 });
 
 //Verify forget password OTP
-exports.resetForgottenPassword = catchAsyncError(async (req, res, next) => {
+exports.resetForgottenPassword = catchAsyncErrors(async (req, res, next) => {
   const { email, otp, newPassword } = req.body;
 
   if (!email || !otp || !newPassword) {
@@ -137,7 +137,7 @@ exports.resetForgottenPassword = catchAsyncError(async (req, res, next) => {
 });
 
 // Get User Detail
-exports.getUserDetails = catchAsyncError(async (req, res, next) => {
+exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
   res.status(200).json({
@@ -147,7 +147,7 @@ exports.getUserDetails = catchAsyncError(async (req, res, next) => {
 });
 
 // Update User password :
-exports.changePassword = catchAsyncError(async (req, res, next) => {
+exports.changePassword = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id).select("+password");
 
   const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
@@ -168,7 +168,7 @@ exports.changePassword = catchAsyncError(async (req, res, next) => {
 });
 
 // Update User profile :
-exports.changeProfile = catchAsyncError(async (req, res, next) => {
+exports.changeProfile = catchAsyncErrors(async (req, res, next) => {
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
@@ -187,7 +187,7 @@ exports.changeProfile = catchAsyncError(async (req, res, next) => {
 });
 
 // Get all users --Admin
-exports.getAllUsers = catchAsyncError(async (req, res, next) => {
+exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
   const users = await User.find();
 
   res.status(200).json({
@@ -197,7 +197,7 @@ exports.getAllUsers = catchAsyncError(async (req, res, next) => {
 });
 
 // Get single user --Admin
-exports.getSingleUser = catchAsyncError(async (req, res, next) => {
+exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
   if (!user) {
@@ -211,7 +211,7 @@ exports.getSingleUser = catchAsyncError(async (req, res, next) => {
 });
 
 // Update User Role --Admin :
-exports.updateUserRole = catchAsyncError(async (req, res, next) => {
+exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
@@ -230,7 +230,7 @@ exports.updateUserRole = catchAsyncError(async (req, res, next) => {
 });
 
 // Delete User --Admin :
-exports.deleteUser = catchAsyncError(async (req, res, next) => {
+exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
   if (!user) {

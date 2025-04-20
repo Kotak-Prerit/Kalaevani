@@ -1,4 +1,5 @@
 import axios from "axios";
+import config from '../config/config';
 
 import {
   ALL_PRODUCT_FAIL,
@@ -22,6 +23,45 @@ import {
   CLEAR_ERRORS,
 } from "../constants/productConstants";
 
+// Set default base URL for axios
+axios.defaults.baseURL = config.API_URL;
+axios.defaults.withCredentials = true;
+axios.defaults.timeout = 30000; // 30 seconds timeout
+
+// Create axios instance with default config
+const api = axios.create({
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Add a request interceptor
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Add a response interceptor
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Handle unauthorized access
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const getProduct =
   (keyword = "", currentPage = 1, price = [500, 5000], sizes, ratings = 0) =>
   async (dispatch) => {
@@ -34,7 +74,7 @@ export const getProduct =
         link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${sizes}&ratings[gte]=${ratings}`;
       }
 
-      const { data } = await axios.get(link);
+      const { data } = await api.get(link);
 
       dispatch({
         type: ALL_PRODUCT_SUCCESS,
@@ -43,7 +83,7 @@ export const getProduct =
     } catch (error) {
       dispatch({
         type: ALL_PRODUCT_FAIL,
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || "Failed to fetch products",
       });
     }
   };
@@ -52,15 +92,8 @@ export const getProduct =
 export const getAdminProducts = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCT_REQUEST });
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`, // Add token
-      },
-    };
-
-    const { data } = await axios.get("/api/v1/admin/products", config);
-
+    const { data } = await api.get("/api/v1/admin/products");
+    
     dispatch({
       type: ADMIN_PRODUCT_SUCCESS,
       payload: data.products,
@@ -68,7 +101,7 @@ export const getAdminProducts = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ADMIN_PRODUCT_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || "Failed to fetch admin products",
     });
   }
 };
@@ -77,16 +110,7 @@ export const getAdminProducts = () => async (dispatch) => {
 export const createProduct = (productData) => async (dispatch) => {
   try {
     dispatch({ type: NEW_PRODUCT_REQUEST });
-
-    const config = {
-      headers: { "Content-Type": "application/json" },
-    };
-
-    const { data } = await axios.post(
-      `/api/v1/admin/product/new`,
-      productData,
-      config
-    );
+    const { data } = await api.post(`/api/v1/admin/product/new`, productData);
 
     dispatch({
       type: NEW_PRODUCT_SUCCESS,
@@ -95,7 +119,7 @@ export const createProduct = (productData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_PRODUCT_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || "Failed to create product",
     });
   }
 };
@@ -104,8 +128,7 @@ export const createProduct = (productData) => async (dispatch) => {
 export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
-
-    const { data } = await axios.get(`/api/v1/product/${id}`);
+    const { data } = await api.get(`/api/v1/product/${id}`);
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
@@ -114,7 +137,7 @@ export const getProductDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || "Failed to fetch product details",
     });
   }
 };
@@ -127,13 +150,7 @@ export const clearErrors = () => async (dispatch) => {
 export const newReview = (reviewData) => async (dispatch) => {
   try {
     dispatch({ type: NEW_REVIEW_REQUEST });
-
-    const config = {
-      headers: { "Content-Type": "application/json" },
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    };
-
-    const { data } = await axios.put(`/api/v1/review`, reviewData, config);
+    const { data } = await api.put(`/api/v1/review`, reviewData);
 
     dispatch({
       type: NEW_REVIEW_SUCCESS,
@@ -142,7 +159,7 @@ export const newReview = (reviewData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_REVIEW_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || "Failed to submit review",
     });
   }
 };
@@ -151,8 +168,7 @@ export const newReview = (reviewData) => async (dispatch) => {
 export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PRODUCT_REQUEST });
-
-    const { data } = await axios.delete(`/api/v1/admin/product/${id}`);
+    const { data } = await api.delete(`/api/v1/admin/product/${id}`);
 
     dispatch({
       type: DELETE_PRODUCT_SUCCESS,
@@ -161,7 +177,7 @@ export const deleteProduct = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_PRODUCT_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || "Failed to delete product",
     });
   }
 };

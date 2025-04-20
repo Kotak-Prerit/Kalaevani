@@ -1,10 +1,10 @@
 const Product = require("../models/productmodel");
-const ErroHandler = require("../utils/errorhandler");
-const catchAsyncError = require("../middleware/catchAsyncError");
+const ErroHandler = require("../utils/errorHandler");
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const apiFeatures = require("../utils/apifeatures");
 
 // Get All Products
-exports.getAllProducts = catchAsyncError(async (req, res, next) => {
+exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   // return next(new ErroHandler("Error 404", 500));
 
   const perPage = 8;
@@ -21,7 +21,7 @@ exports.getAllProducts = catchAsyncError(async (req, res, next) => {
 });
 
 // Get All Products (Admin)
-exports.getAdminProducts = catchAsyncError(async (req, res, next) => {
+exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
   const products = await Product.find();
 
   res.status(200).json({
@@ -31,7 +31,7 @@ exports.getAdminProducts = catchAsyncError(async (req, res, next) => {
 });
 
 // Get Product Details
-exports.productDetails = catchAsyncError(async (req, res, next) => {
+exports.productDetails = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
   if (!product) {
@@ -51,7 +51,7 @@ exports.productDetails = catchAsyncError(async (req, res, next) => {
 });
 
 //Create Product -- Admin
-exports.createProduct = catchAsyncError(async (req, res, next) => {
+exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   // let images = [];
 
   // if (typeof req.body.images === "string") {
@@ -85,7 +85,7 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
 });
 
 //Update products --Admin
-exports.updateProduct = catchAsyncError(async (req, res) => {
+exports.updateProduct = catchAsyncErrors(async (req, res) => {
   let product = Product.findById(req.params.id);
   if (!product) {
     return next(
@@ -109,7 +109,7 @@ exports.updateProduct = catchAsyncError(async (req, res) => {
 });
 
 //Delete Product --Admin
-exports.deleteProduct = catchAsyncError(async (req, res, next) => {
+exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
   if (!product) {
@@ -130,7 +130,7 @@ exports.deleteProduct = catchAsyncError(async (req, res, next) => {
 });
 
 // Create New Review or update the review :
-exports.createProductReview = catchAsyncError(async (req, res, next) => {
+exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   const { rating, comment, productId, createdAt } = req.body;
 
   const review = {
@@ -176,7 +176,7 @@ exports.createProductReview = catchAsyncError(async (req, res, next) => {
 });
 
 // Get reviews of a product
-exports.getProductReviews = catchAsyncError(async (req, res, next) => {
+exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.query.id);
 
   if (!product) {
@@ -190,7 +190,7 @@ exports.getProductReviews = catchAsyncError(async (req, res, next) => {
 });
 
 //delete reviews
-exports.deleteReviews = catchAsyncError(async (req, res, next) => {
+exports.deleteReviews = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.query.productId);
 
   if (!product) {

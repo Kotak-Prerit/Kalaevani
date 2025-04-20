@@ -4,7 +4,7 @@ import MetaData from "../../Meta/MetaData";
 import { Link } from "react-router-dom";
 import { getOrderDetails, clearErrors } from "../../actions/orderAction";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import logo from "../../assets/kalaevaniBlack.webp";
 import QuoteLoader from "../../utils/QuoteLoader/QuoteLoader";
 
@@ -36,7 +36,7 @@ const OrderDetails = () => {
       <MetaData title="Order Details" />
       <div className="bg-white mb-24 font-poppins px-[5vw] pt-[4vh] poppins">
         <Link to={"/"}>
-          <img src={logo} alt="logo" height={60} className="mb-[3vh]" />
+          <img src={logo} alt="logo" className="mb-[3vh] h-[60px] w-auto" />
         </Link>
 
         <h1 className="text-3xl font-bold mb-16 text-black">
