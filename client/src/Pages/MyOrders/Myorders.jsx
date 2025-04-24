@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, myOrders } from "../../actions/orderAction";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import MetaData from "../../Meta/MetaData";
 import Navbar from "../../components/Navbar/Navbar";
 import { MdOutlineFileDownload } from "react-icons/md";
@@ -120,9 +120,9 @@ const MyOrders = () => {
                   lineHeight: "1.5rem",
                 },
                 ".MuiDataGrid-menuIcon, .MuiDataGrid-iconButtonContainer, .MuiDataGrid-iconSeparator":
-                  {
-                    display: "none",
-                  },
+                {
+                  display: "none",
+                },
                 ".MuiDataGrid-cell": {
                   fontFamily: "Apercu",
                   fontSize: window.innerWidth <= 600 ? 10 : "1vmax",

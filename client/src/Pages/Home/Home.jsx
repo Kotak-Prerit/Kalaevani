@@ -9,7 +9,7 @@ import React, {
 import { motion } from "framer-motion";
 import { clearErrors, getProduct } from "../../actions/productAction.js";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import MetaData from "../../Meta/MetaData";
 import logo from "../../assets/kalaevaniBlack.webp";

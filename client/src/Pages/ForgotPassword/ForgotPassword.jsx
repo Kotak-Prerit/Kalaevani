@@ -6,7 +6,7 @@ import {
   forgotPassword,
   resetPassword,
 } from "../../actions/userAction";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import Navbar from "../../components/Navbar/Navbar";
 import logo from "../../assets/kalaevaniBlack.webp";
 import { useNavigate } from "react-router-dom";
@@ -146,8 +146,8 @@ const ForgotPassword = () => {
                     isSendingOtp
                       ? "Sending..."
                       : isEmailSent
-                      ? "Sent"
-                      : "Send OTP"
+                        ? "Sent"
+                        : "Send OTP"
                   }
                   className="w-full mt-5 py-5 text-lg font-light border-none rounded-md bg-black text-white cursor-pointer transition duration-300 hover:bg-neutral-800"
                 />

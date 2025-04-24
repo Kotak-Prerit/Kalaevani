@@ -80,12 +80,23 @@ export default function Footer() {
         </div>
 
         {sizeChartIsOpen && (
-          <div className="fixed top-0 left-0 w-full h-full bg-black/70 z-10 flex items-center justify-center">
-            <div className="bg-white p-5 rounded-lg">
-              <button onClick={closeSizeChart} className="mb-3">
+          <div className="fixed inset-0 z-[1000] flex items-center justify-center">
+            <div
+              className="absolute inset-0 bg-black bg-opacity-50"
+              onClick={closeSizeChart}
+            ></div>
+            <div className="relative bg-white p-5 rounded-[10px] max-w-[90%] max-h-[90%] flex flex-col items-center justify-center">
+              <button
+                className="absolute top-[10px] right-[10px] bg-red-600 text-white border-none rounded-[8px] w-[30px] h-[30px] flex items-center justify-center cursor-pointer"
+                onClick={closeSizeChart}
+              >
                 X
               </button>
-              <img src={sizeChart} alt="Size Chart" />
+              <img
+                src={sizeChart}
+                alt="Size Chart"
+                className="max-w-full max-h-full"
+              />
             </div>
           </div>
         )}
@@ -158,7 +169,7 @@ export default function Footer() {
         <Link to="/">
           <img src={Logo} alt="Logo" className="h-20" />
         </Link>
-        <p className="text-xl text-gray-400">© 2025 Kalaevani-Clothing, Inc.</p>
+        <p className="text-xl text-gray-400 text-right">© 2025 Kalaevani-Clothing, Inc.</p>
       </div>
     </div>
   );

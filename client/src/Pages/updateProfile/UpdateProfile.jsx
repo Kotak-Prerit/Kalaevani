@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import MetaData from "../../Meta/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, loadUser, updateProfile } from "../../actions/userAction";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import Navbar from "../../components/Navbar/Navbar";
 import { UPDATE_PROFILE_RESET } from "../../constants/userConstants";
 import QuoteLoader from "../../utils/QuoteLoader/QuoteLoader";

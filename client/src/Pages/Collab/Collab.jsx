@@ -1,7 +1,7 @@
 import React, { Suspense, useRef, useState, lazy } from "react";
 import emailjs from "@emailjs/browser";
 import collab from "../../assets/collab.png";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import MetaData from "../../Meta/MetaData";
 import logo from "../../assets/kalaevaniBlack.webp";
 import QuoteLoader from "../../utils/QuoteLoader/QuoteLoader";

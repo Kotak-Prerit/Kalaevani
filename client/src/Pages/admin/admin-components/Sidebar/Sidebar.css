@@ -1,11 +1,13 @@
 .sidebar {
   padding: 1rem 0.5rem;
   background: #1e1f26;
-  min-height: 100vh;
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
   width: 20%;
+  overflow-y: auto;
+  z-index: 100;
 }
 .dashboardLogo {
   display: flex;
@@ -55,6 +57,9 @@
   background: transparent;
   margin-bottom: 0;
   gap: 10px;
+  width: 100%;
+  text-align: left;
+  color: #fff;
 }
 .d-link button:focus {
   outline: none;
@@ -76,7 +81,15 @@
   color: #fff;
   gap: 10px;
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 }
 .product-dd {
   margin-bottom: 25px;
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    display: none;
+  }
 }

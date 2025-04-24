@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveShippingInfo } from "../../actions/cartAction";
 import MetaData from "../../Meta/MetaData";
 import CheckoutSteps from "../../components/checkoutStepper/CheckoutSteps";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -45,7 +45,7 @@ const Shipping = () => {
           setSelectedState("Error fetching data. Please try again.");
         }
       } else {
-        setSelectedState("Type valid State");
+        setSelectedState("Type valid Zip Code");
       }
       if (value.length === 6) {
         try {
@@ -63,7 +63,7 @@ const Shipping = () => {
           setSelectedCity("Error fetching data. Please try again.");
         }
       } else {
-        setSelectedCity("Type valid City");
+        setSelectedCity("Type valid Zip Code");
       }
     }
   };
@@ -98,12 +98,12 @@ const Shipping = () => {
       <div className="max-w-full flex justify-start items-center flex-col py-[60px] pb-[100px] bg-black text-white">
         <Link
           to={"/cart"}
-          className="fixed top-[15px] left-[15px] flex items-center justify-center h-10 w-10 rounded-full bg-white"
+          className="fixed top-[10px] left-[10px] flex items-center justify-center h-10 w-10 rounded-lg bg-[#303030]"
         >
-          <MdOutlineKeyboardArrowLeft className="text-3xl text-black absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          <MdOutlineKeyboardArrowLeft className="text-3xl text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
         </Link>
         <CheckoutSteps activeStep={0} />
-        <div className="w-3/4 mt-[30px] md:w-full">
+        <div className="w-[90%] md:w-3/4 mt-[30px] md:w-full">
           <h1 className="text-center uppercase text-[25px] futuraLt">
             Shipping Details
           </h1>
@@ -116,7 +116,7 @@ const Shipping = () => {
             <div className="w-full flex items-start flex-col mb-[10px]">
               <div>
                 <p className="uppercase  text-white font-bold">
-                  House/Door/FlatNo :{" "}
+                  Address Line 1 :{" "}
                 </p>
               </div>
               <div className="w-full mt-[10px]">
@@ -126,9 +126,8 @@ const Shipping = () => {
                   required
                   value={houseNo}
                   onChange={(e) => setHouseNo(e.target.value)}
-                  className={`w-full border ${
-                    houseNo ? "border-green-500" : "border-gray-500"
-                  } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
+                  className={`w-full border ${houseNo ? "border-green-500" : "border-gray-500"
+                    } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
                 />
               </div>
             </div>
@@ -137,7 +136,7 @@ const Shipping = () => {
             <div className="w-full flex items-start flex-col mb-[10px]">
               <div>
                 <p className="uppercase text-white font-bold">
-                  Street/Locality/Police Station :{" "}
+                  Address Line 2 :{" "}
                 </p>
               </div>
               <div className="w-full mt-[10px]">
@@ -147,9 +146,28 @@ const Shipping = () => {
                   required
                   value={street}
                   onChange={(e) => setStreet(e.target.value)}
-                  className={`w-full border ${
-                    street ? "border-green-500" : "border-gray-500"
-                  } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
+                  className={`w-full border ${street ? "border-green-500" : "border-gray-500"
+                    } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
+                />
+              </div>
+            </div>
+
+            {/* Landmark */}
+            <div className="w-full flex items-start flex-col mb-[10px]">
+              <div>
+                <p className="uppercase  text-white font-bold">
+                  Enter Landmark
+                </p>
+              </div>
+              <div className="w-full mt-[10px]">
+                <input
+                  type="text"
+                  placeholder="Landmark"
+                  required
+                  value={info}
+                  onChange={(e) => setInfo(e.target.value)}
+                  className={`w-full border ${info ? "border-green-500" : "border-gray-500"
+                    } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
                 />
               </div>
             </div>
@@ -169,30 +187,8 @@ const Shipping = () => {
                   value={zipCode}
                   onChange={handleInputChange}
                   required
-                  className={`w-full border ${
-                    zipCode ? "border-green-500" : "border-gray-500"
-                  } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
-                />
-              </div>
-            </div>
-
-            {/* Landmark */}
-            <div className="w-full flex items-start flex-col mb-[10px]">
-              <div>
-                <p className="uppercase  text-white font-bold">
-                  Enter Landmark
-                </p>
-              </div>
-              <div className="w-full mt-[10px]">
-                <input
-                  type="text"
-                  placeholder="Landmark"
-                  required
-                  value={info}
-                  onChange={(e) => setInfo(e.target.value)}
-                  className={`w-full border ${
-                    info ? "border-green-500" : "border-gray-500"
-                  } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
+                  className={`w-full border ${zipCode ? "border-green-500" : "border-gray-500"
+                    } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
                 />
               </div>
             </div>
@@ -209,9 +205,8 @@ const Shipping = () => {
                   required
                   value={selectedCity}
                   onChange={(e) => setSelectedCity(e.target.value)}
-                  className={`w-full border ${
-                    selectedCity ? "border-green-500" : "border-gray-500"
-                  } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
+                  className={`w-full border ${selectedCity ? "border-green-500" : "border-gray-500"
+                    } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
                 />
               </div>
             </div>
@@ -228,9 +223,8 @@ const Shipping = () => {
                   required
                   value={selectedState}
                   onChange={(e) => setSelectedState(e.target.value)}
-                  className={`w-full border ${
-                    selectedState ? "border-green-500" : "border-gray-500"
-                  } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
+                  className={`w-full border ${selectedState ? "border-green-500" : "border-gray-500"
+                    } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
                 />
               </div>
             </div>
@@ -249,9 +243,8 @@ const Shipping = () => {
                   id="country"
                   readOnly
                   value={"India"}
-                  className={`w-full border ${
-                    "India" ? "border-green-500" : "border-gray-500"
-                  } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
+                  className={`w-full border futuraLt ${"India" ? "border-green-500" : "border-gray-500"
+                    } bg-transparent text-white text-lg rounded-lg p-4 mb-7 uppercase text-bolder tracking-wider`}
                 />
               </div>
             </div>
@@ -269,9 +262,8 @@ const Shipping = () => {
                   value={phoneNo}
                   onChange={(e) => setPhoneNo(e.target.value)}
                   maxLength={10}
-                  className={`w-full border ${
-                    phoneNo ? "border-green-500" : "border-gray-500"
-                  } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
+                  className={`w-full border ${phoneNo ? "border-green-500" : "border-gray-500"
+                    } bg-transparent text-white text-lg rounded-lg p-4 mb-7`}
                 />
               </div>
             </div>
@@ -287,27 +279,7 @@ const Shipping = () => {
       </div>
 
       {/* Custom styles for MUI components that can't be directly styled with Tailwind */}
-      <style jsx global>{`
-        .MuiStepLabel-labelContainer p {
-          color: #fff;
-        }
-
-        .MuiStepConnector-line {
-          display: none !important;
-        }
-
-        .MuiStepConnector-root {
-          height: 1px;
-          background-color: #ffffff;
-          margin-top: 10px;
-          margin-inline: 10px;
-        }
-
-        .MuiStepConnector-active,
-        .MuiStepConnector-completed {
-          background: #fff;
-        }
-
+      <style>{`
         .Mui-completed svg {
           background: linear-gradient(
             95deg,

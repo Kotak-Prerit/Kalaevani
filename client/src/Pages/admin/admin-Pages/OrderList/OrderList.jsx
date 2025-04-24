@@ -1,31 +1,31 @@
-import React, { useEffect } from "react";
-import "../ProductList/ProductList.css";
-import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, deleteOrder } from "../../../../actions/orderAction";
-import { Link, useNavigate } from "react-router-dom";
-import SideBar from "../../admin-components/Sidebar/Sidebar";
-import { toast } from "react-toastify";
-import { DataGrid } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
-import { CiEdit } from "react-icons/ci";
-import { AiOutlineDelete } from "react-icons/ai";
+import React, { Fragment, useEffect, useState } from "react";
 import MetaData from "../../../../Meta/MetaData";
-import { getAllOrders } from "../../../../actions/orderAction";
-import { DELETE_ORDER_RESET } from "../../../../constants/orderConstants";
+import { Link, useParams } from "react-router-dom";
+import SideBar from "../../admin-components/Sidebar/Sidebar";
+import {
+  getOrderDetails,
+  clearErrors,
+  updateOrder,
+} from "../../../../actions/orderAction";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "sonner";
+import { Button } from "@mui/material";
+import { UPDATE_ORDER_RESET } from "../../../../constants/orderConstants";
+import "../ProccessOrder/processOrder.css";
+import QuoteLoader from "../../../../utils/QuoteLoader/QuoteLoader";
 
-const ProductList = () => {
+const ProcessOrder = () => {
+  const { order, error, loading } = useSelector((state) => state.orderDetails);
+  const { error: updateError, isUpdated } = useSelector((state) => state.order);
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [status, setStatus] = useState("");
 
-  const { error, orders } = useSelector((state) => state.allOrders);
-  const { isAuthenticated, user } = useSelector((state) => state.user);
-
-  //   const productList = adminProducts?.products || [];
-
-  const { error: deleteError, isDeleted } = useSelector((state) => state.order);
-
-  const deleteOrderHandler = (id) => {
-    dispatch(deleteOrder(id));
+  const updateOrderSubmitHandler = (e) => {
+    e.preventDefault();
+    const myForm = new FormData();
+    myForm.set("status", status);
+    dispatch(updateOrder(id, myForm));
   };
 
   useEffect(() => {
@@ -33,116 +33,142 @@ const ProductList = () => {
       toast.error(error);
       dispatch(clearErrors());
     }
-
-    if (deleteError) {
-      toast.error(deleteError);
+    if (updateError) {
+      toast.error(updateError);
       dispatch(clearErrors());
     }
-
-    if (isDeleted) {
-      toast.success("Order deleted successfully");
-      navigate("/admin/orders897451569418741");
-      dispatch({ type: DELETE_ORDER_RESET });
+    if (isUpdated) {
+      toast.success("Order Updated Successfully");
+      dispatch({ type: UPDATE_ORDER_RESET });
     }
+    dispatch(getOrderDetails(id));
+  }, [dispatch, error, id, isUpdated, updateError]);
 
-    dispatch(getAllOrders());
-  }, [dispatch, error, navigate, isDeleted, deleteError]);
-
-  const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 300, flex: 1 },
-
-    {
-      field: "status",
-      headerName: "Status",
-      minWidth: 150,
-      flex: 0.5,
-      cellClassName: (params) => {
-        return params.row.status === "Delivered" ? "greenColor" : "redColor";
-      },
-    },
-    {
-      field: "itemsQty",
-      headerName: "Items Qty",
-      type: "number",
-      minWidth: 150,
-      flex: 0.3,
-    },
-    {
-      field: "size",
-      headerName: "Item Size",
-      type: "string",
-      minWidth: 150,
-      flex: 0.3,
-    },
-
-    {
-      field: "amount",
-      headerName: "Amount",
-      type: "number",
-      minWidth: 270,
-      flex: 0.5,
-    },
-    {
-      field: "actions",
-      flex: 0.3,
-      headerName: "Actions",
-      minWidth: 150,
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <React.Fragment>
-            <Link to={`/admin/order/${params.row.id}`} className="productEdit">
-              <CiEdit className="productEditIcon" />
-            </Link>
-            <Button
-              className="productDeleteBtn"
-              onClick={() => deleteOrderHandler(params.row.id)}
-            >
-              <AiOutlineDelete className="productDeleteBtnIcon" />
-            </Button>
-          </React.Fragment>
-        );
-      },
-    },
-  ];
-  const rows = [];
-  orders &&
-    orders.forEach((item) => {
-      rows.push({
-        id: item._id,
-        status: item.orderStatus,
-        itemsQty: item.orderItems.reduce((acc, curr) => acc + curr.quantity, 0),
-        size: item.orderItems.map((orderItem) => orderItem.size).join(", "),
-        amount: `₹${item.totalPrice}`,
-      });
-    });
+  const getStatusClass = (status) => {
+    switch (status) {
+      case "Processing":
+        return "status-processing";
+      case "Shipped":
+        return "status-shipped";
+      case "Delivered":
+        return "status-delivered";
+      default:
+        return "";
+    }
+  };
 
   return (
-    <React.Fragment>
-      <MetaData title={`Order Management`} />
+    <Fragment>
+      <MetaData title="Process Order" />
+      <div className="dashboard">
+        <SideBar />
+        {loading ? (
+          <QuoteLoader />
+        ) : (
+          <div className="processOrder-container">
+            <div className="processOrder-grid">
+              <div>
+                <div className="shipping-payment-section">
+                  <h3 className="section-title">Shipping Information</h3>
+                  <div className="info-grid">
+                    <div className="info-item">
+                      <p className="info-label">Name</p>
+                      <p className="info-value">{order.user && order.user.name}</p>
+                    </div>
+                    <div className="info-item">
+                      <p className="info-label">Phone</p>
+                      <p className="info-value">
+                        {order.shippingInfo && order.shippingInfo.phoneNo}
+                      </p>
+                    </div>
+                    <div className="info-item">
+                      <p className="info-label">Address</p>
+                      <p className="info-value">
+                        {order.shippingInfo &&
+                          `${order.shippingInfo.houseNo}, ${order.shippingInfo.street}, ${order.shippingInfo.info}, ${order.shippingInfo.zipCode}, ${order.shippingInfo.city}, ${order.shippingInfo.state}, ${order.shippingInfo.country}`}
+                      </p>
+                    </div>
+                  </div>
 
-      {isAuthenticated && user.role === "admin" ? (
-        <div className="dashboard">
-          <SideBar />
-          <div className="productListContainer">
-            <p className="dashboardHeading poppins">All Orders</p>
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              pageSize={10}
-              disableRowSelectionOnClick
-              className="productListTable"
-            />
+                  <h3 className="section-title">Payment Details</h3>
+                  <div className="info-grid">
+                    <div className="info-item">
+                      <p className="info-label">Method</p>
+                      <p className="info-value">Cash on Delivery (COD)</p>
+                    </div>
+                    <div className="info-item">
+                      <p className="info-label">Total Amount</p>
+                      <p className="info-value">₹{order.totalPrice && order.totalPrice}</p>
+                    </div>
+                  </div>
+
+                  <h3 className="section-title">Order Status</h3>
+                  <div className="info-item">
+                    <p className={`order-status ${getStatusClass(order.orderStatus)}`}>
+                      {order.orderStatus}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="cart-items-section">
+                  <h3 className="section-title">Order Items</h3>
+                  <div className="cart-items-container">
+                    {order.orderItems &&
+                      order.orderItems.map((item) => (
+                        <div key={item.product} className="cart-item">
+                          <img src={item.image} alt="Product" />
+                          <div className="item-details">
+                            <Link to={`/product/${item.product}`} className="item-name">
+                              {item.name}
+                            </Link>
+                            <span className="item-size">Size: {item.size}</span>
+                          </div>
+                          <div className="item-price">
+                            {item.quantity} × ₹{item.price} =
+                            <strong> ₹{item.price * item.quantity}</strong>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              </div>
+
+              {order.orderStatus !== "Delivered" && (
+                <div className="update-status-section">
+                  <h3 className="section-title">Update Status</h3>
+                  <form onSubmit={updateOrderSubmitHandler}>
+                    <select
+                      className="status-select"
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value)}
+                    >
+                      <option value="">Choose Status</option>
+                      {order.orderStatus === "Processing" && (
+                        <option value="Shipped">Shipped</option>
+                      )}
+                      {order.orderStatus === "Shipped" && (
+                        <option value="Delivered">Delivered</option>
+                      )}
+                    </select>
+                    <Button
+                      className="update-button"
+                      type="submit"
+                      disabled={loading || status === ""}
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                    >
+                      {loading ? "Updating..." : "Update Status"}
+                    </Button>
+                  </form>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="unauthorized flex justify-center items-center Apercu">
-          <p>You don't Belong here</p>
-        </div>
-      )}
-    </React.Fragment>
+        )}
+      </div>
+    </Fragment>
   );
 };
 
-export default ProductList;
+export default ProcessOrder;

@@ -5,12 +5,17 @@ import MetaData from "../../Meta/MetaData";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CartItems from "../../components/CartItems/CartItems";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
+import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 
 const ConfirmOrder = () => {
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.price,
@@ -55,10 +60,16 @@ const ConfirmOrder = () => {
   return (
     <Fragment>
       <MetaData title="Confirm Order" />
-      <div className="bg-black min-h-[110vh] pt-5 text-white">
+      <button
+        onClick={handleGoBack}
+        className="fixed border-none top-[10px] left-[10px] flex items-center justify-center h-10 w-10 rounded-lg bg-[#303030]"
+      >
+        <MdOutlineKeyboardArrowLeft className="text-3xl text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+      </button>
+      <div className="bg-black min-h-[110vh] pt-5 text-white pt-[50px]">
         <CheckoutSteps activeStep={1} />
 
-        <div className="flex flex-col md:flex-row w-full mt-12 px-[4vw] md:px-[2vw]">
+        <div className="flex flex-col md:flex-row w-full px-[4vw] md:px-[2vw] mt-8">
           {/* Left Side - Shipping Info & Cart Items */}
           <div className="w-full md:w-3/5 flex flex-col justify-start">
             {/* Shipping Information */}
@@ -66,7 +77,7 @@ const ConfirmOrder = () => {
               <Typography
                 style={{
                   fontSize: "25px",
-                  fontWeight: 400,
+                  fontWeight: 600,
                   fontFamily: "poppins",
                   marginBottom: "25px",
                 }}
@@ -133,7 +144,7 @@ const ConfirmOrder = () => {
                 style={{
                   padding: "0 1vmax 1vmax",
                   fontSize: "25px",
-                  fontWeight: 400,
+                  fontWeight: 600,
                   fontFamily: "poppins",
                   marginBottom: "25px",
                   textAlign: "start",
@@ -143,15 +154,15 @@ const ConfirmOrder = () => {
               </Typography>
 
               <div className="text-lg">
-                <div className="flex justify-between my-8">
+                <div className="flex justify-between my-3">
                   <p>Subtotal : </p>
                   <span>₹{subtotal}</span>
                 </div>
-                <div className="flex justify-between my-8">
+                <div className="flex justify-between my-3">
                   <p>Shipping Charges :</p>
                   <span>{shippingCharges}</span>
                 </div>
-                <div className="flex justify-between my-8">
+                <div className="flex justify-between my-3">
                   <p>GST :</p>
                   <span>Included</span>
                 </div>

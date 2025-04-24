@@ -13,11 +13,11 @@ import { useSelector } from "react-redux";
 import DoughnutChart from "../../admin-components/DoughnutChart/DoughnutChart.jsx";
 import { useDispatch } from "react-redux";
 import { getAdminProducts } from "../../../../actions/productAction.js";
-import store from "../../../../store/store.js";
-import { loadUser } from "../../../../actions/userAction.js";
 import { getAllOrders } from "../../../../actions/orderAction.js";
+import { getAllUsers } from "../../../../actions/userAction.js";
 import PageNotFound from "../../../404/PageNotFound.jsx";
 import MetaData from "../../../../Meta/MetaData.js";
+import CustomerInsights from "../../admin-components/CustomerInsights/CustomerInsights.jsx";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -25,13 +25,13 @@ const Dashboard = () => {
   const { orders } = useSelector((state) => state.allOrders);
   const { users } = useSelector((state) => state.allUsers);
   const { isAuthenticated, user } = useSelector((state) => state.user);
-  React.useEffect(() => {
-    store.dispatch(loadUser());
-  }, []);
+
   useEffect(() => {
     dispatch(getAdminProducts());
     dispatch(getAllOrders());
+    dispatch(getAllUsers());
   }, [dispatch]);
+
   return (
     <>
       <MetaData title={"Kalaevani - Dashboard"} />
@@ -48,7 +48,7 @@ const Dashboard = () => {
                 <p className="boxNumbers">NA</p>
               </div>
               <div className="dashboardBox">
-                <Link to="/admin/products897451569418741">
+                <Link to="/admin/products">
                   <p className="boxTitle poppins flex justify-center items-center">
                     {" "}
                     <LuBox className="box" />
@@ -59,7 +59,7 @@ const Dashboard = () => {
                 </Link>
               </div>
               <div className="dashboardBox">
-                <Link to="/admin/orders897451569418741">
+                <Link to="/admin/orders">
                   <p className="boxTitle poppins flex justify-center items-center">
                     <RiBarcodeBoxLine className="barcode" />
                     Orders
@@ -69,7 +69,7 @@ const Dashboard = () => {
                 </Link>
               </div>
               <div className="dashboardBox">
-                <Link to="/admin/users897451569418741">
+                <Link to="/admin/users">
                   <p className="boxTitle poppins flex justify-center items-center">
                     {" "}
                     <FaArrowTrendUp className="usergrow" />
@@ -92,6 +92,8 @@ const Dashboard = () => {
                 <DoughnutChart />
               </div>
             </div>
+
+            <CustomerInsights />
           </div>
         </div>
       ) : (

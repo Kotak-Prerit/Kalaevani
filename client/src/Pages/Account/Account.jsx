@@ -10,7 +10,7 @@ import dashboard from "../../assets/dashboard.png";
 import password from "../../assets/password.png";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { logout } from "../../actions/userAction";
 import { useDispatch } from "react-redux";
 import UserAccount from "../../components/UserAccount/UserAccount";

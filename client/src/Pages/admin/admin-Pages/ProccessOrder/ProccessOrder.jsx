@@ -8,7 +8,7 @@ import {
   updateOrder,
 } from "../../../../actions/orderAction";
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { Button } from "@mui/material";
 import { UPDATE_ORDER_RESET } from "../../../../constants/orderConstants";
 import "./processOrder.css";

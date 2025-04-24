@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItemsToCart, removeItemsFromCart } from "../../actions/cartAction";
 import logoWhite from "../../assets/kalaevaniWhite.webp";
 import Marquee from "react-fast-marquee";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -101,14 +101,14 @@ const Cart = () => {
               </div>
             ) : (
               <div className="py-10 px-6 mt-5 md:mt-16 ">
-                <div className="flex justify-between items-center">
-                  <p className="uppercase text-gray-500 text-sm font-medium">
+                <div className="flex md:justify-between items-center">
+                  <p className="uppercase text-gray-500 w-[50%] md:w-auto  text-sm font-medium">
                     cart
                   </p>
-                  <p className="uppercase text-gray-500 text-sm font-medium">
+                  <p className="uppercase text-gray-500 w-[25%] md:w-auto  text-sm font-medium">
                     quantity
                   </p>
-                  <p className="uppercase text-gray-500 text-sm font-medium">
+                  <p className="uppercase text-gray-500 w-[25%] md:w-auto  text-sm font-medium">
                     subtotal
                   </p>
                 </div>
@@ -128,11 +128,11 @@ const Cart = () => {
                 <div className="mt-[5vh] w-full flex justify-end">
                   <div className="w-full md:w-1/2">
                     <div className="flex justify-between items-center mb-4">
-                      <p className="font-bold text-base text-white uppercase">
+                      <p className="font-bold text-base text-white uppercase w-[30%]">
                         delivery :
                       </p>
-                      <p className="text-sm poppins text-shipping capitalize">
-                        shipping calculated at checkout.
+                      <p className="text-[12px] md:text-sm poppins text-shipping capitalize w-[70%] text-right">
+                        Calculated at checkout.
                       </p>
                     </div>
                     <div className="flex justify-between items-center mb-4">

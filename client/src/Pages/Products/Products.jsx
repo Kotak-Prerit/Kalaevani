@@ -7,7 +7,7 @@ import Product from "../../components/ProductCard/ProductCard";
 import { motion } from "framer-motion";
 import MetaData from "../../Meta/MetaData";
 import Pagination from "react-js-pagination";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import logoBlack from "../../assets/kalaevaniBlack.webp";
 import { Slider } from "@mui/material";
@@ -142,7 +142,7 @@ function Products() {
           </div>
         ) : (
           <div
-            className="flex flex-wrap justify-center gap-2 py-[5vh]"
+            className="flex flex-wrap justify-center gap-2 p-[5vh]"
             onMouseEnter={textEnter}
             onMouseLeave={textLeave}
           >

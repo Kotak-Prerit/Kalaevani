@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { clearErrors, getProductDetails } from "../../actions/productAction";
 import { motion } from "framer-motion";
 

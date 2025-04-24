@@ -30,8 +30,9 @@
     "react-router-dom": "^6.26.0",
     "react-scripts": "5.0.1",
     "react-stars": "^2.2.5",
-    "react-toastify": "^10.0.5",
     "sass-loader": "^16.0.5",
+    "sonner": "^2.0.3",
+    "three": "^0.176.0",
     "threejs-components": "^0.0.13"
   },
   "scripts": {

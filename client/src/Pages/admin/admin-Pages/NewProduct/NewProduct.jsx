@@ -11,7 +11,7 @@ import MetaData from "../../../../Meta/MetaData";
 import Sidebar from "../../admin-components/Sidebar/Sidebar";
 // import { NEW_PRODUCT_RESET } from "../../../../constants/productConstants";
 // import { useNavigate } from "react-router-dom";
-// import { toast } from "react-toastify";
+// import { toast } from "sonner";
 
 const NewProduct = () => {
   // const dispatch = useDispatch();

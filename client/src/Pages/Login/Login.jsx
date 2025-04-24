@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import MetaData from "../../Meta/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login, register } from "../../actions/userAction";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import Navbar from "../../components/Navbar/Navbar";
 import { FaRegEye, FaRegEyeSlash, FaCheckSquare } from "react-icons/fa";
 import logo from "../../assets/kalaevaniBlack.webp";
@@ -212,9 +212,8 @@ const Login = () => {
                     </div>
                   </div>
                   <p
-                    className={`text-sm ${
-                      password.length >= 8 ? "text-green-600" : "text-red-600"
-                    }`}
+                    className={`text-sm ${password.length >= 8 ? "text-green-600" : "text-red-600"
+                      }`}
                   >
                     Password must contain at least 8 characters
                   </p>

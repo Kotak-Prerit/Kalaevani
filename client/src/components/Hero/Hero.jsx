@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Spheres1Background from "threejs-components/build/backgrounds/spheres1.cdn.min.js";
 import { IoIosColorFill } from "react-icons/io";
-import Loader from "../../utils/QuoteLoader/QuoteLoader";
+import Loader from "../../assets/bubble-placeholder.webp";
 
 const Hero = () => {
   const canvasRef = useRef(null);

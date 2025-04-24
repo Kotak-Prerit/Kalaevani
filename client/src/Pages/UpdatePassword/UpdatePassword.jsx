@@ -7,7 +7,7 @@ import {
   loadUser,
   updatePassword,
 } from "../../actions/userAction";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import Navbar from "../../components/Navbar/Navbar";
 import { UPDATE_PASSWORD_RESET } from "../../constants/userConstants";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";

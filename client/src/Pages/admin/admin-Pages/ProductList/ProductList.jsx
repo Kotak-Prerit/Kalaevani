@@ -8,7 +8,7 @@ import {
 } from "../../../../actions/productAction";
 import { Link, useNavigate } from "react-router-dom";
 import SideBar from "../../admin-components/Sidebar/Sidebar";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 import { CiEdit } from "react-icons/ci";
@@ -64,7 +64,7 @@ const ProductList = () => {
           <img
             src={params.value}
             alt="product"
-            style={{ width: "auto", height: "50px" }}
+            className="w-[30px] h-[30px] rounded-md mt-2"
           />
         );
       },
@@ -99,10 +99,10 @@ const ProductList = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <React.Fragment>
+          <div className="flex items-center justify-center w-full h-full">
             <Link
               to={`/admin/product/${params.row.id}`}
-              className="productEdit"
+              className="productEdit flex items-center justify-center"
             >
               <CiEdit className="productEditIcon" />
             </Link>
@@ -112,7 +112,7 @@ const ProductList = () => {
             >
               <AiOutlineDelete className="productDeleteBtnIcon" />
             </Button>
-          </React.Fragment>
+          </div>
         );
       },
     },
@@ -121,7 +121,7 @@ const ProductList = () => {
   productList &&
     productList.forEach((item) => {
       rows.push({
-        productImage: item.images[4].url,
+        productImage: item.images[5].url,
         id: item._id,
         stock: item.Stock,
         price: `₹${item.price}`,

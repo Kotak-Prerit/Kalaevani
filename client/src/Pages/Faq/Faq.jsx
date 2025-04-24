@@ -7,7 +7,6 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
 const Faq = () => {
   const [activeIndex, setActiveIndex] = useState(null);
-
   const contentRefs = useRef([]);
 
   const toggleAnswer = (index) => {
@@ -17,7 +16,7 @@ const Faq = () => {
   const faqs = [
     {
       question: "How much time does delivery take?",
-      answer: `We process orders every day before 9 am except on public holidays. After dispatch, it takes about 5-7 working days for delivery. \n We ship your parcel from Surat, Gujarat.`,
+      answer: `We process orders every day before 9 am except on public holidays. After dispatch, it takes about 5-7 working days for delivery. We ship your parcel from Surat, Gujarat.`,
     },
     {
       question: "Do you have an EMI option?",
@@ -35,12 +34,12 @@ const Faq = () => {
     },
     {
       question: "What are the operation timings?",
-      answer: `It is open on all 7 days except public holidays \n Our operation timing is from 11 am to 6 pm Monday to Sunday.`,
+      answer: `It is open on all 7 days except public holidays. Our operation timing is from 11 am to 6 pm Monday to Sunday.`,
     },
     {
       question: "Can I change my shipping/billing address?",
       answer:
-        "Yes, you can change your shipping or billing address within 3 hours of placing the order. Once the order is shipped already, it gets difficult. Kindly reach out to our customer support team by submitting your request via the `contact us` form.",
+        "Yes, you can change your shipping or billing address within 3 hours of placing the order. Once the order is shipped already, it gets difficult. Kindly reach out to our customer support team by submitting your request via the 'contact us' form.",
     },
     {
       question: "Can I change the items in my order?",
@@ -53,8 +52,7 @@ const Faq = () => {
         "We only have an exchange policy and for this you check our exchange and return policy page.",
     },
     {
-      question:
-        "How much time does it take for a returned item to reach the warehouse?",
+      question: "How much time does it take for a returned item to reach the warehouse?",
       answer:
         "It takes about 5-7 business days for the returned order to be delivered back to us.",
     },
@@ -74,12 +72,12 @@ const Faq = () => {
     },
     {
       question: "Do you have a same-day delivery service?",
-      answer: `Same-day delivery is currently only for Surat orders at an extra cost borne by the customer. You can reach out to our customer support on WhatsApp at +91 8160936541 \n -- before 4 pm (except Sundays) to get a quote for the same. Once the delivery charges are accepted by you, we'll have your parcel delivered the same day.`,
+      answer: `Same-day delivery is currently only for Surat orders at an extra cost borne by the customer. You can reach out to our customer support on WhatsApp at +91 8160936541 before 4 pm (except Sundays) to get a quote for the same. Once the delivery charges are accepted by you, we'll have your parcel delivered the same day.`,
     },
     {
       question: "What are the payment options available?",
       answer:
-        "We offer COD. The options available for placing prepaid orders: \n Google pay, \n Paytm UPI, \n Phone pe , \n UPI ID,Credit Card, Debit card",
+        "We offer COD. The options available for placing prepaid orders: Google pay, Paytm UPI, Phone pe, UPI ID, Credit Card, Debit card",
     },
     {
       question: "Do you have cash on delivery?",
@@ -87,8 +85,7 @@ const Faq = () => {
         "Yes, we do offer cash on delivery services. :) There will be an additional cash on delivery charge applied.",
     },
     {
-      question:
-        "Do you have any shipping charges on international/within-India orders?",
+      question: "Do you have any shipping charges on international/within-India orders?",
       answer:
         "Within India, shipping charges are applicable. Shipping to foreign countries is chargeable, shipping cost will be calculated at the time of checkout automatically and will increase depending on the order value of the product",
     },
@@ -105,7 +102,7 @@ const Faq = () => {
     {
       question: "How to collaborate with Kalaevani?",
       answer:
-        "For collaborations, kindly email us at kalaevani@gmail.com .If things work out, we will get in touch with you :)",
+        "For collaborations, kindly email us at kalaevani@gmail.com. If things work out, we will get in touch with you :)",
     },
     {
       question: "How can I join the kalaevani team?",
@@ -122,41 +119,44 @@ const Faq = () => {
       answer: "Please visit our Contact page",
     },
   ];
+
   return (
     <>
-      <MetaData title="Kalaevani - Faqs" />
+      <MetaData title="Kalaevani - FAQs" />
       <Navbar props={logo} />
-      <div className="faqs flex justify-center items-center">
-        <h1 className="faqs-head futuraLt">FAQs</h1>
-        <div className="faq-container">
+      <div className="flex flex-col items-center min-h-screen py-12">
+        <h1 className="text-4xl md:text-5xl font-bold text-center my-8 futuraLt text-gray-800">
+          Frequently Asked Questions
+        </h1>
+
+        <div className="w-[90%] md:w-[80%] lg:w-[70%] bg-white rounded-xl  border border-black-600 p-6 mb-12">
           {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className="faq-item flex justify-center items-center"
-            >
+            <div key={index} className="border-b border-gray-200 last:border-none">
               <div
-                className="faq-question montserrat"
+                className="flex justify-between items-center py-4 cursor-pointer group"
                 onClick={() => toggleAnswer(index)}
               >
-                <h3>{faq.question}</h3>
-                <span className="toggle-icon">
+                <h3 className="text-lg md:text-xl font-medium text-gray-800 group-hover:text-green-600 transition-colors duration-200 montserrat pr-4">
+                  {faq.question}
+                </h3>
+                <span className="flex-shrink-0">
                   {activeIndex === index ? (
-                    <MdKeyboardArrowUp className="faq-icon" />
+                    <MdKeyboardArrowUp className="text-3xl text-green-500 bg-green-50 rounded-full p-1" />
                   ) : (
-                    <MdKeyboardArrowDown className="faq-icon" />
+                    <MdKeyboardArrowDown className="text-3xl text-gray-400 bg-gray-50 rounded-full p-1 group-hover:text-green-500 group-hover:bg-green-50 transition-colors duration-200" />
                   )}
                 </span>
               </div>
               <div
-                className="faq-answer poppins"
+                className="overflow-hidden transition-all duration-300 ease-in-out"
                 ref={(el) => (contentRefs.current[index] = el)}
                 style={{
-                  maxHeight: activeIndex === index ? `100px` : "0",
-                  overflow: "hidden",
-                  transition: "max-height 200ms ease-in-out",
+                  maxHeight: activeIndex === index ? '500px' : '0',
                 }}
               >
-                <p style={{ width: "90%" }}>{faq.answer}</p>
+                <p className="text-gray-600 pb-4 poppins text-base md:text-lg whitespace-pre-line">
+                  {faq.answer}
+                </p>
               </div>
             </div>
           ))}
