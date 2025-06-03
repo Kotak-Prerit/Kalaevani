@@ -67,7 +67,7 @@ const MaterialPopup = ({ isOpen, onClose, materialName }) => {
 
   return (
     <Modal
-      className="absolute top-1/2 left-1/2 w-3/5 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-8 flex flex-col items-start justify-center max-h-[80vh] overflow-y-scroll"
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-8 flex flex-col items-start justify-center max-h-[80vh] w-[90%] md:w-[70%] overflow-y-scroll"
       isOpen={isOpen}
       onRequestClose={onClose}
       appElement={document.getElementById("root")}
@@ -82,7 +82,7 @@ const MaterialPopup = ({ isOpen, onClose, materialName }) => {
       <h2 className="text-left border-b border-black pb-2 text-black capitalize text-2xl Apercu">
         {selectedMaterial.name}
       </h2>
-      <p className="text-left mt-5 mb-5 text-black max-w-full overflow-hidden break-words whitespace-normal text-[20px] font-poppins">
+      <p className="text-left mt-5 mb-5 text-black max-w-full overflow-hidden break-words whitespace-normal text-[14px]  md:text-[20px] font-poppins">
         {selectedMaterial.data}
       </p>
       <img
@@ -92,7 +92,7 @@ const MaterialPopup = ({ isOpen, onClose, materialName }) => {
       />
       <button
         onClick={onClose}
-        className="bg-black text-white px-4 py-2 text-lg border-none cursor-pointer self-end mr-[2%] rounded-md font-poppins"
+        className="bg-black text-white px-4 md:py-2 py-1 mt-2 md:mt-0 text-lg border-none cursor-pointer self-end mr-[2%] rounded-md font-poppins"
       >
         close
       </button>

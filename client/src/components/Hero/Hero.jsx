@@ -51,8 +51,8 @@ const Hero = () => {
       </div>
 
       <div
-        className="absolute top-1/2 right-4 flex justify-center items-center gap-4 -translate-y-1/2"
-        style={{ zIndex: 10 }}
+        className="absolute md:top-1/2 top-[10%] right-4 flex justify-center items-center gap-4 -translate-y-1/2"
+        style={{ zIndex: 100 }}
       >
         <button
           type="button"

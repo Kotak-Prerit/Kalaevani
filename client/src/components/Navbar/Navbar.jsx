@@ -21,11 +21,10 @@ const Navbar = (props) => {
     <StrictMode>
       {/* Main container: toggles between closed (sticky) and open (fixed) states */}
       <div
-        className={`w-full flex top-0 ${
-          clicked
+        className={`w-full flex top-0 ${clicked
             ? "h-[102vh] items-center justify-between px-[2.5vw] fixed z-[9999] transition duration-500 bg-black overflow-hidden"
             : "h-[80px] items-center justify-between px-[2.6vw] transition duration-300 sticky z-[99] max-sm:h-[10vh]"
-        }`}
+          }`}
       >
         {/* Logo Wrapper */}
         <div className="transition duration-1000 relative overflow-hidden z-[9]">
@@ -56,30 +55,27 @@ const Navbar = (props) => {
         <div>
           {/* Right Section */}
           <div
-            className={`flex items-center justify-center max-sm:${
-              clicked
+            className={`flex items-center justify-center max-sm:${clicked
                 ? ""
-                : "fixed bottom-[3vh] left-[6vw] flex-row-reverse gap-[10px]"
-            }`}
+                : "fixed bottom-[3vh] md:left-[6vw] left-[2vw] flex-row-reverse gap-[10px]"
+              }`}
           >
             {/* Search Icon */}
             <Link
               to="/products"
-              className={`bg-white border border-[#d3d3d3] h-[45px] w-[45px] rounded-[50px] flex items-center justify-center text-[18px] text-black mr-[10px] ${
-                clicked
+              className={`bg-white border border-[#d3d3d3] h-[45px] w-[45px] rounded-[50px] flex items-center justify-center text-[18px] text-black mr-[10px] ${clicked
                   ? "sm:absolute sm:top-[18px] sm:right-[245px] max-sm:fixed max-sm:top-[70px] max-sm:right-[10px] max-sm:rounded-[100px]"
                   : ""
-              }`}
+                }`}
             >
               <LuSearch />
             </Link>
 
             <div
-              className={`flex justify-between items-center h-[45px] rounded-[50px] px-[15px] bg-white border border-[#d3d3d3] ${
-                clicked
+              className={`flex justify-between items-center h-[45px] rounded-[50px] px-[15px] bg-white border border-[#d3d3d3] ${clicked
                   ? "fixed top-[2vh] right-[2.5vw] max-sm:top-[20px] max-sm:right-[20px] w-[200px]"
                   : "w-[200px] max-sm:w-[78vw] max-sm:mt-[5px]"
-              }`}
+                }`}
             >
               <Link className="h-full relative" to="/cart">
                 <img
@@ -122,18 +118,16 @@ const Navbar = (props) => {
                 onClick={handleClick}
               >
                 <i
-                  className={`h-[1px] w-[20px] bg-black ${
-                    clicked
+                  className={`h-[1px] w-[20px] bg-black ${clicked
                       ? "rotate-[45deg] m-0"
                       : "my-[1.5px] group-hover:my-[2px] transition duration-500"
-                  }`}
+                    }`}
                 ></i>
                 <i
-                  className={`h-[1px] w-[20px] bg-black ${
-                    clicked
+                  className={`h-[1px] w-[20px] bg-black ${clicked
                       ? "rotate-[-45deg] m-0"
                       : "my-[1.5px] group-hover:my-[2px] transition duration-500"
-                  }`}
+                    }`}
                 ></i>
               </div>
             </div>
@@ -143,9 +137,8 @@ const Navbar = (props) => {
           <div className="menuLinksContainer">
             {/* Social Links */}
             <div
-              className={`absolute bottom-[2.5vw] left-[2.5vw] max-sm:left-[5vw] max-sm:bottom-[100px] md:top-[15vh] md:bottom-auto ${
-                clicked ? "" : "hidden"
-              }`}
+              className={`absolute bottom-[2.5vw] left-[2.5vw] max-sm:left-[5vw] max-sm:bottom-[100px] md:top-[15vh] md:bottom-auto ${clicked ? "" : "hidden"
+                }`}
             >
               <h1
                 className={
@@ -206,9 +199,8 @@ const Navbar = (props) => {
 
             {/* Navigation Links */}
             <div
-              className={`h-fit flex flex-col items-end justify-end absolute right-[2vw] bottom-[5vh] font-normal max-sm:right-[5vw] max-sm:top-[25vh] montserrat ${
-                clicked ? "" : "hidden"
-              }`}
+              className={`h-fit flex flex-col items-end justify-end absolute right-[2vw] bottom-[5vh] font-normal max-sm:right-[5vw] max-sm:top-[25vh] montserrat ${clicked ? "" : "hidden"
+                }`}
             >
               <Link
                 to="/"

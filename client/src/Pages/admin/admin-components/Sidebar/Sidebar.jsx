@@ -34,29 +34,28 @@ const Sidebar = () => {
           <FaStore className="pr-icon" /> Products
         </button>
         <ul
-          className={`product-dropdown ${
-            isDropdownVisible ? "visible" : "hidden"
-          }`}
+          className={`product-dropdown ${isDropdownVisible ? "visible" : "hidden"
+            }`}
         >
           <li>
-            <Link to="/admin/products897451569418741" className="flex">
+            <Link to="/admin/products" className="flex">
               <FaThList /> All Products
             </Link>
           </li>
           <li>
-            <Link to="/admin/product897451569418741" className="flex">
+            <Link to="/admin/product" className="flex">
               <MdLibraryAdd /> Create Product
             </Link>
           </li>
         </ul>
       </li>
-      <Link to="/admin/orders897451569418741" className="d-link Apercu">
+      <Link to="/admin/orders" className="d-link Apercu">
         <p className="flex">
           <FaPencil className="odr-icon" />
           Orders
         </p>
       </Link>
-      <Link to="/admin/users897451569418741" className=" d-link Apercu">
+      <Link to="/admin/users" className=" d-link Apercu">
         <p className="flex">
           <FaUserCircle className="usr-icon" /> Users
         </p>

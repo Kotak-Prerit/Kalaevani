@@ -348,7 +348,7 @@ const ProductDetails = () => {
             </div>
           </section>
 
-          <section className="h-[125vh] w-screen bg-black">
+          <section className="h-[120vh] w-screen bg-black">
             <div className="flex justify-between items-center w-full py-[2vmax] h-[20vh] px-[2vmax]">
               <h1 className="text-white text-3xl text-left futuraLt">
                 Close look 👀
@@ -365,7 +365,7 @@ const ProductDetails = () => {
                 {product.images &&
                   product.images.slice(0, 4).map((item, i) => (
                     <motion.div
-                      className="md:min-h-[40rem] min-h-[30rem] min-w-[20rem] md:min-w-[30rem] p-2.5 relative"
+                      className="min-h-[30rem] min-w-[26rem] p-2.5 relative"
                       key={i}
                     >
                       <img
@@ -390,7 +390,7 @@ const ProductDetails = () => {
             className="h-screen flex flex-col justify-center items-center bg-white relative overflow-hidden"
             ref={productDetailRef}
           >
-            <h1 className="absolute top-[15px] left-[15px] uppercase z-[5] text-lg md:text-4xl futuraLt">
+            <h1 className="absolute top-[15px] left-[15px] uppercase z-[5] text-sm md:text-4xl futuraLt">
               fabric / care & Artwork Meaning
             </h1>
             <p className="absolute top-[5%] md:top-[7%] left-[15px] text-sm md:text-lg z-[5] Apercu">
@@ -429,9 +429,9 @@ const ProductDetails = () => {
 
           <Fragment>
             <div className="touch-pan-y">
-              <header className="flex justify-between items-center mb-6 px-[1.5vw] text-xl">
-                <h1 className="uppercase futuraLt">you may also like</h1>
-                <Link to={"/products"} className="underline text-blue-600">
+              <header className="flex justify-between items-center mb-6 px-[2.5vw] md:px-[1.5vw] text-xl">
+                <h1 className="uppercase futuraLt ">you may also like</h1>
+                <Link to={"/products"} className="uppercase poppins text-sm md:text-base font-semibold">
                   See all
                 </Link>
               </header>

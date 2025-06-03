@@ -39,7 +39,7 @@ const Shipping = () => {
           if (postState) {
             setSelectedState(postState);
           } else {
-            setSelectedState("No information found for this zipcode");
+            setSelectedState("Enter your state");
           }
         } catch (error) {
           setSelectedState("Error fetching data. Please try again.");
@@ -57,7 +57,7 @@ const Shipping = () => {
           if (district) {
             setSelectedCity(district);
           } else {
-            setSelectedCity("No information found for this zipcode");
+            setSelectedCity("Enter your city");
           }
         } catch (error) {
           setSelectedCity("Error fetching data. Please try again.");

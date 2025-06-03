@@ -8,21 +8,32 @@ import { motion } from "framer-motion";
 import MetaData from "../../Meta/MetaData";
 import Pagination from "react-js-pagination";
 import { toast } from "sonner";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import logoBlack from "../../assets/kalaevaniBlack.webp";
-import { Slider } from "@mui/material";
-import { LuSearch } from "react-icons/lu";
+import { Slider, Rating, FormControl, InputLabel, Select, MenuItem, TextField, InputAdornment } from "@mui/material";
+import { LuSearch, LuFilter } from "react-icons/lu";
+import { IoClose } from "react-icons/io5";
 
 function Products() {
   const dispatch = useDispatch();
-  const { error, productCount, products, perPage, loading } = useSelector(
+  const { error, productCount, products, loading } = useSelector(
     (state) => state.products
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [price, setPrice] = useState([500, 10000]);
+  const [ratings, setRatings] = useState(0);
+  const [sortBy, setSortBy] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
 
   const { keyword } = useParams();
-  const [keywords, setkeyword] = useState("");
+  const [keywords, setKeywords] = useState("");
+
+  const sortOptions = [
+    { value: "price_asc", label: "Price: Low to High" },
+    { value: "price_desc", label: "Price: High to Low" },
+    { value: "rating_desc", label: "Highest Rated" },
+    { value: "newest", label: "Newest First" }
+  ];
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
@@ -32,14 +43,29 @@ function Products() {
     setPrice(newPrice);
   };
 
+  const ratingHandler = (e, newRating) => {
+    // If user selects 5 stars, we'll use 4.5 as the minimum rating
+    setRatings(newRating === 5 ? 4.5 : newRating);
+  };
+
+  const sortHandler = (e) => {
+    setSortBy(e.target.value);
+  };
+
+  const clearFilters = () => {
+    setPrice([500, 10000]);
+    setRatings(0);
+    setSortBy("");
+  };
+
   useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
     window.scrollTo(0, 0);
-    dispatch(getProduct(keyword, currentPage, price));
-  }, [dispatch, keyword, currentPage, error, price]);
+    dispatch(getProduct(keyword, currentPage, price, "", ratings, sortBy));
+  }, [dispatch, keyword, currentPage, error, price, ratings, sortBy]);
 
   const navigate = useNavigate();
 
@@ -82,67 +108,134 @@ function Products() {
       <MetaData title="All Products" />
       <div className="relative">
         <Navbar props={logoBlack} />
-        <Link
-          to="/"
-          className="fixed top-[15px] left-[2.6vw] z-[1000] w-[60px] h-[60px]"
-        >
-          <img
-            src={logoBlack}
-            alt="logo"
-            className="w-full h-full object-cover"
-          />
-        </Link>
 
-        <div className="flex justify-center items-center">
-          <div className="mx-[1.5vw] mt-[50px] mb-2 min-h-[150px] w-[90%] md:w-1/2 border border-black pb-4">
-            <div className="flex justify-center font-semibold py-4 border-b border-black uppercase text-base font-sans">
-              Filters
-            </div>
-            <div className="flex items-center justify-center">
-              <div className="flex flex-col w-[90%] pr-10">
-                <p className="text-center font-medium">Select Price Range</p>
-                <Slider
-                  value={price}
-                  onChange={priceHandler}
-                  valueLabelDisplay={window.innerWidth < 600 ? "on" : "auto"}
-                  aria-labelledby="range-slider"
-                  min={500}
-                  max={10000}
-                  color="primary"
-                />
+
+        {/* Search Bar */}
+        <div className="w-full flex justify-center px-[1.6vw] mt-[100px]">
+          <form onSubmit={searchSubmitHandler} className="w-[90%] md:w-[52%] relative">
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Search products..."
+              value={keywords}
+              onChange={(e) => setKeywords(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <button type="submit" className="p-2">
+                      <LuSearch className="text-gray-500" />
+                    </button>
+                  </InputAdornment>
+                ),
+              }}
+              className="bg-white"
+            />
+          </form>
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="ml-4 p-2 border border-black rounded-lg hover:bg-black hover:text-white transition-colors"
+          >
+            <LuFilter className="text-xl" />
+          </button>
+        </div>
+
+        {/* Filters Section */}
+        {showFilters && (
+          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex justify-center items-start overflow-y-auto">
+            <div className="bg-white w-[90%] md:w-[600px] rounded-lg p-6 my-4 relative">
+              <div className="sticky top-0 bg-white pb-4 z-10">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-semibold">Filters</h2>
+                  <button
+                    onClick={() => setShowFilters(false)}
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  >
+                    <IoClose className="text-2xl" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                {/* Price Range */}
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Price Range</h3>
+                  <Slider
+                    value={price}
+                    onChange={priceHandler}
+                    valueLabelDisplay="auto"
+                    min={500}
+                    max={10000}
+                    className="mt-4"
+                  />
+                  <div className="flex justify-between mt-2">
+                    <span>₹{price[0]}</span>
+                    <span>₹{price[1]}</span>
+                  </div>
+                </div>
+
+                {/* Ratings */}
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Minimum Rating</h3>
+                  <Rating
+                    value={ratings === 4.5 ? 5 : ratings}
+                    onChange={ratingHandler}
+                    precision={0.5}
+                    size="large"
+                  />
+                  {ratings > 0 && (
+                    <p className="text-sm text-gray-600 mt-1">
+                      {ratings === 4.5 ? "Showing products rated 4.5 stars and above" : `Showing products rated ${ratings} stars and above`}
+                    </p>
+                  )}
+                </div>
+
+                {/* Sort By */}
+                <div>
+                  <FormControl fullWidth>
+                    <InputLabel>Sort By</InputLabel>
+                    <Select
+                      value={sortBy}
+                      onChange={sortHandler}
+                      label="Sort By"
+                    >
+                      <MenuItem value="">None</MenuItem>
+                      {sortOptions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex justify-between gap-4 sticky bottom-0 bg-white pt-4">
+                  <button
+                    onClick={clearFilters}
+                    className="flex-1 py-2 border border-black rounded-lg hover:bg-gray-100"
+                  >
+                    Clear Filters
+                  </button>
+                  <button
+                    onClick={() => setShowFilters(false)}
+                    className="flex-1 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
+                  >
+                    Apply Filters
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
-        <form
-          className="w-full flex justify-center px-[1.6vw]"
-          onSubmit={searchSubmitHandler}
-        >
-          <div className="relative w-[93%] md:w-[52%] h-10 overflow-hidden border border-black">
-            <input
-              type="text"
-              placeholder="Search a Product ..."
-              onChange={(e) => setkeyword(e.target.value)}
-              value={keyword}
-              className="w-full h-full bg-white p-5 border-none focus:outline-none"
-            />
-            <LuSearch className="absolute top-0 right-0 h-10 w-[50px] p-2.5 text-gray-500" />
-            <input
-              type="submit"
-              value=" o "
-              className="absolute top-0 right-0 w-[50px] h-full opacity-0 cursor-pointer z-10"
-            />
-          </div>
-        </form>
-
+        {/* Products Grid */}
         {loading ? (
           <div className="h-[70vh] w-full p-[4vh] rounded-[10px]">
             <div className="h-full w-full animate-pulse bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 rounded-inherit"></div>
           </div>
         ) : (
           <div
-            className="flex flex-wrap justify-center gap-2 p-[5vh]"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 md:p-6 p-2 mt-5"
             onMouseEnter={textEnter}
             onMouseLeave={textLeave}
           >
@@ -157,21 +250,23 @@ function Products() {
           </div>
         )}
 
-        {perPage < productCount && (
-          <div className="flex justify-center my-4">
+        {/* Pagination */}
+        {productCount > 0 && (
+          <div className="flex justify-center my-8">
             <Pagination
               activePage={currentPage}
-              itemsCountPerPage={perPage}
+              itemsCountPerPage={6}
               totalItemsCount={productCount}
               onChange={setCurrentPageNo}
               nextPageText="Next"
               prevPageText="Prev"
               firstPageText="1st"
               lastPageText="Last"
-              itemClass="cursor-pointer border border-white px-4 py-2 transition-all hover:bg-white"
-              linkClass="no-underline text-white font-medium"
-              activeClass="bg-white"
-              activeLinkClass="text-black"
+              itemClass="page-item"
+              linkClass="page-link"
+              activeClass="active"
+              activeLinkClass="active-link"
+              className="flex gap-2"
             />
           </div>
         )}
@@ -184,6 +279,35 @@ function Products() {
 
         <Footer />
       </div>
+
+      {/* Custom styles */}
+      <style jsx>{`
+        .page-item {
+          padding: 0.5rem 1rem;
+          border: 1px solid #ddd;
+          margin: 0 0.25rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .page-item:hover {
+          background-color: #f5f5f5;
+        }
+
+        .page-link {
+          color: #333;
+          text-decoration: none;
+        }
+
+        .active {
+          background-color: #000;
+          color: #fff;
+        }
+
+        .active-link {
+          color: #fff;
+        }
+      `}</style>
     </Fragment>
   );
 }

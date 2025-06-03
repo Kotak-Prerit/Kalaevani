@@ -1,5 +1,5 @@
 const catchAsyncErrors = require("../middleware/catchAsyncError");
-const ErrorHandler = require("../utils/errorHandler");
+const ErrorHandler = require("../utils/errorhandler");
 const getRazorpayInstance = require("../config/razorpay");
 const crypto = require("crypto");
 
@@ -34,7 +34,9 @@ exports.processPayment = catchAsyncErrors(async (req, res, next) => {
     });
   } catch (error) {
     console.error("Payment processing error:", error);
-    return next(new ErrorHandler(error.message || "Payment processing failed", 500));
+    return next(
+      new ErrorHandler(error.message || "Payment processing failed", 500)
+    );
   }
 });
 
@@ -57,10 +59,13 @@ exports.sendRazorpayApiKey = catchAsyncErrors(async (req, res, next) => {
 // Verify payment
 exports.verifyPayment = catchAsyncErrors(async (req, res, next) => {
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+      req.body;
 
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
-      return next(new ErrorHandler("Missing payment verification parameters", 400));
+      return next(
+        new ErrorHandler("Missing payment verification parameters", 400)
+      );
     }
 
     // Verify signature
@@ -79,14 +84,21 @@ exports.verifyPayment = catchAsyncErrors(async (req, res, next) => {
     const payment = await razorpay.payments.fetch(razorpay_payment_id);
 
     if (payment.status !== "captured") {
-      return next(new ErrorHandler(`Payment not completed. Status: ${payment.status}`, 400));
+      return next(
+        new ErrorHandler(
+          `Payment not completed. Status: ${payment.status}`,
+          400
+        )
+      );
     }
 
     // Verify order details
     const order = await razorpay.orders.fetch(razorpay_order_id);
 
     if (order.status !== "paid") {
-      return next(new ErrorHandler(`Order not paid. Status: ${order.status}`, 400));
+      return next(
+        new ErrorHandler(`Order not paid. Status: ${order.status}`, 400)
+      );
     }
 
     res.status(200).json({
@@ -96,6 +108,8 @@ exports.verifyPayment = catchAsyncErrors(async (req, res, next) => {
     });
   } catch (error) {
     console.error("Payment verification error:", error);
-    return next(new ErrorHandler(error.message || "Payment verification failed", 500));
+    return next(
+      new ErrorHandler(error.message || "Payment verification failed", 500)
+    );
   }
 });

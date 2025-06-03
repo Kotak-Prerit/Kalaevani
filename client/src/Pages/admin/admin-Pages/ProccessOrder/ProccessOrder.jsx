@@ -9,9 +9,7 @@ import {
 } from "../../../../actions/orderAction";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "sonner";
-import { Button } from "@mui/material";
 import { UPDATE_ORDER_RESET } from "../../../../constants/orderConstants";
-import "./processOrder.css";
 import QuoteLoader from "../../../../utils/QuoteLoader/QuoteLoader";
 
 const ProcessOrder = ({ history, match }) => {
@@ -54,85 +52,89 @@ const ProcessOrder = ({ history, match }) => {
   return (
     <Fragment>
       <MetaData title="Process Order" />
-      <div className="dashboard">
+      <div className="flex">
         <SideBar />
-        <div className="newProductContainer">
-          {loading ? (
+        <div className="absolute top-0 right-0 w-4/5 p-6 bg-gray-100 min-h-screen h-full overflow-y-auto max-h-screen">
+          {loading || !order ? (
             <QuoteLoader />
           ) : (
-            <div
-              className="confirmOrderPage"
-              style={{
-                display: order.orderStatus === "Delivered" ? "block" : "grid",
-              }}
-            >
-              <div>
-                <div className="confirmshippingArea">
-                  <h3>Shipping Info</h3>
-                  <div className="orderDetailsContainerBox">
-                    <div>
-                      <p>Name:</p>
-                      <span>{order.user && order.user.name}</span>
+            <div className={`w-full pb-20 ${order.orderStatus === "Delivered" ? "block" : "grid grid-cols-1 lg:grid-cols-2 gap-6"}`}>
+              <div className="space-y-6">
+                {/* Shipping Info */}
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Shipping Info</h3>
+                  <div className="space-y-4">
+                    <div className="flex flex-col md:flex-row md:items-start">
+                      <p className="font-medium text-gray-600 min-w-[100px]">Name:</p>
+                      <span className="text-gray-800">{order.user?.name || "N/A"}</span>
                     </div>
-                    <div>
-                      <p>Phone:</p>
-                      <span>
-                        {order.shippingInfo && order.shippingInfo.phoneNo}
+                    <div className="flex flex-col md:flex-row md:items-start">
+                      <p className="font-medium text-gray-600 min-w-[100px]">Phone:</p>
+                      <span className="text-gray-800">{order.shippingInfo?.phoneNo || "N/A"}</span>
+                    </div>
+                    <div className="flex flex-col md:flex-row md:items-start">
+                      <p className="font-medium text-gray-600 min-w-[100px]">Address:</p>
+                      <span className="text-gray-800">
+                        {order.shippingInfo
+                          ? `${order.shippingInfo.houseNo || ""}, ${order.shippingInfo.street || ""
+                          }, ${order.shippingInfo.info || ""}, ${order.shippingInfo.zipCode || ""
+                          }, ${order.shippingInfo.city || ""}, ${order.shippingInfo.state || ""
+                          }, ${order.shippingInfo.country || ""}`
+                          : "N/A"}
                       </span>
-                    </div>
-                    <div>
-                      <p>Address:</p>
-                      <span>
-                        {order.shippingInfo &&
-                          `${order.shippingInfo.houseNo}, ${order.shippingInfo.street}, ${order.shippingInfo.info}, ${order.shippingInfo.zipCode}, ${order.shippingInfo.city},${order.shippingInfo.state},${order.shippingInfo.country}`}
-                      </span>
-                    </div>
-                  </div>
-
-                  <h3>Payment</h3>
-                  <div className="orderDetailsContainerBox">
-                    <div>
-                      <p>Cash on Delivery (COD)</p>
-                    </div>
-
-                    <div>
-                      <p>Amount:</p>
-                      <span>{order.totalPrice && order.totalPrice}</span>
-                    </div>
-                  </div>
-
-                  <h3>Order Status</h3>
-                  <div className="orderDetailsContainerBox">
-                    <div>
-                      <p
-                        className={
-                          order.orderStatus && order.orderStatus === "Delivered"
-                            ? "greenColor"
-                            : "redColor"
-                        }
-                      >
-                        {order.orderStatus && order.orderStatus}
-                      </p>
                     </div>
                   </div>
                 </div>
-                <div className="confirmCartItems">
-                  <h3>Your Cart Items:</h3>
-                  <div className="confirmCartItemsContainer">
+
+                {/* Payment */}
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Payment</h3>
+                  <div className="space-y-4">
+                    <div className="flex flex-col md:flex-row md:items-start">
+                      <p className="font-medium text-gray-600">Cash on Delivery (COD)</p>
+                    </div>
+                    <div className="flex flex-col md:flex-row md:items-start">
+                      <p className="font-medium text-gray-600 min-w-[100px]">Amount:</p>
+                      <span className="text-gray-800">₹{order.totalPrice || 0}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Order Status */}
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Order Status</h3>
+                  <div>
+                    <p className={`inline-block px-3 py-1 rounded-md font-medium ${order.orderStatus && order.orderStatus === "Delivered"
+                      ? "bg-green-100 text-green-800"
+                      : order.orderStatus === "Shipped"
+                        ? "bg-blue-100 text-blue-800"
+                        : "bg-yellow-100 text-yellow-800"
+                      }`}>
+                      {order.orderStatus || "Processing"}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Cart Items */}
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Your Cart Items:</h3>
+                  <div className="space-y-4">
                     {order.orderItems &&
                       order.orderItems.map((item) => (
                         <div
                           key={item.product}
-                          className="flex justify-center items-center"
+                          className="flex flex-col md:flex-row items-center justify-between p-3 border-b border-gray-200 last:border-b-0"
                         >
-                          <img src={item.image} alt="Product" />
-                          <Link
-                            to={`/product/${item.product}`}
-                            className="processOrderItemName"
-                          >
-                            {item.name} <br /> <span>Size : {item.size}</span>
-                          </Link>{" "}
-                          <span>
+                          <div className="flex flex-col md:flex-row items-center mb-3 md:mb-0">
+                            <img src={item.image} alt="Product" className="w-16 h-16 object-cover rounded-md mr-4" />
+                            <Link
+                              to={`/product/${item.product}`}
+                              className="text-gray-800 hover:text-blue-600 font-medium"
+                            >
+                              {item.name} <br /> <span className="text-sm text-gray-600">Size: {item.size}</span>
+                            </Link>
+                          </div>
+                          <span className="text-gray-800">
                             {item.quantity} X ₹{item.price} ={" "}
                             <b>₹{item.price * item.quantity}</b>
                           </span>
@@ -141,43 +143,42 @@ const ProcessOrder = ({ history, match }) => {
                   </div>
                 </div>
               </div>
-              {/*  */}
-              <div
-                style={{
-                  display: order.orderStatus === "Delivered" ? "none" : "block",
-                }}
-              >
-                <form
-                  className="updateOrderForm"
-                  onSubmit={updateOrderSubmitHandler}
-                >
-                  <h1>Process Order</h1>
 
-                  <div>
-                    {/* <AccountTreeIcon /> */}
-                    <select onChange={(e) => setStatus(e.target.value)}>
-                      <option value="">Choose Category</option>
-                      {order.orderStatus === "Processing" && (
-                        <option value="Shipped">Shipped</option>
-                      )}
-
-                      {order.orderStatus === "Shipped" && (
-                        <option value="Delivered">Delivered</option>
-                      )}
-                    </select>
-                  </div>
-
-                  <Button
-                    id="createProductBtn"
-                    type="submit"
-                    disabled={
-                      loading ? true : false || status === "" ? true : false
-                    }
+              {/* Process Order Form */}
+              {order.orderStatus !== "Delivered" && (
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                  <form
+                    className="space-y-4"
+                    onSubmit={updateOrderSubmitHandler}
                   >
-                    Process
-                  </Button>
-                </form>
-              </div>
+                    <h1 className="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Process Order</h1>
+
+                    <div>
+                      <select
+                        onChange={(e) => setStatus(e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                      >
+                        <option value="">Choose Status</option>
+                        {order.orderStatus === "Processing" && (
+                          <option value="Shipped">Shipped</option>
+                        )}
+
+                        {order.orderStatus === "Shipped" && (
+                          <option value="Delivered">Delivered</option>
+                        )}
+                      </select>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 px-4 rounded-lg transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                      disabled={loading || status === ""}
+                    >
+                      Process
+                    </button>
+                  </form>
+                </div>
+              )}
             </div>
           )}
         </div>
